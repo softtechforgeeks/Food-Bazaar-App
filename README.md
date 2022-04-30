@@ -7,4 +7,15 @@ For this project we have used
 Flutter: 2.2.1
 Dart: 2.13.1
 
+## Screenshots
+<img src="assets/logo.png"> 
+
+## App UI (until now)
+1. Splash Screen
+2. Login Form
+3. Registration Form
+4. Profile Page
+5. Forgot Password
+6. OTP Verification Page
+
 
