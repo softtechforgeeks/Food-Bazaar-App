@@ -1,6 +1,6 @@
 {
-    "name": "food_bazar_app",
-    "short_name": "food_bazar_app",
+    "name": "flutter_login_ui",
+    "short_name": "flutter_login_ui",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
