@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "425270710299",
+    "project_id": "foodbazaar-6c9fa",
+    "storage_bucket": "foodbazaar-6c9fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425270710299:android:50bbdbb1e7881cc5cea8be",
+        "android_client_info": {
+          "package_name": "net.fluttertutorial.flutter_login_ui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425270710299-cc1ndmj1aqmh0hil551aap6k8qqp6alg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.fluttertutorial.flutter_login_ui",
+            "certificate_hash": "bec2eb8b2076b95da3cc918ca4c1081355fb657b"
+          }
+        },
+        {
+          "client_id": "425270710299-rrpd9me44memopd1tn7nn8ma8g3pdhnu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbQ8zu4GODdwLdD1bx1RVqEeA0GKOYAbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425270710299-rrpd9me44memopd1tn7nn8ma8g3pdhnu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

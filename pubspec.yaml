@@ -31,6 +31,8 @@ dependencies:
   hexcolor: ^2.0.4
   font_awesome_flutter: ^9.1.0
   otp_text_field: ^1.1.1
+  firebase_core: ^1.16.0
+  firebase_auth: ^3.3.17
 
 dev_dependencies:
   flutter_test:
