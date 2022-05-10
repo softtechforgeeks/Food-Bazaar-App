@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login_ui/models/user.dart';
+import 'package:flutter_login_ui/services/auth.dart';
 import 'package:hexcolor/hexcolor.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'pages/splash_screen.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(LoginUiApp());
 }
 
@@ -26,15 +32,19 @@ class LoginUiApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Food Bazaar',
-      theme: ThemeData(
-        primaryColor: _primaryColor,
-        accentColor: _accentColor,
-        scaffoldBackgroundColor: Colors.grey.shade100,
-        primarySwatch: Colors.grey,
+    return StreamProvider<UserModel>.value(
+      value: AuthService().user,
+      initialData: UserModel(uid: null),
+      child: MaterialApp(
+        title: 'Food Bazaar',
+        theme: ThemeData(
+          primaryColor: _primaryColor,
+          scaffoldBackgroundColor: Colors.grey.shade100,
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey)
+              .copyWith(secondary: _accentColor),
+        ),
+        home: SplashScreen(title: 'Food Bazaar'),
       ),
-      home: SplashScreen(title: 'Food Bazaar'),
     );
   }
 }

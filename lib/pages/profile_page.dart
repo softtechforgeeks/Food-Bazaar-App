@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_login_ui/models/user.dart';
 import 'package:flutter_login_ui/pages/login_page.dart';
 import 'package:flutter_login_ui/pages/splash_screen.dart';
 import 'package:flutter_login_ui/pages/widgets/header_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_login_ui/services/auth.dart';
 
 import 'forgot_password_page.dart';
 import 'forgot_password_verification_page.dart';
@@ -20,12 +22,28 @@ class _ProfilePageState extends State<ProfilePage> {
   double _drawerIconSize = 24;
   double _drawerFontSize = 17;
 
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Your Profile",
+          ("${loggedInUser.firstName} Profile"),
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         elevation: 0.5,
@@ -37,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   end: Alignment.bottomRight,
                   colors: <Color>[
                 Theme.of(context).primaryColor,
-                Theme.of(context).accentColor,
+                Theme.of(context).colorScheme.secondary,
               ])),
         ),
         actions: [
@@ -88,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
                   colors: [
                 Theme.of(context).primaryColor.withOpacity(0.2),
-                Theme.of(context).accentColor.withOpacity(0.5),
+                Theme.of(context).colorScheme.secondary.withOpacity(0.5),
               ])),
           child: ListView(
             children: [
@@ -101,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     stops: [0.0, 1.0],
                     colors: [
                       Theme.of(context).primaryColor,
-                      Theme.of(context).accentColor,
+                      Theme.of(context).colorScheme.secondary,
                     ],
                   ),
                 ),
@@ -120,12 +138,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 leading: Icon(
                   Icons.screen_lock_landscape_rounded,
                   size: _drawerIconSize,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
                   'Splash Screen',
                   style: TextStyle(
-                      fontSize: 17, color: Theme.of(context).accentColor),
+                      fontSize: 17,
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -138,12 +157,12 @@ class _ProfilePageState extends State<ProfilePage> {
               ListTile(
                 leading: Icon(Icons.login_rounded,
                     size: _drawerIconSize,
-                    color: Theme.of(context).accentColor),
+                    color: Theme.of(context).colorScheme.secondary),
                 title: Text(
                   'Login Page',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -159,12 +178,12 @@ class _ProfilePageState extends State<ProfilePage> {
               ListTile(
                 leading: Icon(Icons.person_add_alt_1,
                     size: _drawerIconSize,
-                    color: Theme.of(context).accentColor),
+                    color: Theme.of(context).colorScheme.secondary),
                 title: Text(
                   'Registration Page',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -181,13 +200,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 leading: Icon(
                   Icons.password_rounded,
                   size: _drawerIconSize,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
                   'Forgot Password Page',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -205,13 +224,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 leading: Icon(
                   Icons.verified_user_sharp,
                   size: _drawerIconSize,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
                   'Verification Page',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -229,16 +248,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 leading: Icon(
                   Icons.logout_rounded,
                   size: _drawerIconSize,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
                   'Logout',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
-                  SystemNavigator.pop();
+                  AuthService().signOut();
                 },
               ),
             ],
@@ -282,7 +301,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 20,
                   ),
                   Text(
-                    'Ahmedalla Hanoura',
+                    '${loggedInUser.firstName} ${loggedInUser.lastName}',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
@@ -335,12 +354,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                           leading: Icon(Icons.email),
                                           title: Text("Email"),
                                           subtitle:
-                                              Text("ahmedhanora11@gmail.com"),
+                                              Text("${loggedInUser.email}"),
                                         ),
                                         ListTile(
                                           leading: Icon(Icons.phone),
                                           title: Text("Phone"),
-                                          subtitle: Text("+966544984525"),
+                                          subtitle:
+                                              Text("${loggedInUser.mobile}"),
                                         ),
                                         ListTile(
                                           leading: Icon(Icons.person),

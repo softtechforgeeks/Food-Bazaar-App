@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.fluttertutorial.flutter_login_ui">
+    package="com.mobilemaster.foodbazarapp">
    <application
         android:label="Food Bazaar"
         android:icon="@mipmap/ic_launcher">

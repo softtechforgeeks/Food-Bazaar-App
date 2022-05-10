@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_login_ui/wrapper.dart';
 
 import 'login_page.dart';
 
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     new Timer(const Duration(milliseconds: 2000), () {
       setState(() {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => Wrapper()),
             (route) => false);
       });
     });
@@ -39,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
       decoration: new BoxDecoration(
         gradient: new LinearGradient(
           colors: [
-            Theme.of(context).accentColor,
+            Theme.of(context).colorScheme.secondary,
             Theme.of(context).primaryColor
           ],
           begin: const FractionalOffset(0, 0),

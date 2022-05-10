@@ -1,4 +1,4 @@
-package net.fluttertutorial.flutter_login_ui
+package com.mobilemaster.foodbazarapp
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "883407828382",
+    "project_id": "food-bazar-app",
+    "storage_bucket": "food-bazar-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883407828382:android:1e61a076b1a73ad18f928f",
+        "android_client_info": {
+          "package_name": "com.mobilemaser.foodbazarapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883407828382-942i1g0cjhdaf304m3c1np62o4vdie3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTYmgTG9T1THc755NGpr2ZkgEXXu0CbwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883407828382-942i1g0cjhdaf304m3c1np62o4vdie3k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883407828382:android:e5b6a435e3f21b588f928f",
+        "android_client_info": {
+          "package_name": "com.mobilemaster.foodbazarapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883407828382-942i1g0cjhdaf304m3c1np62o4vdie3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTYmgTG9T1THc755NGpr2ZkgEXXu0CbwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883407828382-942i1g0cjhdaf304m3c1np62o4vdie3k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
