@@ -1,26 +1,40 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/common/theme_helper.dart';
+import 'package:flutter_login_ui/pages/login_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
-import 'profile_page.dart';
 import 'widgets/header_widget.dart';
 
 class ForgotPasswordVerificationPage extends StatefulWidget {
-  const ForgotPasswordVerificationPage({Key? key}) : super(key: key);
+  const ForgotPasswordVerificationPage({
+    Key? key,
+    required this.email,
+    required this.code,
+  }) : super(key: key);
+
+  final String email;
+  final int code;
 
   @override
-  _ForgotPasswordVerificationPageState createState() => _ForgotPasswordVerificationPageState();
+  _ForgotPasswordVerificationPageState createState() =>
+      _ForgotPasswordVerificationPageState();
 }
 
-class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificationPage> {
+class _ForgotPasswordVerificationPageState
+    extends State<ForgotPasswordVerificationPage> {
   final _formKey = GlobalKey<FormState>();
+
   bool _pinSuccess = false;
+  String input = "";
 
   @override
   Widget build(BuildContext context) {
     double _headerHeight = 300;
+    final OtpFieldController codeController = new OtpFieldController();
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -45,22 +59,23 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Verification',
+                            Text(
+                              'Verification',
                               style: TextStyle(
                                   fontSize: 35,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black54
-                              ),
+                                  color: Colors.black54),
                               // textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Text(
                               'Enter the verification code we just sent you on your email address.',
                               style: TextStyle(
-                                // fontSize: 20,
+                                  // fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black54
-                              ),
+                                  color: Colors.black54),
                               // textAlign: TextAlign.center,
                             ),
                           ],
@@ -72,18 +87,19 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
                         child: Column(
                           children: <Widget>[
                             OTPTextField(
+                              controller: codeController,
+                              keyboardType: TextInputType.number,
                               length: 4,
                               width: 300,
                               fieldWidth: 50,
-                              style: TextStyle(
-                                  fontSize: 30
-                              ),
+                              style: TextStyle(fontSize: 30),
                               textFieldAlignment: MainAxisAlignment.spaceAround,
                               fieldStyle: FieldStyle.underline,
                               onCompleted: (pin) {
                                 setState(() {
                                   _pinSuccess = true;
                                 });
+                                input = pin;
                               },
                             ),
                             SizedBox(height: 50.0),
@@ -103,7 +119,8 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return ThemeHelper().alartDialog("Successful",
+                                            return ThemeHelper().alartDialog(
+                                                "Successful",
                                                 "Verification code resend successful.",
                                                 context);
                                           },
@@ -111,20 +128,22 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
                                       },
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.orange
-                                    ),
+                                        color: Colors.orange),
                                   ),
                                 ],
                               ),
                             ),
                             SizedBox(height: 40.0),
                             Container(
-                              decoration: _pinSuccess ? ThemeHelper().buttonBoxDecoration(context):ThemeHelper().buttonBoxDecoration(context, "#AAAAAA","#757575"),
+                              decoration: _pinSuccess
+                                  ? ThemeHelper().buttonBoxDecoration(context)
+                                  : ThemeHelper().buttonBoxDecoration(
+                                      context, "#AAAAAA", "#757575"),
                               child: ElevatedButton(
                                 style: ThemeHelper().buttonStyle(),
                                 child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      40, 10, 40, 10),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                   child: Text(
                                     "Verify".toUpperCase(),
                                     style: TextStyle(
@@ -134,14 +153,34 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
                                     ),
                                   ),
                                 ),
-                                onPressed: _pinSuccess ? () {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) => ProfilePage()
-                                      ),
-                                          (Route<dynamic> route) => false
-                                  );
-                                } : null,
+                                onPressed: _pinSuccess
+                                    ? () async {
+                                        print(input);
+                                        print(widget.code.toString());
+                                        if (input == widget.code.toString()) {
+                                          try {
+                                            await FirebaseAuth.instance
+                                                .sendPasswordResetEmail(
+                                                    email: widget.email);
+                                            Navigator.of(context)
+                                                .pushAndRemoveUntil(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            LoginPage()),
+                                                    (Route<dynamic> route) =>
+                                                        false);
+                                          } catch (e) {
+                                            print(e);
+                                          }
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Reset password email sent successfully.");
+                                        } else {
+                                          Fluttertoast.showToast(
+                                              msg: "Wrong verification code.");
+                                        }
+                                      }
+                                    : null,
                               ),
                             ),
                           ],
@@ -153,7 +192,6 @@ class _ForgotPasswordVerificationPageState extends State<ForgotPasswordVerificat
               )
             ],
           ),
-        )
-    );
+        ));
   }
 }

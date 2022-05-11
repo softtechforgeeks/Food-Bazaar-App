@@ -22,6 +22,10 @@ class _ProfilePageState extends State<ProfilePage> {
   double _drawerIconSize = 24;
   double _drawerFontSize = 17;
 
+  String email = "";
+  String newPassword = "";
+  int code = 0;
+
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -216,30 +220,31 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
               ),
-              Divider(
-                color: Theme.of(context).primaryColor,
-                height: 1,
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.verified_user_sharp,
-                  size: _drawerIconSize,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-                title: Text(
-                  'Verification Page',
-                  style: TextStyle(
-                      fontSize: _drawerFontSize,
-                      color: Theme.of(context).colorScheme.secondary),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ForgotPasswordVerificationPage()),
-                  );
-                },
-              ),
+              // Divider(
+              //   color: Theme.of(context).primaryColor,
+              //   height: 1,
+              // ),
+              // ListTile(
+              //   leading: Icon(
+              //     Icons.verified_user_sharp,
+              //     size: _drawerIconSize,
+              //     color: Theme.of(context).colorScheme.secondary,
+              //   ),
+              //   title: Text(
+              //     'Verification Page',
+              //     style: TextStyle(
+              //         fontSize: _drawerFontSize,
+              //         color: Theme.of(context).colorScheme.secondary),
+              //   ),
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => ForgotPasswordVerificationPage(
+              //               email: email, code: code)),
+              //     );
+              //   },
+              // ),
               Divider(
                 color: Theme.of(context).primaryColor,
                 height: 1,
