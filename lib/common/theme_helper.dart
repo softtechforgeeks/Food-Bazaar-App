@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+// this widget would be common for all 
 class ThemeHelper {
   InputDecoration textInputDecoration(
       [String lableText = "", String hintText = ""]) {
