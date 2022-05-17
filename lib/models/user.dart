@@ -4,6 +4,7 @@ class UserModel {
   String? firstName;
   String? lastName;
   String? mobile;
+  String? title;
   String? password;
 
   UserModel(
@@ -12,6 +13,7 @@ class UserModel {
       this.firstName,
       this.lastName,
       this.mobile,
+      this.title,
       this.password});
 
   // receiving data from server
@@ -22,6 +24,7 @@ class UserModel {
       firstName: map['firstName'],
       lastName: map['lastName'],
       mobile: map['mobile'],
+      title: map['title'],
       password: map['password'],
     );
   }
@@ -34,6 +37,7 @@ class UserModel {
       'firstName': firstName,
       'lastName': lastName,
       'mobile': mobile,
+      'title': title,
       'password': password,
     };
   }

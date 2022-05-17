@@ -11,6 +11,8 @@ import 'login_page.dart';
 import '../models/user.dart';
 
 class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _RegistrationPageState();
@@ -29,11 +31,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String? errorMessage;
 
   // editing Controller
-  final firstNameController = new TextEditingController();
-  final secondNameController = new TextEditingController();
-  final emailController = new TextEditingController();
-  final passwordController = new TextEditingController();
-  final mobileController = new TextEditingController();
+  final firstNameController = TextEditingController();
+  final secondNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final mobileController = TextEditingController();
+  String title = 'UTM Student';
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +45,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Container(
+            const SizedBox(
               height: 150,
               child: HeaderWidget(150, false, Icons.person_add_alt_1_rounded),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(25, 50, 25, 10),
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              margin: const EdgeInsets.fromLTRB(25, 50, 25, 10),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               alignment: Alignment.center,
               child: Column(
                 children: [
@@ -60,17 +63,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           child: Stack(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
                                   border:
                                       Border.all(width: 5, color: Colors.white),
                                   color: Colors.white,
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black12,
                                       blurRadius: 20,
-                                      offset: const Offset(5, 5),
+                                      offset: Offset(5, 5),
                                     ),
                                   ],
                                 ),
@@ -81,7 +84,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.fromLTRB(80, 80, 0, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(80, 80, 0, 0),
                                 child: Icon(
                                   Icons.add_circle,
                                   color: Colors.grey.shade700,
@@ -91,15 +95,46 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 30,
+                        const SizedBox(
+                          height: 20,
                         ),
+                        Container(
+                          child: DropdownButton<String>(
+                            value: title,
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.orange),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.orange,
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                title = newValue!;
+                              });
+                            },
+                            items: <String>[
+                              'UTM Student',
+                              'UTM Staff',
+                              'Normal Customer'
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            // onSaved: (value) {
+                            //   secondNameController.text = value!;
+                            // },
+                          ),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                        ),
+                        const SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
                             controller: firstNameController,
                             keyboardType: TextInputType.name,
                             validator: (value) {
-                              RegExp regex = new RegExp(r'^.{3,}$');
+                              RegExp regex = RegExp(r'^.{3,}$');
                               if (value!.isEmpty) {
                                 return ("First Name cannot be Empty");
                               }
@@ -117,8 +152,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
-                        SizedBox(
-                          height: 30,
+                        const SizedBox(
+                          height: 20,
                         ),
                         Container(
                           child: TextFormField(
@@ -139,7 +174,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
                             controller: emailController,
@@ -164,7 +199,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
                             controller: mobileController,
@@ -186,7 +221,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
                             controller: passwordController,
@@ -194,7 +229,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration: ThemeHelper().textInputDecoration(
                                 "Password*", "Enter your password"),
                             validator: (val) {
-                              RegExp regex = new RegExp(r'^.{6,}$');
+                              RegExp regex = RegExp(r'^.{6,}$');
                               if (val!.isEmpty) {
                                 return ("Password is required for login");
                               }
@@ -209,7 +244,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
-                        SizedBox(height: 15.0),
+                        const SizedBox(height: 15.0),
                         FormField<bool>(
                           builder: (state) {
                             return Column(
@@ -224,7 +259,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                             state.didChange(value);
                                           });
                                         }),
-                                    Text(
+                                    const Text(
                                       "I accept all terms and conditions.",
                                       style: TextStyle(color: Colors.grey),
                                     ),
@@ -252,7 +287,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             }
                           },
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 15.0),
                         Container(
                           decoration:
                               ThemeHelper().buttonBoxDecoration(context),
@@ -263,7 +298,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   const EdgeInsets.fromLTRB(40, 10, 40, 10),
                               child: Text(
                                 "Register".toUpperCase(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
@@ -282,12 +317,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             },
                           ),
                         ),
-                        SizedBox(height: 30.0),
+                        const SizedBox(height: 15.0),
                         Container(
-                          margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                          margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
                           //child: Text('Don\'t have an account? Create'),
                           child: Text.rich(TextSpan(children: [
-                            TextSpan(text: "I have account already "),
+                            const TextSpan(text: "I have account already "),
                             TextSpan(
                               text: 'Login',
                               recognizer: TapGestureRecognizer()
@@ -295,7 +330,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => LoginPage()));
+                                          builder: (context) =>
+                                              const LoginPage()));
                                 },
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -304,12 +340,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ),
                           ])),
                         ),
-                        SizedBox(height: 30.0),
-                        Text(
+                        const SizedBox(height: 15.0),
+                        const Text(
                           "Or create account using social media",
                           style: TextStyle(color: Colors.grey),
                         ),
-                        SizedBox(height: 25.0),
+                        const SizedBox(height: 15.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -333,12 +369,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 });
                               },
                             ),
-                            SizedBox(
-                              width: 30.0,
+                            const SizedBox(
+                              width: 20.0,
                             ),
                             GestureDetector(
                               child: Container(
-                                padding: EdgeInsets.all(0),
+                                padding: const EdgeInsets.all(0),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
                                   border: Border.all(
@@ -365,8 +401,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 });
                               },
                             ),
-                            SizedBox(
-                              width: 30.0,
+                            const SizedBox(
+                              width: 20.0,
                             ),
                             GestureDetector(
                               child: FaIcon(
@@ -446,7 +482,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     // sedning these values
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = await _auth.currentUser;
+    User? user = _auth.currentUser;
 
     UserModel userModel = UserModel();
 
@@ -456,6 +492,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     userModel.firstName = firstNameController.text;
     userModel.lastName = secondNameController.text;
     userModel.mobile = mobileController.text;
+    userModel.title = title;
     userModel.password = passwordController.text;
 
     await firebaseFirestore
@@ -464,7 +501,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
-    Navigator.pushAndRemoveUntil((context),
-        MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+        (route) => false);
   }
 }

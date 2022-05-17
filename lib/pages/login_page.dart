@@ -17,12 +17,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  double _headerHeight = 250;
+  final double _headerHeight = 250;
   final _formKey = GlobalKey<FormState>();
 
   // editing controller
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   // string for displaying the error Message
   String? errorMessage;
@@ -48,21 +48,21 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SafeArea(
               child: Container(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  margin: EdgeInsets.fromLTRB(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  margin: const EdgeInsets.fromLTRB(
                       20, 10, 20, 10), // This will be the login form
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         'Login',
                         style: TextStyle(
                             fontSize: 60, fontWeight: FontWeight.bold),
                       ),
-                      Text(
+                      const Text(
                         'Add your details to login',
                         style: TextStyle(color: Colors.grey),
                       ),
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                       Form(
                           key: _formKey,
                           child: Column(
@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
                               ),
-                              SizedBox(height: 30.0),
+                              const SizedBox(height: 30.0),
                               Container(
                                 child: TextFormField(
                                   controller: passwordController,
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                     if (value!.isEmpty) {
                                       return ("Password is required for login");
                                     }
-                                    RegExp regex = new RegExp(r'^.{6,}$');
+                                    RegExp regex = RegExp(r'^.{6,}$');
                                     if (!regex.hasMatch(value)) {
                                       return ("Enter Valid Password(Min. 6 Character)");
                                     }
@@ -122,9 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
                               ),
-                              SizedBox(height: 15.0),
+                              const SizedBox(height: 15.0),
                               Container(
-                                margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                                margin:
+                                    const EdgeInsets.fromLTRB(10, 0, 10, 20),
                                 alignment: Alignment.topRight,
                                 child: GestureDetector(
                                   onTap: () {
@@ -132,10 +133,10 @@ class _LoginPageState extends State<LoginPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              ForgotPasswordPage()),
+                                              const ForgotPasswordPage()),
                                     );
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Forgot password?",
                                     style: TextStyle(
                                       color: Colors.grey,
@@ -149,11 +150,11 @@ class _LoginPageState extends State<LoginPage> {
                                 child: ElevatedButton(
                                   style: ThemeHelper().buttonStyle(),
                                   child: Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        40, 10, 40, 10),
                                     child: Text(
                                       'Login'.toUpperCase(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
@@ -172,10 +173,12 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                margin:
+                                    const EdgeInsets.fromLTRB(10, 20, 10, 20),
                                 //child: Text('Don\'t have an account? Create'),
                                 child: Text.rich(TextSpan(children: [
-                                  TextSpan(text: "Don\'t have an account? "),
+                                  const TextSpan(
+                                      text: "Don\'t have an account? "),
                                   TextSpan(
                                     text: 'Create',
                                     recognizer: TapGestureRecognizer()
@@ -207,7 +210,6 @@ class _LoginPageState extends State<LoginPage> {
 
   // login function
   void signIn(String email, String password) async {
-    dynamic userid;
     if (_formKey.currentState!.validate()) {
       try {
         await _auth

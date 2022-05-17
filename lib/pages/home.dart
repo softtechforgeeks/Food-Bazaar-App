@@ -20,12 +20,12 @@ class Home extends StatelessWidget {
             ),
             SafeArea(
               child: Container(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  margin: EdgeInsets.fromLTRB(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  margin: const EdgeInsets.fromLTRB(
                       20, 10, 20, 10), // This will be the login form
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         'Home',
                         style: TextStyle(
                             fontSize: 60, fontWeight: FontWeight.bold),
@@ -38,7 +38,7 @@ class Home extends StatelessWidget {
                                 ThemeHelper().buttonBoxDecoration(context),
                             child: ElevatedButton(
                               style: ThemeHelper().buttonStyle(),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                                 child: Text(
                                   'User Profile',
@@ -53,17 +53,18 @@ class Home extends StatelessWidget {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => ProfilePage()));
+                                        builder: (context) =>
+                                            const ProfilePage()));
                               },
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           Container(
                             decoration:
                                 ThemeHelper().buttonBoxDecoration(context),
                             child: ElevatedButton(
                               style: ThemeHelper().buttonStyle(),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                                 child: Text(
                                   'Sign Out',

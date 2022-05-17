@@ -48,18 +48,18 @@ class _ForgotPasswordVerificationPageState
               ),
               SafeArea(
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(25, 10, 25, 10),
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  margin: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Column(
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Verification',
                               style: TextStyle(
                                   fontSize: 35,
@@ -67,12 +67,12 @@ class _ForgotPasswordVerificationPageState
                                   color: Colors.black54),
                               // textAlign: TextAlign.center,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Text(
+                            const Text(
                               'Enter the verification code we just sent you on your email address.',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   // fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black54),
@@ -81,7 +81,7 @@ class _ForgotPasswordVerificationPageState
                           ],
                         ),
                       ),
-                      SizedBox(height: 40.0),
+                      const SizedBox(height: 40.0),
                       Form(
                         key: _formKey,
                         child: Column(
@@ -92,7 +92,7 @@ class _ForgotPasswordVerificationPageState
                               length: 4,
                               width: 300,
                               fieldWidth: 50,
-                              style: TextStyle(fontSize: 30),
+                              style: const TextStyle(fontSize: 30),
                               textFieldAlignment: MainAxisAlignment.spaceAround,
                               fieldStyle: FieldStyle.underline,
                               onCompleted: (pin) {
@@ -102,11 +102,11 @@ class _ForgotPasswordVerificationPageState
                                 input = pin;
                               },
                             ),
-                            SizedBox(height: 50.0),
+                            const SizedBox(height: 50.0),
                             Text.rich(
                               TextSpan(
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text: "If you didn't receive a code! ",
                                     style: TextStyle(
                                       color: Colors.black38,
@@ -126,14 +126,14 @@ class _ForgotPasswordVerificationPageState
                                           },
                                         );
                                       },
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.orange),
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 40.0),
+                            const SizedBox(height: 40.0),
                             Container(
                               decoration: _pinSuccess
                                   ? ThemeHelper().buttonBoxDecoration(context)
@@ -146,7 +146,7 @@ class _ForgotPasswordVerificationPageState
                                       const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                   child: Text(
                                     "Verify".toUpperCase(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -166,7 +166,7 @@ class _ForgotPasswordVerificationPageState
                                                 .pushAndRemoveUntil(
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            LoginPage()),
+                                                            const LoginPage()),
                                                     (Route<dynamic> route) =>
                                                         false);
                                           } catch (e) {

@@ -30,7 +30,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   String? errorMessage;
 
   // firebase
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // String email = "";
   // String newPassword = "";
@@ -51,42 +51,42 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
               SafeArea(
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(25, 10, 25, 10),
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  margin: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Column(
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Forgot Password?',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 35,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black54),
                               // textAlign: TextAlign.center,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Text(
+                            const Text(
                               'Enter the email address associated with your account.',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   // fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black54),
                               // textAlign: TextAlign.center,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Text(
+                            const Text(
                               'We will email you a verification code to check your authenticity.',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black38,
                                 // fontSize: 20,
                               ),
@@ -95,7 +95,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 40.0),
+                      const SizedBox(height: 40.0),
                       Form(
                         key: _formKey,
                         child: Column(
@@ -127,7 +127,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               decoration:
                                   ThemeHelper().inputBoxDecorationShaddow(),
                             ),
-                            SizedBox(height: 40.0),
+                            const SizedBox(height: 40.0),
                             Container(
                               decoration:
                                   ThemeHelper().buttonBoxDecoration(context),
@@ -138,7 +138,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                       const EdgeInsets.fromLTRB(40, 10, 40, 10),
                                   child: Text(
                                     "Send".toUpperCase(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -152,11 +152,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 30.0),
+                            const SizedBox(height: 30.0),
                             Text.rich(
                               TextSpan(
                                 children: [
-                                  TextSpan(text: "Remember your password? "),
+                                  const TextSpan(text: "Remember your password? "),
                                   TextSpan(
                                     text: 'Login',
                                     recognizer: TapGestureRecognizer()
@@ -165,11 +165,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  LoginPage()),
+                                                  const LoginPage()),
                                         );
                                       },
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                        const TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -188,13 +188,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   // forget password function
   void forgetPassword(String email) async {
-    dynamic userid;
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth.signInWithEmailAndPassword(email: email, password: "");
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: "qw");
         // .then((uid) => userid = uid
         Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+            .pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
         Fluttertoast.showToast(msg: "This is the current password.");
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

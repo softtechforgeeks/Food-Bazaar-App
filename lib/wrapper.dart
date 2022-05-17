@@ -12,6 +12,6 @@ class Wrapper extends StatelessWidget {
     final userModel = Provider.of<UserModel>(context);
     print(userModel.uid);
     // return either home or login page
-    return (userModel.uid != null) ? Home() : LoginPage();
+    return (userModel.uid != null) ? const Home() : const LoginPage();
   }
 }
