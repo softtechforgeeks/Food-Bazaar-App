@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_ui/models/user.dart';
 import 'package:flutter_login_ui/wrapper.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,12 +17,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool _isVisible = false;
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
 
   _SplashScreenState() {
     Timer(const Duration(milliseconds: 2000), () {
       setState(() {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const Wrapper()),
+            MaterialPageRoute(
+                builder: (context) => Wrapper(loggedInUser: loggedInUser)),
             (route) => false);
       });
     });
@@ -29,6 +35,21 @@ class _SplashScreenState extends State<SplashScreen> {
         _isVisible =
             true; // Now it is showing fade effect and navigating to Login page
       });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      loggedInUser = (UserModel.fromMap(value.data()) != null)
+          ? UserModel.fromMap(value.data())
+          : UserModel();
+      print(loggedInUser.title);
     });
   }
 

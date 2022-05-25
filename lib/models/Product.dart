@@ -23,7 +23,7 @@ List<Product> products = [
       size: 12,
       description: dummyText,
       image: "assets/images/food1.png",
-      color: Color.fromARGB(255, 41, 41, 41)),
+      color: const Color.fromARGB(255, 41, 41, 41)),
   Product(
       id: 2,
       title: "MY Pizza",
@@ -31,7 +31,7 @@ List<Product> products = [
       size: 8,
       description: dummyText,
       image: "assets/images/food2.png",
-      color: Color.fromARGB(255, 255, 124, 17)),
+      color: const Color.fromARGB(255, 255, 124, 17)),
   Product(
       id: 3,
       title: "Laksa",
@@ -39,7 +39,7 @@ List<Product> products = [
       size: 10,
       description: dummyText,
       image: "assets/images/food3.png",
-      color: Color.fromARGB(255, 255, 124, 17)),
+      color: const Color.fromARGB(255, 255, 124, 17)),
   Product(
       id: 4,
       title: "Satay",
@@ -47,7 +47,7 @@ List<Product> products = [
       size: 11,
       description: dummyText,
       image: "assets/images/food4.png",
-      color: Color.fromARGB(255, 41, 41, 41)),
+      color: const Color.fromARGB(255, 41, 41, 41)),
   Product(
       id: 5,
       title: "Roti Canai",
@@ -55,7 +55,7 @@ List<Product> products = [
       size: 12,
       description: dummyText,
       image: "assets/images/food5.png",
-      color: Color.fromARGB(255, 41, 41, 41)),
+      color: const Color.fromARGB(255, 41, 41, 41)),
   Product(
     id: 6,
     title: "Keropok Lekor",
@@ -63,7 +63,7 @@ List<Product> products = [
     size: 12,
     description: dummyText,
     image: "assets/images/food6.png",
-    color: Color.fromARGB(255, 255, 124, 17),
+    color: const Color.fromARGB(255, 255, 124, 17),
   ),
 ];
 

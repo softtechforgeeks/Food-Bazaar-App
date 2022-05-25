@@ -78,7 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Container(
                     padding: const EdgeInsets.all(1),
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: Colors.orange,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     constraints: const BoxConstraints(
@@ -159,6 +159,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           builder: (context) =>
                               const SplashScreen(title: "Splash Screen")));
                 },
+              ),
+              Divider(
+                color: Theme.of(context).primaryColor,
+                height: 1,
               ),
               ListTile(
                 leading: Icon(Icons.login_rounded,
@@ -275,9 +279,9 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 100,
-              child: const HeaderWidget(100, false, Icons.house_rounded),
+              child: HeaderWidget(100, false, Icons.house_rounded),
             ),
             Container(
               alignment: Alignment.center,

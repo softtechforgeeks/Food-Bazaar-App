@@ -6,6 +6,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'pages/splash_screen.dart';
 import 'firebase_options.dart';
+import 'package:get/get.dart';
+
+import 'package:flutter_login_ui/products_screen.dart';
+import 'package:flutter_login_ui/new_product_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,8 +22,8 @@ class LoginUiApp extends StatelessWidget {
   //Color _accentColor = HexColor('#8A02AE');
 
   //Design color
-  Color _primaryColor = HexColor('#ff4c00');
-  Color _accentColor = HexColor('#FF8C00');
+  final Color _primaryColor = HexColor('#ff4c00');
+  final Color _accentColor = HexColor('#FF8C00');
 
   // Our Logo Color
   // Color _primaryColor= HexColor('#D44CF6');
@@ -35,15 +39,19 @@ class LoginUiApp extends StatelessWidget {
     return StreamProvider<UserModel>.value(
       value: AuthService().user,
       initialData: UserModel(uid: null),
-      child: MaterialApp(
+      child: GetMaterialApp(
         title: 'Food Bazaar',
+        getPages: [
+          GetPage(name: '/products', page: () => ProductsScreen()),
+          GetPage(name: '/products/news', page: () => NewProductScreen()),
+        ],
         theme: ThemeData(
           primaryColor: _primaryColor,
           scaffoldBackgroundColor: Colors.grey.shade100,
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey)
               .copyWith(secondary: _accentColor),
         ),
-        home: SplashScreen(title: 'Food Bazaar'),
+        home: const SplashScreen(title: 'Food Bazaar'),
       ),
     );
   }

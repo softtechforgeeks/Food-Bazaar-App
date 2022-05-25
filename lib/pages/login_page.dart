@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/common/theme_helper.dart';
+import 'package:flutter_login_ui/wrapper.dart';
 import '../services/auth.dart';
 
 import 'forgot_password_page.dart';
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: _headerHeight,
               child: HeaderWidget(
                 _headerHeight,
@@ -178,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                                 //child: Text('Don\'t have an account? Create'),
                                 child: Text.rich(TextSpan(children: [
                                   const TextSpan(
-                                      text: "Don\'t have an account? "),
+                                      text: "Don't have an account? "),
                                   TextSpan(
                                     text: 'Create',
                                     recognizer: TapGestureRecognizer()
@@ -187,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    RegistrationPage()));
+                                                    const RegistrationPage()));
                                       },
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -214,7 +215,15 @@ class _LoginPageState extends State<LoginPage> {
       try {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
-            .then((_auth) => AuthService().userFromFirebaseUser(_auth.user));
+            .then((_auth) => AuthService().userFromFirebaseUser(_auth.user))
+            .then((user) => {
+                  print(user),
+                  Navigator.pushAndRemoveUntil(
+                      (context),
+                      MaterialPageRoute(
+                          builder: (context) => Wrapper(loggedInUser: user)),
+                      (route) => false)
+                });
         // .then((uid) => userid = uid
         //   Navigator.of(context).pushReplacement(
         //       MaterialPageRoute(builder: (context) => Home())),

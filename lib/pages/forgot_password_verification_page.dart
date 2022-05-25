@@ -34,7 +34,7 @@ class _ForgotPasswordVerificationPageState
   @override
   Widget build(BuildContext context) {
     double _headerHeight = 300;
-    final OtpFieldController codeController = new OtpFieldController();
+    final OtpFieldController codeController = OtpFieldController();
 
     return Scaffold(
         backgroundColor: Colors.white,

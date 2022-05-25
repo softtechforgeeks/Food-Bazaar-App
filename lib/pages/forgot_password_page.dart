@@ -24,7 +24,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
 
   // editing controller
-  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   // string for displaying the error Message
   String? errorMessage;
@@ -64,7 +64,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           children: [
                             const Text(
                               'Forgot Password?',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 35,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black54),
@@ -75,7 +75,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             ),
                             const Text(
                               'Enter the email address associated with your account.',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   // fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black54),
@@ -86,7 +86,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             ),
                             const Text(
                               'We will email you a verification code to check your authenticity.',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.black38,
                                 // fontSize: 20,
                               ),
@@ -156,7 +156,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             Text.rich(
                               TextSpan(
                                 children: [
-                                  const TextSpan(text: "Remember your password? "),
+                                  const TextSpan(
+                                      text: "Remember your password? "),
                                   TextSpan(
                                     text: 'Login',
                                     recognizer: TapGestureRecognizer()
@@ -168,8 +169,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                                   const LoginPage()),
                                         );
                                       },
-                                    style:
-                                        const TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -193,8 +194,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: "qw");
         // .then((uid) => userid = uid
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const Home()));
         Fluttertoast.showToast(msg: "This is the current password.");
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

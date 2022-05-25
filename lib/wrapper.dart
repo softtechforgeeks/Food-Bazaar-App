@@ -5,16 +5,29 @@ import 'package:flutter_login_ui/pages/login_page.dart';
 // import 'package:flutter_login_ui/pages/menu.dart';
 import 'package:flutter_login_ui/screens/home/home_screen.dart';
 
+import 'package:flutter_login_ui/products_screen.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
-  const Wrapper({Key? key}) : super(key: key);
+  UserModel loggedInUser;
+
+  Wrapper({required this.loggedInUser});
 
   @override
   Widget build(BuildContext context) {
     final userModel = Provider.of<UserModel>(context);
+
     print(userModel.uid);
+    print(loggedInUser.title);
     // return either home or login page
-    return (userModel.uid != null) ? HomeScreen() : const LoginPage();
+    if (userModel.uid != null) {
+      if (loggedInUser.title == "Admin") {
+        return ProductsScreen();
+      } else {
+        return HomeScreen();
+      }
+    } else {
+      return const LoginPage();
+    }
   }
 }

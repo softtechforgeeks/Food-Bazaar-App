@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login_ui/pages/profile_page.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_login_ui/constants.dart';
 import 'package:flutter_login_ui/screens/home/components/body.dart';
@@ -10,12 +11,12 @@ import 'package:flutter_login_ui/pages/splash_screen.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_login_ui/services/auth.dart';
 import '../../pages/registration_page.dart';
-import '../../pages/menu.dart';
+// import '../../pages/menu.dart';
 import '../../pages/forgot_password_page.dart';
 
 class HomeScreen extends StatelessWidget {
-  double _drawerIconSize = 24;
-  double _drawerFontSize = 17;
+  final double _drawerIconSize = 24;
+  final double _drawerFontSize = 17;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class HomeScreen extends StatelessWidget {
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  stops: [
+                  stops: const [
                 0.0,
                 1.0
               ],
@@ -43,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    stops: [0.0, 1.0],
+                    stops: const [0.0, 1.0],
                     colors: [
                       Theme.of(context).primaryColor,
                       Theme.of(context).colorScheme.secondary,
@@ -52,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: Container(
                   alignment: Alignment.bottomLeft,
-                  child: Text(
+                  child: const Text(
                     "Food Bazaar",
                     style: TextStyle(
                         fontSize: 25,
@@ -78,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              SplashScreen(title: "Splash Screen")));
+                              const SplashScreen(title: "Splash Screen")));
                 },
               ),
               ListTile(
@@ -94,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   );
                 },
               ),
@@ -115,7 +116,8 @@ class HomeScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegistrationPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const RegistrationPage()),
                   );
                 },
               ),
@@ -130,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
-                  'Menu Page',
+                  'Profile Page',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
                       color: Theme.of(context).colorScheme.secondary),
@@ -138,7 +140,8 @@ class HomeScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MenuPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const ProfilePage()),
                   );
                 },
               ),
@@ -162,7 +165,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ForgotPasswordPage()),
+                        builder: (context) => const ForgotPasswordPage()),
                   );
                 },
               ),
@@ -221,7 +224,7 @@ class HomeScreen extends StatelessWidget {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: Color.fromARGB(255, 255, 106, 0),
+      backgroundColor: const Color.fromARGB(255, 255, 106, 0),
       elevation: 0,
       // leading: IconButton(
       //   icon: SvgPicture.asset("assets/icons/back.svg"),
@@ -244,7 +247,7 @@ class HomeScreen extends StatelessWidget {
           ),
           onPressed: () {},
         ),
-        SizedBox(width: kDefaultPaddin / 2)
+        const SizedBox(width: kDefaultPaddin / 2)
       ],
     );
   }
