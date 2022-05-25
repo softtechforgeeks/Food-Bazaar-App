@@ -9,12 +9,13 @@ class StorageService {
       firebase_storage.FirebaseStorage.instance;
 
   Future<void> uploadImage(XFile image) async {
-    await storage.ref('product_images/${image.path}').putFile(File(image.path));
+    await storage.ref('food_images/${image.path}').putFile(File(image.path));
   }
 
   Future<String> getDownloadURL(String imageName) async {
     String downloadURL = await storage
-        .ref('product_images/data/user/0/com.example.dhur/cache/$imageName')
+        .ref(
+            'food_images/data/user/0/com.mobilemaster.foodbazarapp/cache/$imageName')
         .getDownloadURL();
     return downloadURL;
   }
