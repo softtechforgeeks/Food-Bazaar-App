@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/models/user.dart';
 import 'package:flutter_login_ui/wrapper.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key, required this.title}) : super(key: key);
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   UserModel loggedInUser = UserModel();
 
   _SplashScreenState() {
-    Timer(const Duration(milliseconds: 2000), () {
+    Timer(const Duration(milliseconds: 5000), () {
       setState(() {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
@@ -39,22 +40,19 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      loggedInUser = (UserModel.fromMap(value.data()) != null)
-          ? UserModel.fromMap(value.data())
-          : UserModel();
-      print(loggedInUser.title);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final userModel = Provider.of<UserModel>(context);
+    if (userModel.uid != null) {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(user!.uid)
+          .get()
+          .then((value) {
+        loggedInUser = UserModel.fromMap(value.data());
+        print(loggedInUser.title);
+      });
+    }
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(

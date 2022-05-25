@@ -1,7 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/common/theme_helper.dart';
-import 'package:flutter_login_ui/wrapper.dart';
+import 'package:flutter_login_ui/products_screen.dart';
+import 'package:flutter_login_ui/screens/home/home_screen.dart';
 import '../services/auth.dart';
 
 import 'forgot_password_page.dart';
@@ -218,11 +219,24 @@ class _LoginPageState extends State<LoginPage> {
             .then((_auth) => AuthService().userFromFirebaseUser(_auth.user))
             .then((user) => {
                   print(user),
-                  Navigator.pushAndRemoveUntil(
-                      (context),
-                      MaterialPageRoute(
-                          builder: (context) => Wrapper(loggedInUser: user)),
-                      (route) => false)
+                  if (user.title == "Admin")
+                    {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductsScreen()))
+                    }
+                  else
+                    {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()))
+                    }
+
+                  // Navigator.pushAndRemoveUntil(
+                  //     (context),
+                  //     MaterialPageRoute(
+                  //         builder: (context) => ),
+                  //     (route) => false)
                 });
         // .then((uid) => userid = uid
         //   Navigator.of(context).pushReplacement(
