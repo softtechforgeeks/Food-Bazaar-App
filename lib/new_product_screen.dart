@@ -12,7 +12,7 @@ import 'models/model.dart';
 // ignore: must_be_immutable
 
 class NewProductScreen extends StatefulWidget {
-  NewProductScreen({Key? key}) : super(key: key);
+  const NewProductScreen({Key? key}) : super(key: key);
 
   @override
   State<NewProductScreen> createState() => _NewProductScreenState();
@@ -57,8 +57,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                 content: Text('No Image was selected'),
                               ),
                             );
-                            Fluttertoast.showToast(
-                                msg: "No Image was selected");
                           }
 
                           if (_image != null) {
@@ -71,8 +69,12 @@ class _NewProductScreenState extends State<NewProductScreen> {
                                 'imageUrl', (_) => imageUrl,
                                 ifAbsent: () => imageUrl);
 
-                            Fluttertoast.showToast(
-                                msg: "Selected image added successfully");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text("Selected image added successfully"),
+                              ),
+                            );
                           }
                         },
                         icon: const Icon(Icons.add_circle, color: Colors.white),
@@ -123,6 +125,15 @@ class _NewProductScreenState extends State<NewProductScreen> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
+                    if (productController.newProduct.keys.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text("Please fill in with approperiate values."),
+                        ),
+                      );
+                      return;
+                    }
                     try {
                       database.addProduct(
                         Product(
@@ -140,13 +151,21 @@ class _NewProductScreenState extends State<NewProductScreen> {
                               productController.newProduct['quantity'].toInt(),
                         ),
                       );
-                      Fluttertoast.showToast(msg: "Meal created successfully.");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Meal created successfully."),
+                        ),
+                      );
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (context) => ProductsScreen()),
                           (Route<dynamic> route) => false);
                     } on Exception catch (e) {
-                      Fluttertoast.showToast(msg: e.toString());
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Exceptional error occured"),
+                        ),
+                      );
                       print(e);
                     }
                   },
