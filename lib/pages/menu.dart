@@ -12,6 +12,8 @@ import 'forgot_password_page.dart';
 import 'registration_page.dart';
 
 class MenuPage extends StatefulWidget {
+  const MenuPage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _MenuPageState();
@@ -216,7 +218,7 @@ class _MenuPageState extends State<MenuPage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MenuPage()),
+                    MaterialPageRoute(builder: (context) => const MenuPage()),
                   );
                 },
               ),
@@ -296,9 +298,9 @@ class _MenuPageState extends State<MenuPage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 100,
-              child: const HeaderWidget(100, false, Icons.house_rounded),
+              child: HeaderWidget(100, false, Icons.house_rounded),
             ),
             Container(
               alignment: Alignment.center,

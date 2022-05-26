@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
+import 'models/model.dart';
 import 'package:flutter_login_ui/pages/forgot_password_page.dart';
 import 'package:flutter_login_ui/pages/login_page.dart';
 import 'package:flutter_login_ui/pages/registration_page.dart';
@@ -8,7 +12,6 @@ import 'package:get/get.dart';
 
 import 'package:flutter_login_ui/new_product_screen.dart';
 import 'controllers/product_controller.dart';
-import 'models/product_model.dart';
 
 class ProductsScreen extends StatelessWidget {
   ProductsScreen({Key? key}) : super(key: key);
@@ -255,6 +258,7 @@ class ProductsScreen extends StatelessWidget {
 class ProductCard extends StatelessWidget {
   final Product product;
   final int index;
+
   ProductCard({
     Key? key,
     required this.product,
@@ -380,6 +384,36 @@ class ProductCard extends StatelessWidget {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
+                          ),
+                          SizedBox(
+                            width: 45,
+                          ),
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                primary: Colors.red,
+                                minimumSize: Size(40, 40),
+                                side: BorderSide(
+                                  width: 2,
+                                  color: Colors.red,
+                                )),
+                            child: Icon(
+                              Icons.delete_sweep_outlined,
+                              size: 45,
+                            ),
+                            onPressed: () {
+                              final docProduct = FirebaseFirestore.instance
+                                  .collection('products')
+                                  .where('id', isEqualTo: product.id)
+                                  .get()
+                                  .then((querySnapshot) => {
+                                        querySnapshot.docs.first.reference
+                                            .delete()
+                                      });
+                              Fluttertoast.showToast(
+                                msg: 'Dish deleted successfully!',
+                                fontSize: 18,
+                              );
+                            },
                           ),
                         ],
                       ),

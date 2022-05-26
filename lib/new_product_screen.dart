@@ -7,10 +7,19 @@ import 'controllers/product_controller.dart';
 import 'models/model.dart';
 
 // ignore: must_be_immutable
-class NewProductScreen extends StatelessWidget {
+
+class NewProductScreen extends StatefulWidget {
   NewProductScreen({Key? key}) : super(key: key);
+
+  @override
+  State<NewProductScreen> createState() => _NewProductScreenState();
+}
+
+class _NewProductScreenState extends State<NewProductScreen> {
   final ProductController productController = Get.find();
+
   StorageService storage = StorageService();
+
   DatabaseService database = DatabaseService();
 
   @override
@@ -82,15 +91,15 @@ class NewProductScreen extends StatelessWidget {
                 ),
               ),
               _buildTextFormField(
-                'Prodcut ID',
+                'Product ID',
                 'id',
                 productController,
               ),
-              _buildTextFormField('Prodcut Name', 'name', productController),
+              _buildTextFormField('Product Name', 'name', productController),
               _buildTextFormField(
-                  'Prodcut Description', 'description', productController),
+                  'Product Description', 'description', productController),
               _buildTextFormField(
-                  'Prodcut Category', 'category', productController),
+                  'Product Category', 'category', productController),
               const SizedBox(height: 10),
               _buildSlider(
                   'Price', 'price', productController, productController.price),
