@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'models/model.dart';
 import 'package:flutter_login_ui/pages/forgot_password_page.dart';
 import 'package:flutter_login_ui/pages/login_page.dart';
+import 'package:flutter_login_ui/pages/profile_page.dart';
 import 'package:flutter_login_ui/pages/registration_page.dart';
 import 'package:flutter_login_ui/pages/splash_screen.dart';
 import 'package:flutter_login_ui/services/auth.dart';
@@ -127,6 +128,30 @@ class ProductsScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const RegistrationPage()),
+                  );
+                },
+              ),
+              Divider(
+                color: Theme.of(context).primaryColor,
+                height: 1,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.menu_rounded,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                title: Text(
+                  'Profile Page',
+                  style: TextStyle(
+                      fontSize: _drawerFontSize,
+                      color: Theme.of(context).colorScheme.secondary),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfilePage()),
                   );
                 },
               ),

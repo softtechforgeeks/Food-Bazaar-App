@@ -82,6 +82,10 @@ class HomeScreen extends StatelessWidget {
                               const SplashScreen(title: "Splash Screen")));
                 },
               ),
+              Divider(
+                color: Theme.of(context).primaryColor,
+                height: 1,
+              ),
               ListTile(
                 leading: Icon(Icons.login_rounded,
                     size: _drawerIconSize,
