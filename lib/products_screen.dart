@@ -410,40 +410,43 @@ class ProductCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
-                            width: 45,
-                          ),
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                primary: Colors.red,
-                                minimumSize: Size(40, 40),
-                                side: BorderSide(
-                                  width: 2,
-                                  color: Colors.red,
-                                )),
-                            child: Icon(
-                              Icons.delete_sweep_outlined,
-                              size: 45,
-                            ),
-                            onPressed: () {
-                              final docProduct = FirebaseFirestore.instance
-                                  .collection('products')
-                                  .where('id', isEqualTo: product.id)
-                                  .get()
-                                  .then((querySnapshot) => {
-                                        querySnapshot.docs.first.reference
-                                            .delete()
-                                      });
-                              Fluttertoast.showToast(
-                                msg: 'Dish deleted successfully!',
-                                fontSize: 18,
-                              );
-                            },
-                          ),
                         ],
                       ),
                     ]),
-                  )
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 180,
+                  ),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        alignment: Alignment.topRight,
+                        primary: Colors.red,
+                        minimumSize: Size(40, 40),
+                        side: BorderSide(
+                          width: 2,
+                          color: Colors.red,
+                        )),
+                    child: Icon(
+                      Icons.delete_sweep_outlined,
+                      size: 40,
+                    ),
+                    onPressed: () {
+                      final docProduct = FirebaseFirestore.instance
+                          .collection('products')
+                          .where('id', isEqualTo: product.id)
+                          .get()
+                          .then((querySnapshot) =>
+                              {querySnapshot.docs.first.reference.delete()});
+                      Fluttertoast.showToast(
+                        msg: 'Dish deleted successfully!',
+                        fontSize: 18,
+                      );
+                    },
+                  ),
                 ],
               ),
             ],
