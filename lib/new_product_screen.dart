@@ -1,3 +1,6 @@
+import 'package:flutter_login_ui/products_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'services/database_service.dart';
 import 'services/storage_service.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +48,8 @@ class NewProductScreen extends StatelessWidget {
                                 content: Text('No Image was selected'),
                               ),
                             );
+                            Fluttertoast.showToast(
+                                msg: "No Image was selected");
                           }
 
                           if (_image != null) {
@@ -56,6 +61,9 @@ class NewProductScreen extends StatelessWidget {
                             productController.newProduct.update(
                                 'imageUrl', (_) => imageUrl,
                                 ifAbsent: () => imageUrl);
+
+                            Fluttertoast.showToast(
+                                msg: "Selected image added successfully");
                           }
                         },
                         icon: const Icon(Icons.add_circle, color: Colors.white),
@@ -106,22 +114,32 @@ class NewProductScreen extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    database.addProduct(
-                      Product(
-                        id: int.parse(productController.newProduct['id']),
-                        name: productController.newProduct['name'],
-                        category: productController.newProduct['category'],
-                        description:
-                            productController.newProduct['description'],
-                        imageUrl: productController.newProduct['imageUrl'],
-                        isRecommended:
-                            productController.newProduct['isRecommended'],
-                        isPopular: productController.newProduct['isPopular'],
-                        price: productController.newProduct['price'],
-                        quantity:
-                            productController.newProduct['quantity'].toInt(),
-                      ),
-                    );
+                    try {
+                      database.addProduct(
+                        Product(
+                          id: int.parse(productController.newProduct['id']),
+                          name: productController.newProduct['name'],
+                          category: productController.newProduct['category'],
+                          description:
+                              productController.newProduct['description'],
+                          imageUrl: productController.newProduct['imageUrl'],
+                          isRecommended:
+                              productController.newProduct['isRecommended'],
+                          isPopular: productController.newProduct['isPopular'],
+                          price: productController.newProduct['price'],
+                          quantity:
+                              productController.newProduct['quantity'].toInt(),
+                        ),
+                      );
+                      Fluttertoast.showToast(msg: "Meal created successfully.");
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => ProductsScreen()),
+                          (Route<dynamic> route) => false);
+                    } on Exception catch (e) {
+                      Fluttertoast.showToast(msg: e.toString());
+                      print(e);
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange,
@@ -229,6 +247,12 @@ class NewProductScreen extends StatelessWidget {
           (_) => value,
           ifAbsent: () => value,
         );
+      },
+      validator: (val) {
+        if (val!.isEmpty) {
+          Fluttertoast.showToast(msg: "$name is required for create product");
+        }
+        return null;
       },
     );
   }
