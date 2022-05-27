@@ -5,12 +5,17 @@ import '../../../constants.dart';
 // We need satefull widget for our categories
 
 class Categories extends StatefulWidget {
+  const Categories(this.setIndex);
+  final void Function(int) setIndex;
+
   @override
-  _CategoriesState createState() => _CategoriesState();
+  CategoriesState createState() => CategoriesState(setIndex);
 }
 
-class _CategoriesState extends State<Categories> {
-  List<String> categories = ["Main course", "desserts", "Breakfast", "Special"];
+class CategoriesState extends State<Categories> {
+  List<String> categories = ["Main", "Appetizers", "Desserts"];
+  CategoriesState(this.setIndex);
+  final void Function(int) setIndex;
   // By default our first item will be selected
   int selectedIndex = 0;
   @override
@@ -33,6 +38,7 @@ class _CategoriesState extends State<Categories> {
       onTap: () {
         setState(() {
           selectedIndex = index;
+          setIndex(index);
         });
       },
       child: Padding(
@@ -48,7 +54,8 @@ class _CategoriesState extends State<Categories> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: kDefaultPaddin / 4), //top padding 5
+              margin: const EdgeInsets.only(
+                  top: kDefaultPaddin / 4), //top padding 5
               height: 2,
               width: 30,
               color: selectedIndex == index ? Colors.black : Colors.transparent,

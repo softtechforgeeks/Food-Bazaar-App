@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_login_ui/models/Product.dart';
+import 'package:flutter_login_ui/models/product_model.dart';
 
 import '../../../constants.dart';
 
@@ -19,19 +19,23 @@ class AddToCart extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(right: kDefaultPaddin),
+            margin: const EdgeInsets.only(right: kDefaultPaddin),
             height: 50,
             width: 58,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
               border: Border.all(
-                color: product!.color!,
+                color: (product!.isRecommended == true)
+                    ? const Color.fromARGB(255, 255, 124, 17)
+                    : const Color.fromARGB(255, 41, 41, 41),
               ),
             ),
             child: IconButton(
               icon: SvgPicture.asset(
                 "assets/icons/add_to_cart.svg",
-                color: product!.color,
+                color: (product!.isRecommended == true)
+                    ? const Color.fromARGB(255, 255, 124, 17)
+                    : const Color.fromARGB(255, 41, 41, 41),
               ),
               onPressed: () {},
             ),
@@ -42,11 +46,13 @@ class AddToCart extends StatelessWidget {
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
-                color: product!.color,
+                color: (product!.isRecommended == true)
+                    ? const Color.fromARGB(255, 255, 124, 17)
+                    : const Color.fromARGB(255, 41, 41, 41),
                 onPressed: () {},
                 child: Text(
                   "Buy  Now".toUpperCase(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,

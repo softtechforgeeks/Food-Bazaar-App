@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_login_ui/constants.dart';
-import 'package:flutter_login_ui/models/Product.dart';
+import 'package:flutter_login_ui/models/product_model.dart';
 import 'package:flutter_login_ui/screens/details/components/body.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -12,7 +12,9 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // each product have a color
-      backgroundColor: product!.color,
+      backgroundColor: (product!.isRecommended == true)
+          ? const Color.fromARGB(255, 255, 124, 17)
+          : const Color.fromARGB(255, 41, 41, 41),
       appBar: buildAppBar(context),
       body: Body(product: product),
     );
@@ -20,7 +22,9 @@ class DetailsScreen extends StatelessWidget {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: product!.color,
+      backgroundColor: (product!.isRecommended == true)
+          ? const Color.fromARGB(255, 255, 124, 17)
+          : const Color.fromARGB(255, 41, 41, 41),
       elevation: 0,
       leading: IconButton(
         icon: SvgPicture.asset(

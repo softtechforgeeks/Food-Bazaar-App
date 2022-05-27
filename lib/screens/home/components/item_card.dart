@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_ui/models/Product.dart';
+import 'package:flutter_login_ui/models/product_model.dart';
 
 import '../../../constants.dart';
 
@@ -21,18 +21,23 @@ class ItemCard extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(kDefaultPaddin),
+              padding: const EdgeInsets.all(kDefaultPaddin),
               // For  demo we use fixed height  and width
               // Now we dont need them
               // height: 180,
               // width: 160,
               decoration: BoxDecoration(
-                color: product!.color,
+                color: (product!.isRecommended == true)
+                    ? const Color.fromARGB(255, 255, 124, 17)
+                    : const Color.fromARGB(255, 41, 41, 41),
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Hero(
-                tag: "${product!.id}",
-                child: Image.asset(product!.image!),
+              child: SizedBox(
+                height: 200,
+                child: Image.network(
+                  product!.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -40,13 +45,13 @@ class ItemCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin / 4),
             child: Text(
               // products is out demo list
-              product!.title!,
-              style: TextStyle(color: kTextLightColor),
+              product!.name,
+              style: const TextStyle(color: kTextLightColor),
             ),
           ),
           Text(
             "\$${product!.price}",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           )
         ],
       ),

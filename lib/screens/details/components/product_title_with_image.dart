@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_ui/models/Product.dart';
+import 'package:flutter_login_ui/models/product_model.dart';
 
 import '../../../constants.dart';
 
@@ -23,7 +23,7 @@ class ProductTitleWithImage extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
           Text(
-            product!.title!,
+            product!.name,
             style: Theme.of(context)
                 .textTheme
                 .headline4!
@@ -46,11 +46,12 @@ class ProductTitleWithImage extends StatelessWidget {
               ),
               const SizedBox(width: kDefaultPaddin),
               Expanded(
-                child: Hero(
-                  tag: "${product!.id}",
-                  child: Image.asset(
-                    product!.image!,
-                    fit: BoxFit.fill,
+                child: SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Image.network(
+                    product!.imageUrl,
+                    fit: BoxFit.cover,
                   ),
                 ),
               )

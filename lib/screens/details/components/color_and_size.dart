@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_ui/models/Product.dart';
+import 'package:flutter_login_ui/models/product_model.dart';
 
 import '../../../constants.dart';
 
@@ -21,13 +21,13 @@ class ColorAndSize extends StatelessWidget {
             children: <Widget>[
               const Text("Color"),
               Row(
-                children: <Widget>[
-                  const ColorDot(
+                children: const <Widget>[
+                  ColorDot(
                     color: Color(0xFF356C95),
                     isSelected: true,
                   ),
-                  const ColorDot(color: Color(0xFFF8C078)),
-                  const ColorDot(color: Color(0xFFA29B9B)),
+                  ColorDot(color: Color(0xFFF8C078)),
+                  ColorDot(color: Color(0xFFA29B9B)),
                 ],
               ),
             ],
@@ -40,7 +40,7 @@ class ColorAndSize extends StatelessWidget {
               children: [
                 const TextSpan(text: "Size\n"),
                 TextSpan(
-                  text: "${product!.size} cm",
+                  text: "${product!.quantity} cm",
                   style: Theme.of(context)
                       .textTheme
                       .headline5!
