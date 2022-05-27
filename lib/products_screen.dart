@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart';
 import 'models/model.dart';
 import 'package:flutter_login_ui/pages/forgot_password_page.dart';
 import 'package:flutter_login_ui/pages/login_page.dart';
@@ -241,7 +240,7 @@ class ProductsScreen extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Get.to(() => NewProductScreen());
+                        Get.to(() => const NewProductScreen());
                       },
                       icon: const Icon(Icons.add_circle, color: Colors.white),
                     ),
@@ -263,7 +262,7 @@ class ProductsScreen extends StatelessWidget {
                   itemCount: productController.products.length,
                   itemBuilder: (context, index) {
                     return SizedBox(
-                      height: 210,
+                      height: 380,
                       child: ProductCard(
                         product: productController.products[index],
                         index: index,
@@ -311,6 +310,14 @@ class ProductCard extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+              Text(product.category,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
               Text(product.description,
                   style: const TextStyle(
                     fontSize: 12,
@@ -331,6 +338,64 @@ class ProductCard extends StatelessWidget {
                   ),
                   Expanded(
                     child: Column(children: [
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 90,
+                            child: Text(
+                              'Category',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 175,
+                            child: TextField(
+                              onChanged: (value) {
+                                productController.updateProductCategory(
+                                  index,
+                                  product,
+                                  value,
+                                );
+                                productController.saveNewProductCategory(
+                                    product, 'category', value);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10.0),
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 90,
+                            child: Text(
+                              'Description',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 175,
+                            child: TextField(
+                              onChanged: (value) {
+                                productController.updateProductDescription(
+                                  index,
+                                  product,
+                                  value,
+                                );
+                                productController.saveNewProductDescription(
+                                    product, 'description', value);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10.0),
                       Row(
                         children: [
                           const SizedBox(
@@ -418,19 +483,20 @@ class ProductCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 180,
                   ),
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                         alignment: Alignment.topRight,
+                        padding: const EdgeInsets.only(right: 20.0),
                         primary: Colors.red,
-                        minimumSize: Size(40, 40),
-                        side: BorderSide(
+                        minimumSize: const Size(40, 40),
+                        side: const BorderSide(
                           width: 2,
                           color: Colors.red,
                         )),
-                    child: Icon(
+                    child: const Icon(
                       Icons.delete_sweep_outlined,
                       size: 40,
                     ),

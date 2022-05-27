@@ -15,11 +15,56 @@ class ProductController extends GetxController {
 
   var newProduct = {}.obs;
 
+  get category => newProduct['category'];
+  get description => newProduct['description'];
+
   get price => newProduct['price'];
   get quantity => newProduct['quantity'];
 
   get isRecommended => newProduct['isRecommended'];
   get isPopular => newProduct['isPopular'];
+
+  void updateProductCategory(
+    int index,
+    Product product,
+    String value,
+  ) {
+    product.category = value;
+    products[index] = product;
+  }
+
+  void saveNewProductCategory(
+    Product product,
+    String field,
+    String value,
+  ) {
+    database.updateField(
+      product,
+      field,
+      value,
+    );
+  }
+
+  void updateProductDescription(
+    int index,
+    Product product,
+    String value,
+  ) {
+    product.description = value;
+    products[index] = product;
+  }
+
+  void saveNewProductDescription(
+    Product product,
+    String field,
+    String value,
+  ) {
+    database.updateField(
+      product,
+      field,
+      value,
+    );
+  }
 
   void updateProductPrice(
     int index,
