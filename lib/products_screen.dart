@@ -15,7 +15,8 @@ import 'controllers/product_controller.dart';
 
 class ProductsScreen extends StatelessWidget {
   ProductsScreen({Key? key}) : super(key: key);
-  final ProductController productController = Get.put(ProductController());
+  final ProductController productController =
+      Get.put(ProductController(type: 'All'));
 
   final double _drawerIconSize = 24;
   final double _drawerFontSize = 17;

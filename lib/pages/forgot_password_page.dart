@@ -221,9 +221,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     "message": "Verification code: " + code.toString(),
                   },
                 }));
-            print(response.body);
+            // print(response.body);
 
-            print(code);
+            // print(code);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -248,7 +248,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             errorMessage = "An undefined Error happened.";
         }
         Fluttertoast.showToast(msg: errorMessage!);
-        print(error.code);
+        // print(error.code);
       }
     }
   }

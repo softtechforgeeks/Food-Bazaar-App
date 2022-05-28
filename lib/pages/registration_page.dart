@@ -471,7 +471,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             errorMessage = "An undefined Error happened.";
         }
         Fluttertoast.showToast(msg: errorMessage!);
-        print(error.code);
+        // print(error.code);
       }
     }
   }

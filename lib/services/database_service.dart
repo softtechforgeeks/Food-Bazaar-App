@@ -5,12 +5,21 @@ import '../models/model.dart';
 class DatabaseService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  Stream<List<Product>> getProducts() {
+  Stream<List<Product>> getProducts(String type) {
     return _firebaseFirestore
         .collection('products')
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs.map((doc) => Product.fromSnapshot(doc)).toList();
+      // print('get products');
+      // print(snapshot.docs
+      //     .map((doc) => Product.fromSnapshot(doc))
+      //     .where((element) => (element.category == type || type == 'All'))
+      //     .toList()
+      //     .length);
+      return snapshot.docs
+          .map((doc) => Product.fromSnapshot(doc))
+          .where((element) => (element.category == type || type == 'All'))
+          .toList();
     });
   }
 

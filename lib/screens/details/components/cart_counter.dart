@@ -52,7 +52,7 @@ class _CartCounterState extends State<CartCounter> {
             EdgeInsets.zero,
           ),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
+            const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(13),
               ),

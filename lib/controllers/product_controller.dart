@@ -4,13 +4,23 @@ import '/models/product_model.dart';
 
 class ProductController extends GetxController {
   final DatabaseService database = DatabaseService();
-
+  final String type;
   var products = <Product>[].obs;
+  ProductController({required this.type});
 
   @override
   void onInit() {
-    products.bindStream(database.getProducts());
+    products.bindStream(database.getProducts(type));
+    // print(products);
     super.onInit();
+  }
+
+  RxList<Product> onUpdate(String ty) {
+    var pro = <Product>[].obs;
+    products.bindStream(database.getProducts(ty));
+    // print('on update');
+    // print(pro.length);
+    return pro;
   }
 
   var newProduct = {}.obs;

@@ -17,10 +17,10 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final userModel = Provider.of<UserModel>(context);
 
-    print(userModel.uid);
+    // print(userModel.uid);
     // return either home or login page
     if (userModel.uid != null) {
-      print(loggedInUser.title);
+      // print(loggedInUser.title);
       if (loggedInUser.title == "Admin") {
         return ProductsScreen();
       } else {

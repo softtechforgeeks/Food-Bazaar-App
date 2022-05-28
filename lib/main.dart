@@ -43,7 +43,7 @@ class LoginUiApp extends StatelessWidget {
         title: 'Food Bazaar',
         getPages: [
           GetPage(name: '/products', page: () => ProductsScreen()),
-          GetPage(name: '/products/news', page: () => NewProductScreen()),
+          GetPage(name: '/products/news', page: () => const NewProductScreen()),
         ],
         theme: ThemeData(
           primaryColor: _primaryColor,

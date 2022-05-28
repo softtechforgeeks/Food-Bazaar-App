@@ -72,7 +72,7 @@ class _ForgotPasswordVerificationPageState
                             ),
                             const Text(
                               'Enter the verification code we just sent you on your email address.',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   // fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black54),
@@ -155,8 +155,8 @@ class _ForgotPasswordVerificationPageState
                                 ),
                                 onPressed: _pinSuccess
                                     ? () async {
-                                        print(input);
-                                        print(widget.code.toString());
+                                        // print(input);
+                                        // print(widget.code.toString());
                                         if (input == widget.code.toString()) {
                                           try {
                                             await FirebaseAuth.instance

@@ -4,7 +4,6 @@ import 'package:flutter_login_ui/common/theme_helper.dart';
 import 'package:flutter_login_ui/products_screen.dart';
 import 'package:flutter_login_ui/screens/home/home_screen.dart';
 import '../services/auth.dart';
-import 'dart:async';
 
 import 'forgot_password_page.dart';
 import 'registration_page.dart';
@@ -93,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                                   decoration: ThemeHelper().textInputDecoration(
                                       'Email', 'Enter your email'),
                                   onChanged: (val) {
-                                    print(val);
+                                    // print(val);
                                   },
                                 ),
                                 decoration:
@@ -219,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
             .signInWithEmailAndPassword(email: email, password: password)
             .then((_auth) => AuthService().userFromFirebaseUser(_auth.user))
             .then((user) => {
-                  print(user),
+                  // print(user),
                   if (user.title == "Admin")
                     {
                       Navigator.push(
@@ -269,7 +268,7 @@ class _LoginPageState extends State<LoginPage> {
             errorMessage = "An undefined Error happened.";
         }
         Fluttertoast.showToast(msg: errorMessage!);
-        print(error.code);
+        // print(error.code);
       }
     }
   }
