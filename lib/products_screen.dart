@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_ui/common/theme_helper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'models/model.dart';
 import 'package:flutter_login_ui/pages/forgot_password_page.dart';
@@ -291,6 +292,7 @@ class ProductCard extends StatelessWidget {
   }) : super(key: key);
 
   final ProductController productController = Get.find();
+  String cate = "Main";
 
   @override
   Widget build(BuildContext context) {
@@ -351,19 +353,40 @@ class ProductCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: 175,
-                            child: TextField(
+                          Container(
+                            child: DropdownButton<String>(
+                              value: cate,
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.orange),
+                              underline: Container(
+                                height: 2,
+                                color: Colors.orange,
+                              ),
                               onChanged: (value) {
                                 productController.updateProductCategory(
                                   index,
                                   product,
-                                  value,
+                                  value!,
                                 );
                                 productController.saveNewProductCategory(
                                     product, 'category', value);
                               },
+                              items: <String>[
+                                'Main',
+                                'Appetizers',
+                                'Desserts'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              // onSaved: (value) {
+                              //   secondNameController.text = value!;
+                              // },
                             ),
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShaddow(),
                           ),
                         ],
                       ),

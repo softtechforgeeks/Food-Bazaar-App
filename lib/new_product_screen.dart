@@ -1,3 +1,4 @@
+import 'package:flutter_login_ui/common/theme_helper.dart';
 import 'package:flutter_login_ui/products_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -24,6 +25,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
   StorageService storage = StorageService();
 
   DatabaseService database = DatabaseService();
+  String dropdownValue = "Main";
+  String title = 'UTM Student';
 
   @override
   Widget build(BuildContext context) {
@@ -106,10 +109,54 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 productController,
               ),
               _buildTextFormField('Product Name', 'name', productController),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 200,
+                    child: Text(
+                      'Product Category',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: DropdownButton<String>(
+                      value: dropdownValue,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.orange),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.orange,
+                      ),
+                      onChanged: (String? value) {
+                        productController.newProduct.update(
+                          'category',
+                          (_) => value,
+                          ifAbsent: () => value,
+                        );
+                        setState(() {
+                          dropdownValue = value!;
+                        });
+                      },
+                      items: <String>['Main', 'Appetizers', 'Desserts']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      // onSaved: (value) {
+                      //   secondNameController.text = value!;
+                      // },
+                    ),
+                    decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                  ),
+                ],
+              ),
               _buildTextFormField(
                   'Product Description', 'description', productController),
-              _buildTextFormField(
-                  'Product Category', 'category', productController),
               const SizedBox(height: 10),
               _buildSlider(
                   'Price', 'price', productController, productController.price),
