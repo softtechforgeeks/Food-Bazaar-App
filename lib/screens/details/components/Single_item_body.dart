@@ -220,7 +220,7 @@ class AddToCart extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  "Buy  Now".toUpperCase(),
+                  "Order  Now".toUpperCase(),
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -400,7 +400,7 @@ class CounterWithFavBtn extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        CartCounter(),
+        const CartCounter(),
         Container(
           padding: const EdgeInsets.all(8),
           height: 32,

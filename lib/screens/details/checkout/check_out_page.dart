@@ -6,18 +6,17 @@ import 'package:flutter_login_ui/widgets/my_button.dart';
 import 'package:flutter_login_ui/widgets/single_cart_item.dart';
 
 import '../../../appColors/app_colors.dart';
-import '../../../route/routing_page.dart';
-import '../address/address_form.dart';
 
 class CheckOutPage extends StatelessWidget {
   const CheckOutPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var subTotal = 0;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color.fromARGB(0, 59, 57, 57),
+        backgroundColor: const Color.fromARGB(0, 59, 57, 57),
         centerTitle: true,
         title: const Text(
           "Check out",
@@ -48,6 +47,9 @@ class CheckOutPage extends StatelessWidget {
                         itemCount: streamSnapshort.data!.docs.length,
                         itemBuilder: (ctx, index) {
                           var data = streamSnapshort.data!.docs[index];
+                          subTotal = subTotal +
+                              (data["price"] as int) *
+                                  (data["quantity"] as int);
                           return SingleCartItem(
                             id: data["id"],
                             category: data["category"],
@@ -64,27 +66,27 @@ class CheckOutPage extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                const ListTile(
-                  leading: Text("Sub Total"),
-                  trailing: Text("\$200"),
+                ListTile(
+                  leading: const Text("Sub Total"),
+                  trailing: Text("\$" + subTotal.toString()),
                 ),
 
                 const ListTile(
                   leading: Text("Delivery"),
-                  trailing: Text("\$10"),
+                  trailing: Text("\$5"),
                 ),
                 const Divider(
                   thickness: 2,
                 ),
-                const ListTile(
-                  leading: Text("Total"),
-                  trailing: Text("\$500"),
+                ListTile(
+                  leading: const Text("Total"),
+                  trailing: Text("\$" + (subTotal + 5).toString()),
                 ),
                 //scroll text input field
 
                 MyButton(
                   onPressed: () {},
-                  text: 'Buy Now',
+                  text: 'Order Now',
                 ),
               ],
             ),

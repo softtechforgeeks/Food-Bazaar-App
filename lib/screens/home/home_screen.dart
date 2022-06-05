@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/pages/profile_page.dart';
+import 'package:flutter_login_ui/screens/details/cartPage/cart_page.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_login_ui/constants.dart';
 import 'package:flutter_login_ui/screens/home/components/body.dart';
@@ -21,7 +22,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       drawer: Drawer(
         child: Container(
           decoration: BoxDecoration(
@@ -222,11 +223,11 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Body(),
+      body: const Body(),
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 255, 106, 0),
       elevation: 0,
@@ -249,7 +250,10 @@ class HomeScreen extends StatelessWidget {
             // By default our  icon color is white
             color: kTextColor,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CartPage()));
+          },
         ),
         const SizedBox(width: kDefaultPaddin / 2)
       ],
