@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_ui/Manage_product.dart';
 import 'package:flutter_login_ui/common/theme_helper.dart';
+import 'package:flutter_login_ui/orders_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'models/model.dart';
 import 'package:flutter_login_ui/pages/forgot_password_page.dart';
@@ -26,7 +28,7 @@ class ProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
+        title: const Text('Admin Panel'),
         backgroundColor: Colors.orange,
       ),
       drawer: Drawer(
@@ -180,10 +182,10 @@ class ProductsScreen extends StatelessWidget {
                   );
                 },
               ),
-              // Divider(
-              //   color: Theme.of(context).primaryColor,
-              //   height: 1,
-              // ),
+              Divider(
+                color: Theme.of(context).primaryColor,
+                height: 10,
+              ),
               // ListTile(
               //   leading: Icon(
               //     Icons.verified_user_sharp,
@@ -233,6 +235,10 @@ class ProductsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
+            Divider(
+              // color: Theme.of(context).primaryColor,
+              height: 10,
+            ),
             SizedBox(
               height: 100,
               child: Card(
@@ -242,12 +248,12 @@ class ProductsScreen extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Get.to(() => const NewProductScreen());
+                        Get.to(() => ManageProduct());
                       },
                       icon: const Icon(Icons.add_circle, color: Colors.white),
                     ),
                     const Text(
-                      'Add a New Product',
+                      'Manage Product',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -258,289 +264,37 @@ class ProductsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              child: Obx(
-                () => ListView.builder(
-                  itemCount: productController.products.length,
-                  itemBuilder: (context, index) {
-                    return SizedBox(
-                      height: 380,
-                      child: ProductCard(
-                        product: productController.products[index],
-                        index: index,
+            Divider(
+              //  color: Theme.of(context).primaryColor,
+              height: 10,
+            ),
+            SizedBox(
+              height: 100,
+              child: Card(
+                color: Color.fromARGB(255, 148, 21, 160),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Get.to(() => OrderScreen());
+                      },
+                      icon: Icon(Icons.add_shopping_cart, color: Colors.white),
+                    ),
+                    Text(
+                      '  Manage Order',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  final Product product;
-  final int index;
-
-  ProductCard({
-    Key? key,
-    required this.product,
-    required this.index,
-  }) : super(key: key);
-
-  final ProductController productController = Get.find();
-  String cate = "Main";
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        margin: const EdgeInsets.only(top: 10),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                product.name,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(product.category,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  )),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(product.description,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Row(
-                children: [
-                  SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: Image.network(
-                      product.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Column(children: [
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 90,
-                            child: Text(
-                              'Category',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: DropdownButton<String>(
-                              value: cate,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.orange),
-                              underline: Container(
-                                height: 2,
-                                color: Colors.orange,
-                              ),
-                              onChanged: (value) {
-                                productController.updateProductCategory(
-                                  index,
-                                  product,
-                                  value!,
-                                );
-                                productController.saveNewProductCategory(
-                                    product, 'category', value);
-                              },
-                              items: <String>[
-                                'Main',
-                                'Appetizers',
-                                'Desserts'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              // onSaved: (value) {
-                              //   secondNameController.text = value!;
-                              // },
-                            ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShaddow(),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10.0),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 90,
-                            child: Text(
-                              'Description',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 175,
-                            child: TextField(
-                              onChanged: (value) {
-                                productController.updateProductDescription(
-                                  index,
-                                  product,
-                                  value,
-                                );
-                                productController.saveNewProductDescription(
-                                    product, 'description', value);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10.0),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 50,
-                            child: Text(
-                              'Price',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 175,
-                            child: Slider(
-                              value: product.price,
-                              min: 0,
-                              max: 25,
-                              divisions: 10,
-                              onChanged: (value) {
-                                productController.updateProductPrice(
-                                  index,
-                                  product,
-                                  value,
-                                );
-                              },
-                              onChangeEnd: (value) {
-                                productController.saveNewProductPrice(
-                                    product, 'price', value);
-                              },
-                            ),
-                          ),
-                          Text(
-                            '\$${product.price.toStringAsFixed(1)}',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 50,
-                            child: Text(
-                              'Size: ',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 175,
-                            child: Slider(
-                              value: product.quantity.toDouble(),
-                              min: 0,
-                              max: 30,
-                              divisions: 5,
-                              activeColor: Colors.black,
-                              inactiveColor: Colors.black12,
-                              onChanged: (value) {
-                                productController.updateProductQuantity(
-                                    index, product, value.toInt());
-                              },
-                              onChangeEnd: (value) {
-                                productController.saveNewProductQuantity(
-                                    product, 'quantity', value.toInt());
-                              },
-                            ),
-                          ),
-                          Text(
-                            '${product.quantity.toInt()}',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ]),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 180,
-                  ),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        alignment: Alignment.topRight,
-                        padding: const EdgeInsets.only(right: 20.0),
-                        primary: Colors.red,
-                        minimumSize: const Size(40, 40),
-                        side: const BorderSide(
-                          width: 2,
-                          color: Colors.red,
-                        )),
-                    child: const Icon(
-                      Icons.delete_sweep_outlined,
-                      size: 40,
-                    ),
-                    onPressed: () {
-                      final docProduct = FirebaseFirestore.instance
-                          .collection('products')
-                          .where('id', isEqualTo: product.id)
-                          .get()
-                          .then((querySnapshot) =>
-                              {querySnapshot.docs.first.reference.delete()});
-                      Fluttertoast.showToast(
-                        msg: 'Dish deleted successfully!',
-                        fontSize: 18,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ));
   }
 }

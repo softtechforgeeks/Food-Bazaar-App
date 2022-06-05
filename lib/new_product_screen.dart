@@ -10,8 +10,6 @@ import 'package:image_picker/image_picker.dart';
 import 'controllers/product_controller.dart';
 import 'models/model.dart';
 
-// ignore: must_be_immutable
-
 class NewProductScreen extends StatefulWidget {
   const NewProductScreen({Key? key}) : super(key: key);
 

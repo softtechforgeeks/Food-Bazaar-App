@@ -102,9 +102,10 @@ class Product extends Equatable {
   static List<Product> products = [
     Product(
       id: 1,
-      name: 'Margherita',
+      name: 'Pizza Margherita',
       category: 'Pizza',
-      description: 'Tomatoes, mozzarella, basil',
+      description:
+          'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Fusce, dolore!',
       price: 4,
       quantity: 10,
       isRecommended: true,
@@ -116,7 +117,8 @@ class Product extends Equatable {
       id: 2,
       name: 'Marinara',
       category: 'Pizza',
-      description: 'Tomatoes, garlic, oregano',
+      description:
+          'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Fusce, dolore!',
       price: 10,
       quantity: 10,
       isRecommended: true,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/models/user.dart';
+import 'package:flutter_login_ui/orders_screen.dart';
+import 'package:flutter_login_ui/screens/details/provider/cart_provider.dart';
 import 'package:flutter_login_ui/services/auth.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,8 +36,11 @@ class LoginUiApp extends StatelessWidget {
   //Color _accentColor= HexColor('#320181');
 
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+//multiprovider
+
     return StreamProvider<UserModel>.value(
       value: AuthService().user,
       initialData: UserModel(uid: null),
@@ -44,6 +49,7 @@ class LoginUiApp extends StatelessWidget {
         getPages: [
           GetPage(name: '/products', page: () => ProductsScreen()),
           GetPage(name: '/products/news', page: () => const NewProductScreen()),
+          GetPage(name: '/orders', page: () => OrderScreen()),
         ],
         theme: ThemeData(
           primaryColor: _primaryColor,
