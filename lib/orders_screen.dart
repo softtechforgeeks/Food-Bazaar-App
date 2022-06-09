@@ -24,10 +24,9 @@ class OrderScreen extends StatelessWidget {
           Expanded(
             child: Obx(
               () => ListView.builder(
-                  itemCount: orderController.pendingOrders.length,
+                  itemCount: orderController.orders.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return OrderCard(
-                        order: orderController.pendingOrders[index]);
+                    return OrderCard(order: orderController.orders[index]);
                   }),
             ),
           ),
@@ -46,7 +45,7 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var products = Product.products
-        .where((product) => order.productIds.contains(product.id))
+        .where((product) => order.orderList.contains(product.id))
         .toList();
 
     return Padding(
@@ -61,11 +60,6 @@ class OrderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "order ID:${order.id}",
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
                         DateFormat('dd-MM-yyyy').format(order.createdAt),
                         style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
@@ -74,7 +68,7 @@ class OrderCard extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: products.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
@@ -122,23 +116,18 @@ class OrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
-                      children: [
+                      children: const [
                         Text(
                           "Delivery Fee:",
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(height: 10.0),
-                        Text(
-                          "${order.deliveryFee}",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
+                        SizedBox(height: 10.0),
                       ],
                     ),
                     Column(
                       children: [
-                        Text(
+                        const Text(
                           "Total",
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
@@ -146,7 +135,7 @@ class OrderCard extends StatelessWidget {
                         const SizedBox(height: 10.0),
                         Text(
                           "${order.total}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -168,7 +157,7 @@ class OrderCard extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.blue,
-                                minimumSize: Size(110, 40),
+                                minimumSize: const Size(110, 40),
                               ),
                               child: const Text(
                                 "Deliver",
@@ -185,7 +174,7 @@ class OrderCard extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.blue,
-                                minimumSize: Size(110, 40),
+                                minimumSize: const Size(110, 40),
                               ),
                               child: const Text(
                                 "Accept",
@@ -202,7 +191,7 @@ class OrderCard extends StatelessWidget {
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red,
-                          minimumSize: Size(110, 40),
+                          minimumSize: const Size(110, 40),
                         ),
                         child: const Text(
                           "Cancel",

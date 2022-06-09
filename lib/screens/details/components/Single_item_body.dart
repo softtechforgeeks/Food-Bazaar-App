@@ -11,6 +11,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../cartPage/cart_page.dart';
 
+int quantity = 1;
+
 class ProductTitleWithImage extends StatelessWidget {
   const ProductTitleWithImage({
     Key? key,
@@ -176,7 +178,7 @@ class AddToCart extends StatelessWidget {
                     "imageUrl": product!.imageUrl,
                     "description": product!.description,
                     "category": product!.category,
-                    "quantity": 1,
+                    "quantity": quantity,
                   },
                 );
 
@@ -190,12 +192,14 @@ class AddToCart extends StatelessWidget {
           Expanded(
             child: SizedBox(
               height: 50,
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)),
-                color: (product!.isRecommended == true)
-                    ? const Color.fromARGB(255, 255, 124, 17)
-                    : const Color.fromARGB(255, 41, 41, 41),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
+                  primary: (product!.isRecommended == true)
+                      ? const Color.fromARGB(255, 255, 124, 17)
+                      : const Color.fromARGB(255, 41, 41, 41),
+                ),
                 onPressed: () {
                   FirebaseFirestore.instance
                       .collection("cart")
@@ -210,13 +214,13 @@ class AddToCart extends StatelessWidget {
                       "imageUrl": product!.imageUrl,
                       "description": product!.description,
                       "category": product!.category,
-                      "quantity": 1,
+                      "quantity": quantity,
                     },
                   );
 
                   RoutingPage.goTonext(
                     context: context,
-                    navigateTo: const CheckOutPage(),
+                    navigateTo: CheckOutPage(),
                   );
                 },
                 child: Text(
@@ -255,6 +259,7 @@ class _CartCounterState extends State<CartCounter> {
             if (numOfItems > 1) {
               setState(() {
                 numOfItems--;
+                quantity = numOfItems;
               });
             }
           },
@@ -272,6 +277,7 @@ class _CartCounterState extends State<CartCounter> {
             press: () {
               setState(() {
                 numOfItems++;
+                quantity = numOfItems;
               });
             }),
       ],

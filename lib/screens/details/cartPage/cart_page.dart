@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_ui/appColors/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_login_ui/screens/details/checkout/check_out_page.dart';
 import 'package:flutter_login_ui/screens/details/provider/cart_provider.dart';
@@ -23,6 +24,13 @@ class CartPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          "Check out",
+          style: TextStyle(
+            color: AppColors.KblackColor,
+          ),
+        ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

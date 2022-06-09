@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:883407828382:android:739de8dba55a7ad98f928f",
+        "android_client_info": {
+          "package_name": "com.example.dhur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883407828382-942i1g0cjhdaf304m3c1np62o4vdie3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTYmgTG9T1THc755NGpr2ZkgEXXu0CbwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883407828382-942i1g0cjhdaf304m3c1np62o4vdie3k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "883407828382-c5m84ejc6sn1vfud0ulj0snaej8dp8qs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "net.fluttertutorial.flutterLoginUi"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:883407828382:android:1e61a076b1a73ad18f928f",
         "android_client_info": {
           "package_name": "com.mobilemaser.foodbazarapp"
@@ -29,6 +65,13 @@
             {
               "client_id": "883407828382-942i1g0cjhdaf304m3c1np62o4vdie3k.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "883407828382-c5m84ejc6sn1vfud0ulj0snaej8dp8qs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "net.fluttertutorial.flutterLoginUi"
+              }
             }
           ]
         }
@@ -58,6 +101,13 @@
             {
               "client_id": "883407828382-942i1g0cjhdaf304m3c1np62o4vdie3k.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "883407828382-c5m84ejc6sn1vfud0ulj0snaej8dp8qs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "net.fluttertutorial.flutterLoginUi"
+              }
             }
           ]
         }

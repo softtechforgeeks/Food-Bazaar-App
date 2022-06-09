@@ -19,22 +19,22 @@ class SingleCartItem extends StatefulWidget {
     required this.category,
     required this.id,
   }) : super(key: key);
+
   @override
   _SingleCartItemState createState() => _SingleCartItemState();
 }
 
 class _SingleCartItemState extends State<SingleCartItem> {
-  int quantity = 1;
-
-  void quantityFuntion() {
+  void quantityFuntion(int change) {
     FirebaseFirestore.instance
         .collection("cart")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("userCart")
         .doc(widget.id.toString())
         .update({
-      "quantity": quantity,
+      "quantity": widget.quantity + change,
     });
+    setState(() {});
   }
 
   void deleteProductFuntion() {
@@ -44,6 +44,7 @@ class _SingleCartItemState extends State<SingleCartItem> {
         .collection("userCart")
         .doc(widget.id.toString())
         .delete();
+    setState(() {});
   }
 
   @override
@@ -105,8 +106,7 @@ class _SingleCartItemState extends State<SingleCartItem> {
                             icon: Icons.add,
                             onPressed: () {
                               setState(() {
-                                quantity++;
-                                quantityFuntion();
+                                quantityFuntion(1);
                               });
                             },
                           ),
@@ -119,10 +119,9 @@ class _SingleCartItemState extends State<SingleCartItem> {
                           IncrementAndDecrement(
                             icon: Icons.remove,
                             onPressed: () {
-                              if (quantity > 1) {
+                              if (widget.quantity > 1) {
                                 setState(() {
-                                  quantity--;
-                                  quantityFuntion();
+                                  quantityFuntion(-1);
                                 });
                               }
                             },
@@ -139,7 +138,7 @@ class _SingleCartItemState extends State<SingleCartItem> {
             onPressed: () {
               deleteProductFuntion();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
             ),
           )

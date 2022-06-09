@@ -4,7 +4,7 @@ import 'package:flutter_login_ui/appColors/app_colors.dart';
 class MyButton extends StatefulWidget {
   final void Function()? onPressed;
   final String text;
-  MyButton({
+  const MyButton({
     required this.onPressed,
     required this.text,
   });
@@ -22,13 +22,13 @@ class _MyButtonState extends State<MyButton> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(04),
       ),
-      padding: EdgeInsets.all(0),
+      padding: const EdgeInsets.all(0),
       child: Ink(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
-              AppColors.Kgradient1,
-              AppColors.Kgradient2,
+              Color.fromARGB(255, 243, 239, 5),
+              Colors.orange,
             ],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
@@ -40,7 +40,7 @@ class _MyButtonState extends State<MyButton> {
           alignment: Alignment.center,
           child: Text(
             widget.text,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.KwhiteColor,
             ),
           ),

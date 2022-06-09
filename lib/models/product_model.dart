@@ -41,30 +41,30 @@ class Product extends Equatable {
     ];
   }
 
-  Product copyWith({
-    int? id,
-    String? name,
-    String? category,
-    String? description,
-    String? imageUrl,
-    bool? isRecommended,
-    bool? isPopular,
-    double? price,
-    int? quantity,
-  }) {
-    return Product(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      category: category ?? this.category,
-      description: description ?? this.description,
-      imageUrl: imageUrl ?? this.imageUrl,
-      isRecommended: isRecommended ?? this.isRecommended,
-      isPopular: isPopular ?? this.isPopular,
-      price: price ?? this.price,
-      quantity: quantity ?? this.quantity,
-      // index: index ?? this.index,
-    );
-  }
+  // Product copyWith({
+  //   int? id,
+  //   String? name,
+  //   String? category,
+  //   String? description,
+  //   String? imageUrl,
+  //   bool? isRecommended,
+  //   bool? isPopular,
+  //   double? price,
+  //   int? quantity,
+  // }) {
+  //   return Product(
+  //     id: id ?? this.id,
+  //     name: name ?? this.name,
+  //     category: category ?? this.category,
+  //     description: description ?? this.description,
+  //     imageUrl: imageUrl ?? this.imageUrl,
+  //     isRecommended: isRecommended ?? this.isRecommended,
+  //     isPopular: isPopular ?? this.isPopular,
+  //     price: price ?? this.price,
+  //     quantity: quantity ?? this.quantity,
+  //     // index: index ?? this.index,
+  //   );
+  // }
 
   Map<String, dynamic> toMap() {
     return {

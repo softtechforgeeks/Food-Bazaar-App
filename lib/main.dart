@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/models/user.dart';
 import 'package:flutter_login_ui/orders_screen.dart';
-import 'package:flutter_login_ui/screens/details/provider/cart_provider.dart';
 import 'package:flutter_login_ui/services/auth.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -25,8 +25,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
+        return macos;
+      case TargetPlatform.windows:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
@@ -62,5 +69,15 @@ class DefaultFirebaseOptions {
     storageBucket: 'food-bazar-app.appspot.com',
     iosClientId: '883407828382-c5m84ejc6sn1vfud0ulj0snaej8dp8qs.apps.googleusercontent.com',
     iosBundleId: 'net.fluttertutorial.flutterLoginUi',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDaZLWhUCL6ZA2sPeR-3piNZS5e9wpg1iI',
+    appId: '1:883407828382:ios:89a02b6274f791938f928f',
+    messagingSenderId: '883407828382',
+    projectId: 'food-bazar-app',
+    storageBucket: 'food-bazar-app.appspot.com',
+    iosClientId: '883407828382-pkvhlmnksdp7602k1c797i17q8v1lcp5.apps.googleusercontent.com',
+    iosBundleId: 'com.mobilemaster.foodbazarapp',
   );
 }

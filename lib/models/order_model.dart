@@ -2,51 +2,66 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_login_ui/models/cart_model.dart';
 
 class Order extends Equatable {
-  final int id;
-  final int customerId;
-  final List<int> productIds;
-  final double deliveryFee;
+  final List<CartModel> orderList;
+  CartModel? orderItem;
   final double subtotal;
   final double total;
+  final String notes;
+  final String address;
   final bool isAccepted;
   final bool isDelivered;
   final bool isCancelled;
   final DateTime createdAt;
 
-  const Order({
-    required this.id,
-    required this.customerId,
-    required this.productIds,
-    required this.deliveryFee,
+  Order({
+    required this.orderList,
     required this.subtotal,
     required this.total,
+    required this.notes,
+    required this.address,
     required this.isAccepted,
     required this.isDelivered,
     required this.isCancelled,
     required this.createdAt,
   });
 
+  // Future getOrderData() async {
+  //   List<CartModel> newOrderList = [];
+  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //       .collection('orders')
+  //       .doc(FirebaseAuth.instance.currentUser!.uid)
+  //       .collection('all')
+  //       .get();
+
+  //   for (var element in querySnapshot.docs) {
+  //     orderItem = CartModel.fromDocument(element);
+  //     newOrderList.add(orderItem!);
+  //     subtotal += (orderItem!.price * orderItem!.quantity);
+  //     total += (orderItem!.price * orderItem!.quantity);
+  //   }
+  //   orderList = newOrderList;
+  // }
+
   Order copyWith({
-    int? id,
-    int? customerId,
-    List<int>? productIds,
-    double? deliveryFee,
+    List<CartModel>? items,
     double? subtotal,
     double? total,
+    String? notes,
+    String? address,
     bool? isAccepted,
     bool? isDelivered,
     bool? isCancelled,
     DateTime? createdAt,
   }) {
     return Order(
-      id: id ?? this.id,
-      customerId: customerId ?? this.customerId,
-      productIds: productIds ?? this.productIds,
-      deliveryFee: deliveryFee ?? this.deliveryFee,
+      orderList: items ?? orderList,
       subtotal: subtotal ?? this.subtotal,
       total: total ?? this.total,
+      notes: notes ?? this.notes,
+      address: address ?? this.address,
       isAccepted: isAccepted ?? this.isAccepted,
       isDelivered: isDelivered ?? this.isDelivered,
       isCancelled: isCancelled ?? this.isCancelled,
@@ -54,28 +69,49 @@ class Order extends Equatable {
     );
   }
 
+  List<CartModel> get getOrderList {
+    return orderList;
+  }
+
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'customerId': customerId,
-      'productIds': productIds,
-      'deliveryFee': deliveryFee,
+    // print('orderlist in ordermodel toMap');
+    // print(orderList);
+    var js = {
+      'items': List<dynamic>.from(orderList.map((e) => e.toMap())),
       'subtotal': subtotal,
       'total': total,
+      'notes': notes,
+      'address': address,
       'isAccepted': isAccepted,
       'isDelivered': isDelivered,
       'createdAt': createdAt,
     };
+    // var elem={};
+
+    // for (var element in orderList) {
+    //   js.addEntries({element.id:{
+    //       "id": element.id,
+    //       "name": element.name,
+    //       "price": element.price,
+    //       "imageUrl": element.imageUrl,
+    //       "category": element.category,
+    //       "quantity": element.quantity,
+    //     }});
+    // }
+    return js;
   }
 
-  factory Order.fromSnapshot(DocumentSnapshot snap) {
+  factory Order.fromSnapshot(QueryDocumentSnapshot snap) {
+    print(snap['items'].runtimeType);
+    final y = List<CartModel>.from(
+        snap['items'].map((x) => CartModel.fromDocument(x)));
+    print(y);
     return Order(
-      id: snap['id'] as int,
-      customerId: snap['customerId'] as int,
-      productIds: List<int>.from(snap['productIds']),
-      deliveryFee: snap['deliveryFee'] as double,
+      orderList: y,
       subtotal: snap['subtotal'] as double,
       total: snap['total'] as double,
+      notes: snap['notes'] as String,
+      address: snap['address'] as String,
       isAccepted: snap['isAccepted'] as bool,
       isDelivered: snap['isDelivered'] as bool,
       isCancelled: snap['isCancelled'] as bool,
@@ -89,41 +125,13 @@ class Order extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        customerId,
-        productIds,
-        deliveryFee,
+        getOrderList,
         subtotal,
         total,
+        notes,
+        address,
         isAccepted,
         isDelivered,
         createdAt,
       ];
-
-  static List<Order> orders = [
-    Order(
-      id: 1,
-      customerId: 1,
-      productIds: const [1, 2, 3],
-      deliveryFee: 10,
-      subtotal: 30.0,
-      total: 40.0,
-      isAccepted: false,
-      isDelivered: false,
-      isCancelled: false,
-      createdAt: DateTime.now(),
-    ),
-    Order(
-      id: 2,
-      customerId: 2,
-      productIds: const [2, 3],
-      deliveryFee: 10,
-      subtotal: 30.0,
-      total: 40.0,
-      isAccepted: false,
-      isDelivered: false,
-      isCancelled: false,
-      createdAt: DateTime.now(),
-    ),
-  ];
 }

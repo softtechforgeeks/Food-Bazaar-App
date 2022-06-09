@@ -16,6 +16,7 @@ class CartModel {
     required this.quantity,
   });
   factory CartModel.fromDocument(QueryDocumentSnapshot doc) {
+    print(doc['name']);
     return CartModel(
       id: doc["id"],
       category: doc["category"],
@@ -24,5 +25,16 @@ class CartModel {
       quantity: doc["quantity"],
       name: doc["name"],
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'category': category,
+      'imageUrl': imageUrl,
+      'price': price,
+      'quantity': quantity,
+      'name': name,
+    };
   }
 }
