@@ -14,7 +14,7 @@ class DatabaseService {
         .collection('all')
         .snapshots()
         .map((snapshot) {
-      return (snapshot.docs.map((doc) => Order.fromSnapshot(doc)).toList());
+      return snapshot.docs.map((doc) => Order.fromSnapshot(doc)).toList();
     });
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/pages/profile_page.dart';
 import 'package:flutter_login_ui/screens/details/cartPage/cart_page.dart';
+import 'package:flutter_login_ui/screens/manage_orders/user_orders.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_login_ui/constants.dart';
 import 'package:flutter_login_ui/screens/home/components/body.dart';
@@ -243,6 +244,18 @@ class HomeScreen extends StatelessWidget {
             color: kTextColor,
           ),
           onPressed: () {},
+        ),
+        IconButton(
+          icon: SvgPicture.asset(
+            "assets/icons/history_icon.svg",
+            // By default our  icon color is white
+          ),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const UserActiveOrders()));
+          },
         ),
         IconButton(
           icon: SvgPicture.asset(
