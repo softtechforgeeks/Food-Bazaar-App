@@ -249,6 +249,7 @@ class HomeScreen extends StatelessWidget {
           icon: SvgPicture.asset(
             "assets/icons/history_icon.svg",
             // By default our  icon color is white
+            color: kTextColor,
           ),
           onPressed: () {
             Navigator.push(

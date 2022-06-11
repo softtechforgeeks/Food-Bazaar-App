@@ -1,3 +1,4 @@
+import 'package:flutter_login_ui/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/controllers/order_controller.dart';
 import 'package:flutter_login_ui/models/order_model.dart';
@@ -12,10 +13,12 @@ class UserActiveOrders extends StatefulWidget {
 }
 
 class _UserActiveOrdersState extends State<UserActiveOrders> {
-  final OrderController orderController = Get.put(OrderController());
+  var orders = <Order>[].obs;
+  final DatabaseService database = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
+    orders.bindStream(database.getOrders());
     return Scaffold(
       appBar: AppBar(
           title: const Text(
@@ -27,9 +30,9 @@ class _UserActiveOrdersState extends State<UserActiveOrders> {
           Expanded(
             child: Obx(
               () => ListView.builder(
-                  itemCount: orderController.orders.length,
+                  itemCount: orders.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return OrderCard(order: orderController.orders[index]);
+                    return OrderCard(order: orders[index]);
                   }),
             ),
           ),
@@ -40,10 +43,10 @@ class _UserActiveOrdersState extends State<UserActiveOrders> {
 }
 
 class OrderCard extends StatelessWidget {
-  OrderCard({Key? key, required this.order}) : super(key: key);
+  const OrderCard({Key? key, required this.order}) : super(key: key);
 
   final Order order;
-  final OrderController orderController = Get.find();
+  // final OrderController orderController = Get.find();
 
   @override
   Widget build(BuildContext context) {

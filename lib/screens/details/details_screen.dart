@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/screens/details/cartPage/cart_page.dart';
+import 'package:flutter_login_ui/screens/manage_orders/user_orders.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_login_ui/constants.dart';
 import 'package:flutter_login_ui/models/product_model.dart';
@@ -41,10 +42,23 @@ class DetailsScreen extends StatelessWidget {
           onPressed: () {},
         ),
         IconButton(
-          icon: SvgPicture.asset("assets/icons/cart.svg"),
+          icon: SvgPicture.asset(
+            "assets/icons/history_icon.svg",
+            // By default our  icon color is white
+            color: kTextColor,
+          ),
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CartPage()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const UserActiveOrders()));
+          },
+        ),
+        IconButton(
+          icon: SvgPicture.asset("assets/icons/cart.svg"),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CartPage()));
           },
         ),
         const SizedBox(width: kDefaultPaddin / 2)

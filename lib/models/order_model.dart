@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_login_ui/models/cart_model.dart';
 
@@ -83,6 +82,7 @@ class Order extends Equatable {
       'notes': notes,
       'address': address,
       'isAccepted': isAccepted,
+      'isCancelled': isCancelled,
       'isDelivered': isDelivered,
       'createdAt': createdAt,
     };
@@ -101,13 +101,13 @@ class Order extends Equatable {
     return js;
   }
 
-  factory Order.fromSnapshot(QueryDocumentSnapshot snap) {
-    print(snap['items'].runtimeType);
+  factory Order.fromSnapshot(Map<String, dynamic> snap) {
+    // print(snap['items'].runtimeType);
     List<CartModel> y = [];
     for (var element in snap['items']) {
-      print(element);
-      print(element['id'].runtimeType);
-      print(element['quantity'].runtimeType);
+      // print(element);
+      // print(element['id'].runtimeType);
+      // print(element['quantity'].runtimeType);
       CartModel x = CartModel(
           category: element['category'],
           id: element['id'],
@@ -117,7 +117,7 @@ class Order extends Equatable {
           quantity: element['quantity']);
       y.add(x);
     }
-    print(y);
+    // print(y);
     return Order(
       orderList: y,
       subtotal: snap['subtotal'] as double,

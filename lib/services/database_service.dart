@@ -8,16 +8,78 @@ class DatabaseService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   Stream<List<Order>> getOrders() {
+    // Stream<List<Order>>? allOrders;
+    // List<String> names = [];
+    // final x = _firebaseFirestore.collection('users').get().then((value) {
+    //   for (var element in value.docs) {
+    //     names.add(element.id);
+    //   }
+    // });
+    // print(allOrders);
+    // for (var element in names) {
+    //   try {
+    //     _firebaseFirestore.doc("users/$element").get().then((doc) {
+    //       print(doc);
+    //     });
+    //     if (allOrders == null) {
+    //       allOrders = _firebaseFirestore
+    //           .collection('orders')
+    //           .doc(element)
+    //           .collection('all')
+    //           .snapshots()
+    //           .map((snapshot) {
+    //         return snapshot.docs
+    //             .map((doc) => Order.fromSnapshot(doc.data()))
+    //             .toList();
+    //       });
+    //     } else {
+    //       allOrders += _firebaseFirestore
+    //           .collection('orders')
+    //           .doc(element)
+    //           .collection('all')
+    //           .snapshots()
+    //           .map((snapshot) {
+    //         return snapshot.docs
+    //             .map((doc) => Order.fromSnapshot(doc.data()))
+    //             .toList();
+    //       });
+    //     }
+    //   } catch (e) {
+    //     // If any error
+    //     // return false;
+    //   }
+    // }
+    // print(allOrders);
     return _firebaseFirestore
         .collection('orders')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('all')
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs.map((doc) => Order.fromSnapshot(doc)).toList();
+      return snapshot.docs
+          .map((doc) => Order.fromSnapshot(doc.data()))
+          .toList();
     });
   }
 
+  Stream<List<Order>> getAllOrders() {
+    final allUsers =
+        _firebaseFirestore.collection('orders').snapshots().map((snapshot) {
+      return snapshot.docs
+          .map((doc) => Order.fromSnapshot(doc.data()))
+          .toList();
+    });
+    return _firebaseFirestore
+        .collection('orders')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('all')
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs
+          .map((doc) => Order.fromSnapshot(doc.data()))
+          .toList();
+    });
+  }
   // Stream<List<Order>> getPendingOrders() {
   //   return _firebaseFirestore
   //       .collection('orders')
