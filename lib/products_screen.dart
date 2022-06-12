@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/Manage_product.dart';
-import 'package:flutter_login_ui/common/theme_helper.dart';
 import 'package:flutter_login_ui/orders_screen.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'models/model.dart';
 import 'package:flutter_login_ui/pages/forgot_password_page.dart';
 import 'package:flutter_login_ui/pages/login_page.dart';
 import 'package:flutter_login_ui/pages/profile_page.dart';
@@ -12,8 +8,6 @@ import 'package:flutter_login_ui/pages/registration_page.dart';
 import 'package:flutter_login_ui/pages/splash_screen.dart';
 import 'package:flutter_login_ui/services/auth.dart';
 import 'package:get/get.dart';
-
-import 'package:flutter_login_ui/new_product_screen.dart';
 import 'controllers/product_controller.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -235,7 +229,7 @@ class ProductsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            Divider(
+            const Divider(
               // color: Theme.of(context).primaryColor,
               height: 10,
             ),
@@ -264,23 +258,24 @@ class ProductsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Divider(
+            const Divider(
               //  color: Theme.of(context).primaryColor,
               height: 10,
             ),
             SizedBox(
               height: 100,
               child: Card(
-                color: Color.fromARGB(255, 148, 21, 160),
+                color: const Color.fromARGB(255, 148, 21, 160),
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: () {
                         Get.to(() => OrderScreen());
                       },
-                      icon: Icon(Icons.add_shopping_cart, color: Colors.white),
+                      icon: const Icon(Icons.add_shopping_cart,
+                          color: Colors.white),
                     ),
-                    Text(
+                    const Text(
                       '  Manage Order',
                       style: TextStyle(
                         color: Colors.white,

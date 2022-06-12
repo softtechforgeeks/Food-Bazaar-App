@@ -4,31 +4,30 @@ import 'package:flutter_login_ui/screens/details/checkout/check_out_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app_properties.dart';
-import 'package:flutter_login_ui/screens/details/address/address_form.dart';
 
 class AddAddressPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget finishButton = InkWell(
       onTap: () => Navigator.of(context)
-          .push(MaterialPageRoute(builder: (_) => CheckOutPage())),
+          .push(MaterialPageRoute(builder: (_) => const CheckOutPage())),
       child: Container(
         height: 80,
         width: MediaQuery.of(context).size.width / 1.5,
         decoration: BoxDecoration(
             gradient: mainButton,
             boxShadow: [
-              BoxShadow(
+              const BoxShadow(
                 color: Color.fromRGBO(0, 0, 0, 0.16),
                 offset: Offset(0, 5),
                 blurRadius: 10.0,
               )
             ],
             borderRadius: BorderRadius.circular(9.0)),
-        child: Center(
+        child: const Center(
           child: Text("Finish",
-              style: const TextStyle(
-                  color: const Color(0xfffefefe),
+              style: TextStyle(
+                  color: Color(0xfffefefe),
                   fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
                   fontSize: 20.0)),
@@ -41,10 +40,10 @@ class AddAddressPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: darkGrey),
-        title: Text(
+        iconTheme: const IconThemeData(color: darkGrey),
+        title: const Text(
           'Add Address',
-          style: const TextStyle(
+          style: TextStyle(
               color: darkGrey,
               fontWeight: FontWeight.w500,
               fontFamily: "Montserrat",
@@ -71,7 +70,7 @@ class AddAddressPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Card(
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
                           color: Colors.white,
                           elevation: 3,
                           child: SizedBox(
@@ -87,7 +86,7 @@ class AddAddressPage extends StatelessWidget {
                                       child: Image.asset(
                                           'assets/icons/address_home.png'),
                                     ),
-                                    Text(
+                                    const Text(
                                       'Add New Address',
                                       style: TextStyle(
                                         fontSize: 8,
@@ -99,7 +98,7 @@ class AddAddressPage extends StatelessWidget {
                                 ),
                               ))),
                       Card(
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
                           color: yellow,
                           elevation: 3,
                           child: SizedBox(
@@ -118,7 +117,7 @@ class AddAddressPage extends StatelessWidget {
                                         height: 20,
                                       ),
                                     ),
-                                    Text(
+                                    const Text(
                                       'Simon Philip,\nCity Oscarlad',
                                       style: TextStyle(
                                         fontSize: 8,
@@ -130,7 +129,7 @@ class AddAddressPage extends StatelessWidget {
                                 ),
                               ))),
                       Card(
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
                           color: yellow,
                           elevation: 3,
                           child: SizedBox(
@@ -148,7 +147,7 @@ class AddAddressPage extends StatelessWidget {
                                           color: Colors.white,
                                           height: 20),
                                     ),
-                                    Text(
+                                    const Text(
                                       'Workplace',
                                       style: TextStyle(
                                         fontSize: 8,

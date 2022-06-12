@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login_ui/constants.dart';
-import 'package:flutter_login_ui/models/product_model.dart';
-import '../checkout/check_out_page.dart';
-import '/route/routing_page.dart';
-
-import 'package:flutter_login_ui/route/routing_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:flutter_login_ui/constants.dart';
+import 'package:flutter_login_ui/models/product_model.dart';
+import 'package:flutter_login_ui/route/routing_page.dart';
+
 import '../cartPage/cart_page.dart';
+import '../checkout/check_out_page.dart';
+import '/route/routing_page.dart';
 
 int quantity = 1;
 
@@ -220,7 +220,7 @@ class AddToCart extends StatelessWidget {
 
                   RoutingPage.goTonext(
                     context: context,
-                    navigateTo: CheckOutPage(),
+                    navigateTo: const CheckOutPage(),
                   );
                 },
                 child: Text(

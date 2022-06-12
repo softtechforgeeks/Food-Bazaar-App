@@ -1,6 +1,6 @@
 import 'package:flutter_login_ui/services/database_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login_ui/controllers/order_controller.dart';
+// import 'package:flutter_login_ui/controllers/order_controller.dart';
 import 'package:flutter_login_ui/models/order_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -139,10 +139,53 @@ class OrderCard extends StatelessWidget {
                     }),
                 const SizedBox(height: 10.0),
                 Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(
+                            width: 285,
+                            child: Text(
+                              "Address: ${order.address}",
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.clip,
+                              maxLines: 2,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          (order.notes != '')
+                              ? SizedBox(
+                                  width: 285,
+                                  child: Text(
+                                    "Address: ${order.notes}",
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 2,
+                                  ),
+                                )
+                              : const SizedBox(
+                                  width: 285,
+                                  child: Text(
+                                    "Notes: No Thanks",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                        ],
+                      )
+                    ]),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       children: [
+                        const SizedBox(height: 5),
                         const Text(
                           "Order Costs: ",
                           style: TextStyle(

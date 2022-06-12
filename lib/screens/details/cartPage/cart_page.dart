@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/appColors/app_colors.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_login_ui/screens/details/checkout/check_out_page.dart';
-import 'package:flutter_login_ui/screens/details/provider/cart_provider.dart';
 import '/route/routing_page.dart';
 import 'package:flutter_login_ui/widgets/my_button.dart';
 import 'package:flutter_login_ui/widgets/single_cart_item.dart';
@@ -18,7 +16,8 @@ class CartPage extends StatelessWidget {
       bottomNavigationBar: MyButton(
         text: "Check Out",
         onPressed: () {
-          RoutingPage.goTonext(context: context, navigateTo: CheckOutPage());
+          RoutingPage.goTonext(
+              context: context, navigateTo: const CheckOutPage());
         },
       ),
       appBar: AppBar(
@@ -40,10 +39,10 @@ class CartPage extends StatelessWidget {
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
           if (!streamSnapshort.hasData) {
-            return Center(child: const CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           return ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemCount: streamSnapshort.data!.docs.length,
             itemBuilder: (ctx, index) {
               var data = streamSnapshort.data!.docs[index];
