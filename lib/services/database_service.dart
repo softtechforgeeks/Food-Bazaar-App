@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/model.dart';
 import '../models/order_model.dart';
 
 class DatabaseService {
+//   static final DatabaseService _instance = DatabaseService._constructor();
+//   factory DatabaseService() {
+//     return _instance;
+//   }
+//   DatabaseService._constructor();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   Stream<List<Order>> getOrders() {
-    return _firebaseFirestore
-        .collection('orders')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('all')
-        .snapshots()
-        .map((snapshot) {
+    return _firebaseFirestore.collection('orders').snapshots().map((snapshot) {
       return snapshot.docs
           .map((doc) => Order.fromSnapshot(doc.data()))
           .toList();
@@ -39,8 +38,6 @@ class DatabaseService {
   ) {
     return _firebaseFirestore
         .collection('orders')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('all')
         .get()
         .then((querySnapshot) => {
               querySnapshot.docs
@@ -56,13 +53,21 @@ class DatabaseService {
     return _firebaseFirestore.collection('products').add(product.toMap());
   }
 
-  Future<void> addOrder(Order order) {
+  Future<void> addOrder(Order order) async {
     print(order.subtotal);
+    int list =
+        await _firebaseFirestore.collection('orders').get().then((value) {
+      var count = 0;
+      count = value.docs.length;
+
+      return count;
+    });
+    // int x = list.length;
+    print(list);
     return _firebaseFirestore
         .collection('orders')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('all')
-        .add(order.toMap());
+        .doc((list + 1).toString())
+        .set(order.toMap());
   }
 
   Future<void> updateField(

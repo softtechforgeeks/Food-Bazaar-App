@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String? uid;
   String? email;
@@ -14,7 +16,22 @@ class UserModel {
       this.lastName,
       this.mobile,
       this.title,
-      this.password});
+      this.password}) {
+    if (uid != null && title == null) {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(uid)
+          .get()
+          .then((value) {
+        final ex = UserModel.fromMap(value.data());
+        email = ex.email;
+        firstName = ex.firstName;
+        lastName = ex.lastName;
+        mobile = ex.mobile;
+        title = ex.title;
+      });
+    }
+  }
 
   // receiving data from server
   factory UserModel.fromMap(map) {

@@ -18,7 +18,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool _isVisible = false;
-  User? user = FirebaseAuth.instance.currentUser;
+  // User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
   _SplashScreenState() {
@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (userModel.uid != null) {
       FirebaseFirestore.instance
           .collection("users")
-          .doc(user!.uid)
+          .doc(userModel.uid)
           .get()
           .then((value) {
         loggedInUser = UserModel.fromMap(value.data());

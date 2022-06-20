@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_login_ui/models/cart_model.dart';
 
 class Order extends Equatable {
+  final String uid;
   final List<CartModel> orderList;
   CartModel? orderItem;
   final double subtotal;
@@ -16,6 +17,7 @@ class Order extends Equatable {
   final DateTime createdAt;
 
   Order({
+    required this.uid,
     required this.orderList,
     required this.subtotal,
     required this.total,
@@ -76,6 +78,7 @@ class Order extends Equatable {
     // print('orderlist in ordermodel toMap');
     // print(orderList);
     var js = {
+      'uid': uid,
       'items': List<dynamic>.from(orderList.map((e) => e.toMap())),
       'subtotal': subtotal,
       'total': total,
@@ -87,7 +90,7 @@ class Order extends Equatable {
       'createdAt': createdAt,
     };
     // var elem={};
-
+    print("in to map after listing attributes");
     // for (var element in orderList) {
     //   js.addEntries({element.id:{
     //       "id": element.id,
@@ -119,6 +122,7 @@ class Order extends Equatable {
     }
     // print(y);
     return Order(
+      uid: snap['uid'] as String,
       orderList: y,
       subtotal: snap['subtotal'] as double,
       total: snap['total'] as double,
@@ -138,6 +142,7 @@ class Order extends Equatable {
   @override
   List<Object> get props {
     return [
+      uid,
       orderList,
       subtotal,
       total,

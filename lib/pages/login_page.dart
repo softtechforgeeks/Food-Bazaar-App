@@ -1,8 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/common/theme_helper.dart';
-import 'package:flutter_login_ui/products_screen.dart';
-import 'package:flutter_login_ui/screens/home/home_screen.dart';
 import '../services/auth.dart';
 
 import 'forgot_password_page.dart';
@@ -216,28 +214,27 @@ class _LoginPageState extends State<LoginPage> {
       try {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
-            .then((_auth) => AuthService().userFromFirebaseUser(_auth.user))
-            .then((user) => {
-                  // print(user),
-                  if (user.title == "Admin")
-                    {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProductsScreen()))
-                    }
-                  else
-                    {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()))
-                    }
+            .then((_auth) async {
+          print(_auth);
+          print(_auth.user?.uid);
+          AuthService().userFromFirebaseUser(_auth.user);
+        });
+        // final user = Provider.of<UserModel>(context);
+        //   print(user);
+        //   if (user.title == "Admin") {
+        //     Navigator.push(context,
+        //         MaterialPageRoute(builder: (context) => ProductsScreen()));
+        //   } else {
+        //     Navigator.push(
+        //         context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        //   }
 
-                  // Navigator.pushAndRemoveUntil(
-                  //     (context),
-                  //     MaterialPageRoute(
-                  //         builder: (context) => ),
-                  //     (route) => false)
-                });
+        //           // Navigator.pushAndRemoveUntil(
+        //           //     (context),
+        //           //     MaterialPageRoute(
+        //           //         builder: (context) => ),
+        //           //     (route) => false)
+        //         });
         // .then((uid) => userid = uid
         //   Navigator.of(context).pushReplacement(
         //       MaterialPageRoute(builder: (context) => Home())),

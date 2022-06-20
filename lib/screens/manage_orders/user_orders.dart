@@ -25,18 +25,20 @@ class _UserActiveOrdersState extends State<UserActiveOrders> {
             "Active Orders",
           ),
           backgroundColor: Colors.orange),
-      body: Column(
-        children: [
-          Expanded(
-            child: Obx(
-              () => ListView.builder(
-                  itemCount: orders.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return OrderCard(order: orders[index]);
-                  }),
+      body: Container(
+        child: Column(
+          children: [
+            Expanded(
+              child: Obx(
+                () => ListView.builder(
+                    itemCount: orders.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return OrderCard(order: orders[index]);
+                    }),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

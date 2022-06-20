@@ -201,10 +201,10 @@ class ProductsScreen extends StatelessWidget {
               //     );
               //   },
               // ),
-              Divider(
-                color: Theme.of(context).primaryColor,
-                height: 1,
-              ),
+              // Divider(
+              //   color: Theme.of(context).primaryColor,
+              //   height: 1,
+              // ),
               ListTile(
                 leading: Icon(
                   Icons.logout_rounded,
