@@ -44,6 +44,7 @@ class LoginUiApp extends StatelessWidget {
       value: AuthService().user,
       initialData: UserModel(uid: null),
       child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Food Bazaar',
         getPages: [
           GetPage(name: '/products', page: () => ProductsScreen()),
