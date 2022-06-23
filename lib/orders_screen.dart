@@ -56,7 +56,7 @@ class OrderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        DateFormat('dd-MM-yyyy').format(order.createdAt),
+                        DateFormat('hh:mm dd-MM-yyyy').format(order.createdAt),
                         style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                       ),
@@ -152,7 +152,7 @@ class OrderCard extends StatelessWidget {
                               ? SizedBox(
                                   width: 285,
                                   child: Text(
-                                    "Address: ${order.notes}",
+                                    "Notes: ${order.notes}",
                                     style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold),

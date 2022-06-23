@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/model.dart';
@@ -14,7 +15,17 @@ class DatabaseService {
   Stream<List<Order>> getOrders() {
     return _firebaseFirestore.collection('orders').snapshots().map((snapshot) {
       return snapshot.docs
-          .map((doc) => Order.fromSnapshot(doc.data()))
+          .map((doc) => Order.fromSnapshot(doc))
+          .toList();
+    });
+  }
+
+  Stream<List<Order>> getUserOrders() {
+    return _firebaseFirestore.collection('orders').snapshots().map((snapshot) {
+      return snapshot.docs
+          .map((doc) => Order.fromSnapshot(doc))
+          .where((element) =>
+              (element.uid == FirebaseAuth.instance.currentUser!.uid))
           .toList();
     });
   }

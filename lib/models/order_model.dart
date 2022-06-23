@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_login_ui/models/cart_model.dart';
@@ -7,8 +8,8 @@ class Order extends Equatable {
   final String uid;
   final List<CartModel> orderList;
   CartModel? orderItem;
-  final double subtotal;
-  final double total;
+  final num subtotal;
+  final num total;
   final String notes;
   final String address;
   final bool isAccepted;
@@ -104,7 +105,7 @@ class Order extends Equatable {
     return js;
   }
 
-  factory Order.fromSnapshot(Map<String, dynamic> snap) {
+  factory Order.fromSnapshot(DocumentSnapshot snap) {
     // print(snap['items'].runtimeType);
     List<CartModel> y = [];
     for (var element in snap['items']) {
@@ -124,8 +125,8 @@ class Order extends Equatable {
     return Order(
       uid: snap['uid'] as String,
       orderList: y,
-      subtotal: snap['subtotal'] as double,
-      total: snap['total'] as double,
+      subtotal: snap['subtotal'] as num,
+      total: snap['total'] as num,
       notes: snap['notes'] as String,
       address: snap['address'] as String,
       isAccepted: snap['isAccepted'] as bool,

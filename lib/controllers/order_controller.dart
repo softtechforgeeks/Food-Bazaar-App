@@ -6,11 +6,12 @@ import '../models/order_model.dart';
 class OrderController extends GetxController {
   final DatabaseService database = DatabaseService();
   var orders = <Order>[].obs;
-  // var pendingOrders = <Order>[].obs;
+  var userOrders = <Order>[].obs;
 
   @override
   void onInit() {
     orders.bindStream(database.getOrders());
+    userOrders.bindStream(database.getUserOrders());
     super.onInit();
   }
 

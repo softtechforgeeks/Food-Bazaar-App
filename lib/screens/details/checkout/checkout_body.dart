@@ -19,13 +19,14 @@ class CheckBody extends StatefulWidget {
 }
 
 class _CheckBodyState extends State<CheckBody> {
-  @override
-  Widget build(BuildContext context) {
     double subTotal = 0.0;
     final notesController = TextEditingController();
     final addrController = TextEditingController();
     DatabaseService database = DatabaseService();
     List<CartModel> orderList = [];
+    
+  @override
+  Widget build(BuildContext context) {
     String uid = Provider.of<UserModel>(context).uid!;
     return Container(
       child: ListView(
