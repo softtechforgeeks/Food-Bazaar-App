@@ -5,9 +5,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_login_ui/constants.dart';
 import 'package:flutter_login_ui/models/product_model.dart';
 import 'package:flutter_login_ui/screens/details/components/Single_item_body.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DetailsScreen extends StatelessWidget {
   final Product? product;
+
+  final String _content = 'Lorem i';
+
+  void _shareApp() {
+    Share.share(_content);
+  }
 
   const DetailsScreen({Key? key, this.product}) : super(key: key);
   @override
@@ -38,8 +45,8 @@ class DetailsScreen extends StatelessWidget {
       ),
       actions: <Widget>[
         IconButton(
-          icon: SvgPicture.asset("assets/icons/search.svg"),
-          onPressed: () {},
+          icon: SvgPicture.asset("assets/icons/share.svg"),
+          onPressed: _shareApp,
         ),
         IconButton(
           icon: SvgPicture.asset(
