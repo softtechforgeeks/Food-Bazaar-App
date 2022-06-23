@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/pages/profile_page.dart';
 import 'package:flutter_login_ui/screens/details/cartPage/cart_page.dart';
@@ -12,9 +14,12 @@ import 'package:flutter_login_ui/pages/splash_screen.dart';
 // import 'package:flutter_login_ui/pages/widgets/header_widget.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_login_ui/services/auth.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import '../../pages/registration_page.dart';
 // import '../../pages/menu.dart';
 import '../../pages/forgot_password_page.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HomeScreen extends StatelessWidget {
   final double _drawerIconSize = 24;
@@ -229,6 +234,21 @@ class HomeScreen extends StatelessWidget {
   }
 
   AppBar buildAppBar(BuildContext context) {
+    Future<void> _shareApp() async {
+      const urlImage = 'https://i.ibb.co/KXKfdrM/logo.png';
+      final url = Uri.parse(urlImage);
+      final response = await http.get(url);
+      final bytes = response.bodyBytes;
+      final temp = await getTemporaryDirectory();
+      final path = '${temp.path}/logo.png';
+      print(path);
+      File(path).writeAsBytesSync(bytes);
+
+      await Share.shareFiles([path],
+          text: 'Download FoodBazaar Now! at: https://i.diawi.com/qT5xzG',
+          subject: 'Share App');
+    }
+
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 255, 106, 0),
       elevation: 0,
@@ -239,11 +259,11 @@ class HomeScreen extends StatelessWidget {
       actions: <Widget>[
         IconButton(
           icon: SvgPicture.asset(
-            "assets/icons/search.svg",
+            "assets/icons/share.svg",
             // By default our  icon color is white
             color: kTextColor,
           ),
-          onPressed: () {},
+          onPressed: _shareApp,
         ),
         IconButton(
           icon: SvgPicture.asset(

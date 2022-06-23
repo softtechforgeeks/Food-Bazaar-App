@@ -4,6 +4,7 @@ import 'package:flutter_login_ui/controllers/order_controller.dart';
 import 'package:flutter_login_ui/models/order_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 
 class OrderScreen extends StatelessWidget {
   OrderScreen({Key? key}) : super(key: key);
@@ -41,6 +42,13 @@ class OrderCard extends StatelessWidget {
   final Order order;
   final OrderController orderController = Get.find();
   String cate = "Accepted";
+
+  final String _content =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam ipsum, lobortis quis ultricies non, lacinia at justo.';
+
+  void _shareContent() {
+    Share.share(_content);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -374,7 +382,7 @@ class OrderCard extends StatelessWidget {
                           ),
                         ],
                       )
-                    : Row()
+                    : Row(),
               ],
             ),
           ),
