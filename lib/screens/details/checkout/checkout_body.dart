@@ -10,6 +10,13 @@ import 'package:flutter_login_ui/widgets/my_button.dart';
 import 'package:flutter_login_ui/widgets/single_cart_item.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:google_place/google_place.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 class CheckBody extends StatefulWidget {
   const CheckBody({Key? key}) : super(key: key);
@@ -19,13 +26,61 @@ class CheckBody extends StatefulWidget {
 }
 
 class _CheckBodyState extends State<CheckBody> {
+  double subTotal = 0.0;
+  final notesController = TextEditingController();
+  final addrController = TextEditingController();
+  DatabaseService database = DatabaseService();
+  List<CartModel> orderList = [];
+
+  var _controller = TextEditingController();
+  var uuid = new Uuid();
+  String _sessionToken = '1234567890';
+  List<dynamic> _placeList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      _onChanged();
+    });
+  }
+
+  _onChanged() {
+    if (_sessionToken == null) {
+      setState(() {
+        _sessionToken = uuid.v4();
+      });
+    }
+    getSuggestion(_controller.text);
+  }
+
+  void getSuggestion(String input) async {
+    String kPLACES_API_KEY = "AIzaSyDXdESNtAANbXKvY15Q10MlqjkWaNtVufM";
+    String type = '(regions)';
+
+    try {
+      String baseURL =
+          'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      String request =
+          '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$_sessionToken';
+      var response = await http.get(Uri.parse(request));
+      var data = json.decode(response.body);
+      print('mydata');
+      print(data);
+      if (response.statusCode == 200) {
+        setState(() {
+          _placeList = json.decode(response.body)['predictions'];
+        });
+      } else {
+        throw Exception('Failed to load predictions');
+      }
+    } catch (e) {
+      // toastMessage('success');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    double subTotal = 0.0;
-    final notesController = TextEditingController();
-    final addrController = TextEditingController();
-    DatabaseService database = DatabaseService();
-    List<CartModel> orderList = [];
     String uid = Provider.of<UserModel>(context).uid!;
     return Container(
       child: ListView(
@@ -132,7 +187,7 @@ class _CheckBodyState extends State<CheckBody> {
                   ],
                 ),
                 Row(
-                  children: [
+                  children: <Widget>[
                     const SizedBox(
                       width: 90,
                       child: Text(
@@ -146,6 +201,19 @@ class _CheckBodyState extends State<CheckBody> {
                     SizedBox(
                       width: 300,
                       child: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          hintText: "Seek your location here",
+                          focusColor: Colors.white,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          //  prefixIcon: Icon(Icons.map),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.cancel),
+                            onPressed: () {
+                              _controller.clear();
+                            },
+                          ),
+                        ),
                         onChanged: (value) {
                           addrController.text = value;
                           // print(addrController.text);
@@ -159,6 +227,22 @@ class _CheckBodyState extends State<CheckBody> {
                         textInputAction: TextInputAction.next,
                       ),
                     ),
+                    Expanded(
+                      child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _placeList.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () async {},
+                            child: ListTile(
+                              title: Text(addrController.text =
+                                  _placeList[index]["description"]),
+                            ),
+                          );
+                        },
+                      ),
+                    )
                   ],
                 ),
                 ListTile(
