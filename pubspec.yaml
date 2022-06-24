@@ -47,6 +47,15 @@ dependencies:
   flutter_svg: ^0.20.0-nullsafety.3
   share_plus: ^4.0.9
   share: ^0.6.2+3
+  
+  google_maps_flutter: ^2.1.8
+  geolocator: ^8.2.1
+  flutter_typeahead: ^4.0.0
+  flutter_google_places: ^0.3.0
+  geocoding: ^2.0.4
+  uuid: ^3.0.5
+  google_place: ^0.4.7
+  
  
   url_launcher: ^6.0.20
   
