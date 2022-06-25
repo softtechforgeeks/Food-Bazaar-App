@@ -36,7 +36,10 @@ dependencies:
   flutter_lints: ^1.0.4
   flutter_bloc: ^8.0.1
   switcher_button: ^0.0.4
-  
+  geolocator: ^8.2.1
+  flutter_typeahead: ^4.0.0
+  geocoding: ^2.0.4
+  uuid: ^3.0.5
   shared_preferences: ^2.0.15
 
   # The following adds the Cupertino Icons font to your application.
