@@ -45,6 +45,8 @@ class LoginUiApp extends StatelessWidget {
       initialData: UserModel(uid: null),
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.system,
+        darkTheme: ThemeData.dark(),
         title: 'Food Bazaar',
         getPages: [
           GetPage(name: '/products', page: () => ProductsScreen()),

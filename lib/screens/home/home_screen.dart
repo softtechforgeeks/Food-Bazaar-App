@@ -14,6 +14,7 @@ import 'package:flutter_login_ui/pages/splash_screen.dart';
 // import 'package:flutter_login_ui/pages/widgets/header_widget.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_login_ui/services/auth.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import '../../pages/registration_page.dart';
@@ -256,7 +257,7 @@ class HomeScreen extends StatelessWidget {
       //   icon: SvgPicture.asset("assets/icons/back.svg"),
       //   onPressed: () {},
       // ),
-      actions: <Widget>[
+      actions: [
         IconButton(
           icon: SvgPicture.asset(
             "assets/icons/share.svg",
@@ -265,6 +266,13 @@ class HomeScreen extends StatelessWidget {
           ),
           onPressed: _shareApp,
         ),
+        IconButton(
+            icon: const Icon(Icons.lightbulb),
+            onPressed: () {
+              Get.isDarkMode
+                  ? Get.changeTheme(ThemeData.light())
+                  : Get.changeTheme(ThemeData.dark());
+            }),
         IconButton(
           icon: SvgPicture.asset(
             "assets/icons/history_icon.svg",
