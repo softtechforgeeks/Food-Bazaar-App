@@ -1,54 +1,24 @@
+import 'dart:math';
+
+import 'package:flutter_login_ui/services/database_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login_ui/common/theme_helper.dart';
-import 'package:flutter_login_ui/controllers/order_controller.dart';
+// import 'package:flutter_login_ui/controllers/order_controller.dart';
 import 'package:flutter_login_ui/models/order_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:share_plus/share_plus.dart';
-
-class OrderScreen extends StatelessWidget {
-  OrderScreen({Key? key}) : super(key: key);
-
-  final OrderController orderController = Get.put(OrderController());
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text(
-            "Orders",
-          ),
-          backgroundColor: Colors.orange),
-      body: Column(
-        children: [
-          Expanded(
-            child: Obx(
-              () => ListView.builder(
-                  itemCount: orderController.orders.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return OrderCard(order: orderController.orders[index]);
-                  }),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+import 'dart:typed_data';
+import 'package:flutter/services.dart' show rootBundle;
+import '../../models/cart_model.dart';
+import '../details/components/Single_item_body.dart';
+import 'mobile.dart' if (dart.library.html) 'web.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class OrderCard extends StatelessWidget {
-  OrderCard({Key? key, required this.order}) : super(key: key);
+  const OrderCard({Key? key, required this.order}) : super(key: key);
 
   final Order order;
-  final OrderController orderController = Get.find();
-  String cate = "Accepted";
 
-  final String _content =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam ipsum, lobortis quis ultricies non, lacinia at justo.';
-
-  void _shareContent() {
-    Share.share(_content);
-  }
+  // final OrderController orderController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +36,20 @@ class OrderCard extends StatelessWidget {
                       Text(
                         DateFormat('hh:mm dd-MM-yyyy').format(order.createdAt),
                         style: const TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
+                      //add a column
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const <Widget>[
+                          ElevatedButton(
+                            child: Text('Create PDF'),
+                            onPressed: _createPDF,
+                          ),
+                        ],
+                      ),
+
+                      //add
                     ]),
                 const SizedBox(height: 10.0),
                 ListView.builder(
@@ -160,7 +142,7 @@ class OrderCard extends StatelessWidget {
                               ? SizedBox(
                                   width: 285,
                                   child: Text(
-                                    "Notes: ${order.notes}",
+                                    "Address: ${order.notes}",
                                     style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold),
@@ -187,6 +169,7 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Column(
                       children: [
+                        const SizedBox(height: 5),
                         const Text(
                           "Order Costs: ",
                           style: TextStyle(
@@ -245,15 +228,13 @@ class OrderCard extends StatelessWidget {
                               !order.isDelivered &&
                               !order.isCancelled)
                           ? const Text(
-                              "New Order",
+                              "Order Sent Successfully",
                               style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
                             )
-                          : (order.isAccepted &&
-                                  !order.isDelivered &&
-                                  !order.isCancelled)
+                          : (order.isAccepted && !order.isDelivered)
                               ? const Text(
                                   "Order In Progress",
                                   style: TextStyle(
@@ -261,7 +242,7 @@ class OrderCard extends StatelessWidget {
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 )
-                              : (order.isDelivered)
+                              : (order.isAccepted && order.isDelivered)
                                   ? const Text(
                                       "Order Delivered Successfully",
                                       style: TextStyle(
@@ -271,7 +252,7 @@ class OrderCard extends StatelessWidget {
                                     )
                                   : order.isCancelled
                                       ? const Text(
-                                          "Order Cancelled",
+                                          "Sorry, we can't afford this order now.",
                                           style: TextStyle(
                                               color: Colors.red,
                                               fontSize: 16,
@@ -284,7 +265,6 @@ class OrderCard extends StatelessWidget {
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                         )
-
                       // order.isAccepted
                       //     ? ElevatedButton(
                       //         onPressed: () {
@@ -337,55 +317,64 @@ class OrderCard extends StatelessWidget {
                       //     style: TextStyle(fontSize: 14),
                       //   ),
                       // ),
-                    ]),
-                (!order.isCancelled && !order.isDelivered)
-                    ? Row(
-                        children: [
-                          Container(
-                            child: DropdownButton<String>(
-                              value: cate,
-                              elevation: 16,
-                              style: const TextStyle(color: Colors.orange),
-                              underline: Container(
-                                height: 2,
-                                color: Colors.orange,
-                              ),
-                              onChanged: (value) {
-                                print(value);
-                                if (value == "Accepted") {
-                                  orderController.updateOrder(
-                                      order, 'isAccepted', true);
-                                } else if (value == "Delivered") {
-                                  orderController.updateOrder(
-                                      order, 'isDelivered', true);
-                                } else if (value == "Cancelled") {
-                                  orderController.updateOrder(
-                                      order, 'isCancelled', true);
-                                }
-                              },
-                              items: <String>[
-                                'Accepted',
-                                'Delivered',
-                                'Cancelled'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              // onSaved: (value) {
-                              //   secondNameController.text = value!;
-                              // },
-                            ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShaddow(),
-                          ),
-                        ],
-                      )
-                    : Row(),
+                    ])
               ],
             ),
           ),
         ));
   }
 }
+
+Future<void> _createPDF() async {
+  PdfDocument document = PdfDocument();
+
+  // final page = document.pages.add();
+
+//Create a PdfGrid class
+  PdfGrid grid = PdfGrid();
+
+//Add the columns to the grid
+  grid.columns.add(count: 3);
+
+//Add header to the grid
+  grid.headers.add(1);
+
+//Add the rows to the grid
+  PdfGridRow header = grid.headers[0];
+
+  header.cells[0].value = "Product Name";
+  header.cells[1].value = 'Price';
+  header.cells[2].value = 'Quantity';
+
+//Add rows to grid
+  PdfGridRow row = grid.rows.add();
+  row.cells[0].value = 'Product 1';
+  row.cells[1].value = 'Clay';
+  row.cells[2].value = '\$10,000';
+
+  row = grid.rows.add();
+  row.cells[0].value = 'E02';
+  row.cells[1].value = 'Simon';
+  row.cells[2].value = '\$12,000';
+
+//Set the grid style
+  grid.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 2, right: 3, top: 4, bottom: 5),
+      backgroundBrush: PdfBrushes.white,
+      textBrush: PdfBrushes.black,
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 25));
+
+//Draw the grid
+  grid.draw(
+      page: document.pages.add(), bounds: const Rect.fromLTWH(0, 0, 0, 0));
+
+  List<int> bytes = document.save();
+  document.dispose();
+
+  saveAndLaunchFile(bytes, 'Output.pdf');
+}
+
+//Future<Uint8List> _readImageData(String name) async {
+ // final data = await rootBundle.load('images/$name');
+ // return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+//}

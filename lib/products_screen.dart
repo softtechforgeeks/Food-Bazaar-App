@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/Manage_product.dart';
+import 'package:flutter_login_ui/controllers/order_stats_controller.dart';
+import 'package:flutter_login_ui/datetime-chart.dart';
 import 'package:flutter_login_ui/orders_screen.dart';
 import 'package:flutter_login_ui/pages/forgot_password_page.dart';
 import 'package:flutter_login_ui/pages/login_page.dart';
@@ -9,6 +11,9 @@ import 'package:flutter_login_ui/pages/splash_screen.dart';
 import 'package:flutter_login_ui/services/auth.dart';
 import 'package:get/get.dart';
 import 'controllers/product_controller.dart';
+import 'models/order_stat_model.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:intl/intl.dart';
 
 class ProductsScreen extends StatelessWidget {
   ProductsScreen({Key? key}) : super(key: key);
@@ -17,6 +22,9 @@ class ProductsScreen extends StatelessWidget {
 
   final double _drawerIconSize = 24;
   final double _drawerFontSize = 17;
+
+  final OrderStatsController orderStatsController =
+      Get.put(OrderStatsController());
 
   @override
   Widget build(BuildContext context) {
@@ -229,6 +237,25 @@ class ProductsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
+            FutureBuilder(
+                future: orderStatsController.stats.value,
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<OrderStats>> snapshot) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      height: 250,
+                      padding: const EdgeInsets.all(10.0),
+                      child: CustomBarChart(
+                        orderStats: snapshot.data!,
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }),
             const Divider(
               // color: Theme.of(context).primaryColor,
               height: 10,
@@ -287,9 +314,67 @@ class ProductsScreen extends StatelessWidget {
                 ),
               ),
             ),
+            const Divider(
+              //  color: Theme.of(context).primaryColor,
+              height: 10,
+            ),
+            SizedBox(
+              height: 100,
+              child: Card(
+                color: const Color.fromARGB(255, 148, 21, 160),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Get.to(() => DateTimeChart());
+                      },
+                      icon: const Icon(Icons.add_shopping_cart,
+                          color: Colors.white),
+                    ),
+                    const Text(
+                      '  Manage Revenue',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomBarChart extends StatelessWidget {
+  const CustomBarChart({
+    Key? key,
+    required this.orderStats,
+  }) : super(key: key);
+
+  final List<OrderStats> orderStats;
+
+  @override
+  Widget build(BuildContext context) {
+    List<charts.Series<OrderStats, String>> series = [
+      charts.Series(
+        id: 'orders',
+        data: orderStats,
+        domainFn: (series, _) =>
+            DateFormat.d().format(series.dateTime).toString(),
+        // series.index.toString(),
+        measureFn: (series, _) => series.orders,
+        colorFn: (series, _) => series.barColor!,
+      )
+    ];
+
+    return charts.BarChart(
+      series,
+      animate: true,
     );
   }
 }

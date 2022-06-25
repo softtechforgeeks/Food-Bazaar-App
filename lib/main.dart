@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'pages/splash_screen.dart';
 import 'firebase_options.dart';
 import 'package:get/get.dart';
-
 import 'package:flutter_login_ui/products_screen.dart';
 import 'package:flutter_login_ui/new_product_screen.dart';
 

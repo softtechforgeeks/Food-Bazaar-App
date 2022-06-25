@@ -1,20 +1,24 @@
 import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/models/cart_model.dart';
 
-class Order extends Equatable {
+// ignore: must_be_immutable
+class Order {
   final String uid;
   final List<CartModel> orderList;
   CartModel? orderItem;
-  final double subtotal;
-  final double total;
+  final num subtotal;
+  final num total;
   final String notes;
   final String address;
   final bool isAccepted;
   final bool isDelivered;
   final bool isCancelled;
   final DateTime createdAt;
+  charts.Color? barColor;
 
   Order({
     required this.uid,
@@ -27,7 +31,15 @@ class Order extends Equatable {
     required this.isDelivered,
     required this.isCancelled,
     required this.createdAt,
-  });
+  }) {
+    barColor = charts.ColorUtil.fromDartColor(Colors.black);
+  }
+
+  get productName => null;
+
+  get price => null;
+
+  get quantity => null;
 
   // Future getOrderData() async {
   //   List<CartModel> newOrderList = [];
@@ -104,7 +116,7 @@ class Order extends Equatable {
     return js;
   }
 
-  factory Order.fromSnapshot(Map<String, dynamic> snap) {
+  factory Order.fromSnapshot(DocumentSnapshot snap) {
     // print(snap['items'].runtimeType);
     List<CartModel> y = [];
     for (var element in snap['items']) {
@@ -124,8 +136,8 @@ class Order extends Equatable {
     return Order(
       uid: snap['uid'] as String,
       orderList: y,
-      subtotal: snap['subtotal'] as double,
-      total: snap['total'] as double,
+      subtotal: snap['subtotal'] as num,
+      total: snap['total'] as num,
       notes: snap['notes'] as String,
       address: snap['address'] as String,
       isAccepted: snap['isAccepted'] as bool,

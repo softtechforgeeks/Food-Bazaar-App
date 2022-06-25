@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:flutter_login_ui/models/food-trackentry.dart';
+import 'package:flutter_login_ui/models/order_stat_model.dart';
 import '../models/model.dart';
 import '../models/order_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class DatabaseService {
+  DatabaseService();
 //   static final DatabaseService _instance = DatabaseService._constructor();
 //   factory DatabaseService() {
 //     return _instance;
@@ -11,10 +15,32 @@ class DatabaseService {
 //   DatabaseService._constructor();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
+//instance Database
+
+  Future<List<OrderStats>> getOrderStats() {
+    return _firebaseFirestore
+        .collection('order_stats')
+        .orderBy('dateTime')
+        .get()
+        .then((querySnapshot) => querySnapshot.docs
+            .asMap()
+            .entries
+            .map((entry) => OrderStats.fromSnapshot(entry.value, entry.key))
+            .toList());
+  }
+
   Stream<List<Order>> getOrders() {
     return _firebaseFirestore.collection('orders').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => Order.fromSnapshot(doc)).toList();
+    });
+  }
+
+  Stream<List<Order>> getUserOrders() {
+    return _firebaseFirestore.collection('orders').snapshots().map((snapshot) {
       return snapshot.docs
-          .map((doc) => Order.fromSnapshot(doc.data()))
+          .map((doc) => Order.fromSnapshot(doc))
+          .where((element) =>
+              (element.uid == FirebaseAuth.instance.currentUser!.uid))
           .toList();
     });
   }
@@ -84,3 +110,5 @@ class DatabaseService {
             });
   }
 }
+
+mixin DatabaseReference {}
