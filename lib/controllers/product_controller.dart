@@ -79,16 +79,16 @@ class ProductController extends GetxController {
   void updateProductPrice(
     int index,
     Product product,
-    double value,
+    num value,
   ) {
-    product.price = value;
+    product.price = value.toDouble();
     products[index] = product;
   }
 
   void saveNewProductPrice(
     Product product,
     String field,
-    double value,
+    num value,
   ) {
     database.updateField(
       product,

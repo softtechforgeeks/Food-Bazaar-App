@@ -47,9 +47,9 @@ dependencies:
   flutter_svg: ^0.20.0-nullsafety.3
   share_plus: ^4.0.9
   share: ^0.6.2+3
- 
+
   url_launcher: ^6.0.20
-  
+  firebase_messaging: ^11.4.2
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:flutter_login_ui/common/theme_helper.dart';
 import 'package:flutter_login_ui/products_screen.dart';
+import 'package:flutter_login_ui/services/notify.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'services/database_service.dart';
@@ -21,7 +22,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
   final ProductController productController = Get.find();
 
   StorageService storage = StorageService();
-
+  Notify n = Notify();
   DatabaseService database = DatabaseService();
   String dropdownValue = "Main";
   String title = 'UTM Student';
@@ -201,6 +202,11 @@ class _NewProductScreenState extends State<NewProductScreen> {
                           content: Text("Meal created successfully."),
                         ),
                       );
+                      setState(() {
+                        n.productNotification(
+                            title: "New meal for you",
+                            body: "Admin add a new meal for you, try it Now!");
+                      });
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (context) => ProductsScreen()),
@@ -272,7 +278,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
     String title,
     String name,
     ProductController productController,
-    double? controllerValue,
+    num? controllerValue,
   ) {
     return Row(
       children: [
@@ -288,7 +294,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
         ),
         Expanded(
           child: Slider(
-            value: (controllerValue == null) ? 0 : controllerValue,
+            value: (controllerValue == null) ? 0 : controllerValue.toDouble(),
             min: 0,
             max: 25,
             divisions: 10,

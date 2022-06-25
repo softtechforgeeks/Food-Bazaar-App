@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/common/theme_helper.dart';
+import 'package:flutter_login_ui/services/notify.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'models/model.dart';
 import 'package:flutter_login_ui/pages/forgot_password_page.dart';
@@ -18,7 +19,7 @@ class ManageProduct extends StatelessWidget {
   ManageProduct({Key? key}) : super(key: key);
   final ProductController productController =
       Get.put(ProductController(type: 'All'));
-
+  Notify n = Notify();
   final double _drawerIconSize = 24;
   final double _drawerFontSize = 17;
 
@@ -281,18 +282,34 @@ class ManageProduct extends StatelessWidget {
   }
 }
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   final Product product;
   final int index;
 
-  ProductCard({
+  const ProductCard({
     Key? key,
     required this.product,
     required this.index,
   }) : super(key: key);
 
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
   final ProductController productController = Get.find();
+
   String cate = "Main";
+
+  Notify n = Notify();
+
+  void notifyOnChange() {
+    print('before notify');
+    n.productNotification(
+        title: widget.product.name + " meal changed",
+        body: "Admin updated meal's information, check it out");
+    print('after notify');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -304,7 +321,7 @@ class ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product.name,
+                widget.product.name,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -313,7 +330,7 @@ class ProductCard extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text(product.category,
+              Text(widget.product.category,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -321,7 +338,7 @@ class ProductCard extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text(product.description,
+              Text(widget.product.description,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -332,7 +349,7 @@ class ProductCard extends StatelessWidget {
                     height: 80,
                     width: 80,
                     child: Image.network(
-                      product.imageUrl,
+                      widget.product.imageUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -364,12 +381,15 @@ class ProductCard extends StatelessWidget {
                               ),
                               onChanged: (value) {
                                 productController.updateProductCategory(
-                                  index,
-                                  product,
+                                  widget.index,
+                                  widget.product,
                                   value!,
                                 );
                                 productController.saveNewProductCategory(
-                                    product, 'category', value);
+                                    widget.product, 'category', value);
+                                setState(() {
+                                  notifyOnChange();
+                                });
                               },
                               items: <String>[
                                 'Main',
@@ -408,12 +428,15 @@ class ProductCard extends StatelessWidget {
                             child: TextField(
                               onChanged: (value) {
                                 productController.updateProductDescription(
-                                  index,
-                                  product,
+                                  widget.index,
+                                  widget.product,
                                   value,
                                 );
                                 productController.saveNewProductDescription(
-                                    product, 'description', value);
+                                    widget.product, 'description', value);
+                                setState(() {
+                                  notifyOnChange();
+                                });
                               },
                             ),
                           ),
@@ -435,25 +458,28 @@ class ProductCard extends StatelessWidget {
                           SizedBox(
                             width: 175,
                             child: Slider(
-                              value: product.price,
+                              value: widget.product.price.toDouble(),
                               min: 0,
                               max: 25,
                               divisions: 10,
                               onChanged: (value) {
                                 productController.updateProductPrice(
-                                  index,
-                                  product,
+                                  widget.index,
+                                  widget.product,
                                   value,
                                 );
                               },
                               onChangeEnd: (value) {
                                 productController.saveNewProductPrice(
-                                    product, 'price', value);
+                                    widget.product, 'price', value);
+                                setState(() {
+                                  notifyOnChange();
+                                });
                               },
                             ),
                           ),
                           Text(
-                            '\$${product.price.toStringAsFixed(1)}',
+                            '\$${widget.product.price.toStringAsFixed(1)}',
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -476,7 +502,7 @@ class ProductCard extends StatelessWidget {
                           SizedBox(
                             width: 175,
                             child: Slider(
-                              value: product.quantity.toDouble(),
+                              value: widget.product.quantity.toDouble(),
                               min: 0,
                               max: 30,
                               divisions: 5,
@@ -484,16 +510,21 @@ class ProductCard extends StatelessWidget {
                               inactiveColor: Colors.black12,
                               onChanged: (value) {
                                 productController.updateProductQuantity(
-                                    index, product, value.toInt());
+                                    widget.index,
+                                    widget.product,
+                                    value.toInt());
                               },
                               onChangeEnd: (value) {
                                 productController.saveNewProductQuantity(
-                                    product, 'quantity', value.toInt());
+                                    widget.product, 'quantity', value.toInt());
+                                setState(() {
+                                  notifyOnChange();
+                                });
                               },
                             ),
                           ),
                           Text(
-                            '${product.quantity.toInt()}',
+                            '${widget.product.quantity.toInt()}',
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -527,7 +558,7 @@ class ProductCard extends StatelessWidget {
                     onPressed: () {
                       final docProduct = FirebaseFirestore.instance
                           .collection('products')
-                          .where('id', isEqualTo: product.id)
+                          .where('id', isEqualTo: widget.product.id)
                           .get()
                           .then((querySnapshot) =>
                               {querySnapshot.docs.first.reference.delete()});

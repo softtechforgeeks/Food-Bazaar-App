@@ -28,8 +28,8 @@ class CartProvider with ChangeNotifier {
     return cartList;
   }
 
-  double subTotal() {
-    double subtotal = 0.0;
+  num subTotal() {
+    num subtotal = 0.0;
     for (var element in cartList) {
       subtotal += element.price * element.quantity;
     }

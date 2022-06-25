@@ -23,7 +23,7 @@ class CheckOutPage extends StatefulWidget {
 }
 
 class _CheckOutPageState extends State<CheckOutPage> {
-  double subTotal = 0.0;
+  num subTotal = 0.0;
   final notesController = TextEditingController();
   final addrController = TextEditingController();
   DatabaseService database = DatabaseService();

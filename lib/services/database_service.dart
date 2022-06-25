@@ -14,7 +14,7 @@ class DatabaseService {
 
   Stream<List<Order>> getOrders() {
     return _firebaseFirestore.collection('orders').snapshots().map((snapshot) {
-      return snapshot.docs
+      return snapshot.docs.reversed
           .map((doc) => Order.fromSnapshot(doc))
           .toList();
     });
@@ -22,7 +22,7 @@ class DatabaseService {
 
   Stream<List<Order>> getUserOrders() {
     return _firebaseFirestore.collection('orders').snapshots().map((snapshot) {
-      return snapshot.docs
+      return snapshot.docs.reversed
           .map((doc) => Order.fromSnapshot(doc))
           .where((element) =>
               (element.uid == FirebaseAuth.instance.currentUser!.uid))

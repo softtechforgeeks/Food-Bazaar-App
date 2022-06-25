@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class SingleCartItem extends StatefulWidget {
   final String imageUrl;
   final String name;
-  final double price;
+  final num price;
   final int quantity;
   final String category;
   final int id;
