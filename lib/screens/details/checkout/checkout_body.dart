@@ -288,7 +288,7 @@ class _CheckBodyState extends State<CheckBody> {
                         subtotal: subTotal,
                         total: (subTotal + 5),
                         notes: notesController.text,
-                        address: addrController.text,
+                        address: answer,
                         isAccepted: false,
                         isDelivered: false,
                         isCancelled: false,
