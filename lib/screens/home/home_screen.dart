@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/pages/profile_page.dart';
 import 'package:flutter_login_ui/screens/details/cartPage/cart_page.dart';
@@ -17,6 +17,8 @@ import 'package:flutter_login_ui/services/auth.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../pages/registration_page.dart';
 // import '../../pages/menu.dart';
 import '../../pages/forgot_password_page.dart';
@@ -250,6 +252,42 @@ class HomeScreen extends StatelessWidget {
           subject: 'Share App');
     }
 
+    openWhatsApp() async {
+      var whatsapp = "00201028980878";
+      var whatsappURL_android =
+          "https://api.whatsapp.com/send?phone=${whatsapp}" +
+              "&text=Hello I need help";
+      var whatsappURL_ios =
+          "https://wa.me/${whatsapp}?text=${Uri.parse("Hello I need help")}";
+      if (Platform.isIOS) {
+        // ignore: deprecated_member_use
+        if (await canLaunch(whatsappURL_ios)) {
+          await launch(whatsappURL_ios);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: new Text("Whatsapp is not installed")));
+        }
+      } else {
+        if (await canLaunch(whatsappURL_android)) {
+          await launch(whatsappURL_android);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: new Text("Whatsapp is not installed")));
+        }
+      }
+    }
+
+    launchWhatsApp() async {
+      final link = WhatsAppUnilink(
+        phoneNumber: '+201028980878',
+        text: "Hey! I'm inquiring about my order",
+      );
+      // Convert the WhatsAppUnilink instance to a string.
+      // Use either Dart's string interpolation or the toString() method.
+      // The "launch" method is part of "url_launcher".
+      await launch('$link');
+    }
+
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 255, 106, 0),
       elevation: 0,
@@ -257,6 +295,7 @@ class HomeScreen extends StatelessWidget {
       //   icon: SvgPicture.asset("assets/icons/back.svg"),
       //   onPressed: () {},
       // ),
+
       actions: [
         IconButton(
           icon: SvgPicture.asset(
@@ -266,6 +305,11 @@ class HomeScreen extends StatelessWidget {
           ),
           onPressed: _shareApp,
         ),
+        IconButton(
+            icon: const Icon(Icons.whatsapp_rounded),
+            onPressed: () {
+              launchWhatsApp();
+            }),
         IconButton(
             icon: const Icon(Icons.lightbulb),
             onPressed: () {

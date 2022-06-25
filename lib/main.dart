@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/models/user.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_login_ui/services/auth.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'pages/splash_screen.dart';
 import 'firebase_options.dart';
 import 'package:get/get.dart';

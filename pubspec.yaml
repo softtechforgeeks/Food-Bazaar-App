@@ -37,7 +37,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   switcher_button: ^0.0.4
   
-  shared_preferences: ^2.0.15
+  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -53,6 +53,8 @@ dependencies:
 
   url_launcher: ^6.0.20
   firebase_messaging: ^11.4.2
+  whatsapp_unilink: ^2.0.1+1
+
 
 dev_dependencies:
   flutter_test:
