@@ -12,6 +12,10 @@ import 'package:flutter_login_ui/widgets/single_cart_item.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
+
 class CheckBody extends StatefulWidget {
   const CheckBody({Key? key}) : super(key: key);
 
@@ -27,8 +31,53 @@ class _CheckBodyState extends State<CheckBody> {
   Notify n = Notify();
   List<CartModel> orderList = [];
 
+  var uuid = const Uuid();
+  String _sessionToken = '1234567890';
+  List<dynamic> _placeList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    addrController.addListener(() {
+      _onChanged();
+    });
+  }
+
+  _onChanged() {
+    if (_sessionToken == null) {
+      setState(() {
+        _sessionToken = uuid.v4();
+      });
+    }
+    getSuggestion(addrController.text);
+  }
+
+  void getSuggestion(String input) async {
+    String kPLACESAPIKEY = "AIzaSyDXdESNtAANbXKvY15Q10MlqjkWaNtVufM";
+    try {
+      String baseURL =
+          'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      String request =
+          '$baseURL?input=$input&key=$kPLACESAPIKEY&sessiontoken=$_sessionToken';
+      var response = await http.get(Uri.parse(request));
+      var data = json.decode(response.body);
+      print('mydata');
+      print(data);
+      if (response.statusCode == 200) {
+        setState(() {
+          _placeList = json.decode(response.body)['predictions'];
+        });
+      } else {
+        throw Exception('Failed to load predictions');
+      }
+    } catch (e) {
+      // toastMessage('success');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String answer = '';
     final user = Provider.of<UserModel>(context);
     String uname = "${user.firstName} ${user.lastName}";
     return ListView(
@@ -149,6 +198,19 @@ class _CheckBodyState extends State<CheckBody> {
                   SizedBox(
                     width: 300,
                     child: TextField(
+                      // controller: addrController,
+                      decoration: InputDecoration(
+                        hintText: "Seek your location here",
+                        focusColor: Colors.white,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        //  prefixIcon: Icon(Icons.map),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.cancel),
+                          onPressed: () {
+                            addrController.clear();
+                          },
+                        ),
+                      ),
                       onChanged: (value) {
                         addrController.text = value;
                         // print(addrController.text);
@@ -158,10 +220,29 @@ class _CheckBodyState extends State<CheckBody> {
                           Fluttertoast.showToast(
                               msg: "Address cannot be Empty");
                         }
+                        answer = value;
                       },
                       textInputAction: TextInputAction.next,
                     ),
                   ),
+                  Expanded(
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: _placeList.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () async {
+                            answer = _placeList[index]["description"];
+                          },
+                          child: ListTile(
+                            title: Text(addrController.text =
+                                _placeList[index]["description"]),
+                          ),
+                        );
+                      },
+                    ),
+                  )
                 ],
               ),
               ListTile(
@@ -207,7 +288,7 @@ class _CheckBodyState extends State<CheckBody> {
                         subtotal: subTotal,
                         total: (subTotal + 5),
                         notes: notesController.text,
-                        address: addrController.text,
+                        address: answer,
                         isAccepted: false,
                         isDelivered: false,
                         isCancelled: false,
@@ -234,7 +315,7 @@ class _CheckBodyState extends State<CheckBody> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const UserActiveOrders()));
-                  } on Exception catch (e) {
+                  } on Exception {
                     Fluttertoast.showToast(msg: "Exceptional error occured");
                     // print(e);
                   }
