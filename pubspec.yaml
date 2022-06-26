@@ -36,6 +36,8 @@ dependencies:
   flutter_lints: ^1.0.4
   flutter_bloc: ^8.0.1
   switcher_button: ^0.0.4
+  
+  
   geolocator: ^8.2.1
   flutter_typeahead: ^4.0.0
   geocoding: ^2.0.4
@@ -56,6 +58,8 @@ dependencies:
 
   url_launcher: ^6.0.20
   firebase_messaging: ^11.4.2
+  whatsapp_unilink: ^2.0.1+1
+
 
 dev_dependencies:
   flutter_test:

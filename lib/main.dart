@@ -6,6 +6,7 @@ import 'package:flutter_login_ui/services/auth.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+
 import 'pages/splash_screen.dart';
 import 'firebase_options.dart';
 import 'package:get/get.dart';

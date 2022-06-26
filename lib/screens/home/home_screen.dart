@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/pages/profile_page.dart';
 import 'package:flutter_login_ui/screens/details/cartPage/cart_page.dart';
@@ -17,6 +17,8 @@ import 'package:flutter_login_ui/services/auth.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../../pages/registration_page.dart';
 // import '../../pages/menu.dart';
 import '../../pages/forgot_password_page.dart';
@@ -250,6 +252,28 @@ class HomeScreen extends StatelessWidget {
           subject: 'Share App');
     }
 
+    launchWhatsApp() async {
+      final link = WhatsAppUnilink(
+        phoneNumber: '+201028980878',
+        text: "Hey! I'm inquiring about my order",
+      );
+      await launch('$link');
+    }
+
+    final Uri _url = Uri.parse('https://www.thelostfoodproject.org');
+    void _launchUrl() async {
+      if (!await launchUrl(_url)) throw 'Could not launch $_url';
+    }
+
+    _charity() async {
+      const url = 'https://www.thelostfoodproject.org';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 255, 106, 0),
       elevation: 0,
@@ -257,6 +281,7 @@ class HomeScreen extends StatelessWidget {
       //   icon: SvgPicture.asset("assets/icons/back.svg"),
       //   onPressed: () {},
       // ),
+
       actions: [
         IconButton(
           icon: SvgPicture.asset(
@@ -265,6 +290,18 @@ class HomeScreen extends StatelessWidget {
             color: kTextColor,
           ),
           onPressed: _shareApp,
+        ),
+        IconButton(
+            icon: const Icon(Icons.whatsapp_rounded),
+            onPressed: () {
+              launchWhatsApp();
+            }),
+        IconButton(
+          icon: SvgPicture.asset(
+            "assets/icons/love.svg",
+            // By default our  icon color is white
+          ),
+          onPressed: _launchUrl,
         ),
         IconButton(
             icon: const Icon(Icons.lightbulb),

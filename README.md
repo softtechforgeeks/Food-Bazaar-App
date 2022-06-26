@@ -9,6 +9,7 @@ Dart: 2.13.1
 
 ## Screenshots
 <img src="assets/logo.png"> 
+<img src="assets/icons/love.svg">
 
 ## App UI (until now)
 1. Splash Screen
