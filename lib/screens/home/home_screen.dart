@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+
 import '../../pages/registration_page.dart';
 // import '../../pages/menu.dart';
 import '../../pages/forgot_password_page.dart';
@@ -252,40 +252,26 @@ class HomeScreen extends StatelessWidget {
           subject: 'Share App');
     }
 
-    openWhatsApp() async {
-      var whatsapp = "00201028980878";
-      var whatsappURL_android =
-          "https://api.whatsapp.com/send?phone=${whatsapp}" +
-              "&text=Hello I need help";
-      var whatsappURL_ios =
-          "https://wa.me/${whatsapp}?text=${Uri.parse("Hello I need help")}";
-      if (Platform.isIOS) {
-        // ignore: deprecated_member_use
-        if (await canLaunch(whatsappURL_ios)) {
-          await launch(whatsappURL_ios);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: new Text("Whatsapp is not installed")));
-        }
-      } else {
-        if (await canLaunch(whatsappURL_android)) {
-          await launch(whatsappURL_android);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: new Text("Whatsapp is not installed")));
-        }
-      }
-    }
-
     launchWhatsApp() async {
       final link = WhatsAppUnilink(
         phoneNumber: '+201028980878',
         text: "Hey! I'm inquiring about my order",
       );
-      // Convert the WhatsAppUnilink instance to a string.
-      // Use either Dart's string interpolation or the toString() method.
-      // The "launch" method is part of "url_launcher".
       await launch('$link');
+    }
+
+    final Uri _url = Uri.parse('https://www.thelostfoodproject.org');
+    void _launchUrl() async {
+      if (!await launchUrl(_url)) throw 'Could not launch $_url';
+    }
+
+    _charity() async {
+      const url = 'https://www.thelostfoodproject.org';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
     }
 
     return AppBar(
@@ -310,6 +296,13 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               launchWhatsApp();
             }),
+        IconButton(
+          icon: SvgPicture.asset(
+            "assets/icons/love.svg",
+            // By default our  icon color is white
+          ),
+          onPressed: _launchUrl,
+        ),
         IconButton(
             icon: const Icon(Icons.lightbulb),
             onPressed: () {
