@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class CheckBody extends StatefulWidget {
   const CheckBody({Key? key}) : super(key: key);
@@ -32,27 +33,28 @@ class _CheckBodyState extends State<CheckBody> {
   List<CartModel> orderList = [];
 
   var uuid = const Uuid();
-  String _sessionToken = '1234567890';
-  List<dynamic> _placeList = [];
+  final String _sessionToken = '1234567890';
+  final List<String> _placeList = [];
 
-  @override
-  void initState() {
-    super.initState();
-    addrController.addListener(() {
-      _onChanged();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   addrController.addListener(() {
+  //     _onChanged();
+  //   });
+  // }
 
-  _onChanged() {
-    if (_sessionToken == null) {
-      setState(() {
-        _sessionToken = uuid.v4();
-      });
-    }
-    getSuggestion(addrController.text);
-  }
+  // _onChanged() {
+  //   getSuggestion(addrController.text);
+  // }
 
-  void getSuggestion(String input) async {
+  Future<List<String>> getPlaceSuggestions(String input) async {
+    // if (_sessionToken == null) {
+    //   setState(() {
+    //     _sessionToken = uuid.v4();
+    //   });
+    // }
+    List<String> places = [];
     String kPLACESAPIKEY = "AIzaSyDXdESNtAANbXKvY15Q10MlqjkWaNtVufM";
     try {
       String baseURL =
@@ -60,19 +62,23 @@ class _CheckBodyState extends State<CheckBody> {
       String request =
           '$baseURL?input=$input&key=$kPLACESAPIKEY&sessiontoken=$_sessionToken';
       var response = await http.get(Uri.parse(request));
-      var data = json.decode(response.body);
+      final List data = json.decode(response.body)['predictions'];
       print('mydata');
       print(data);
       if (response.statusCode == 200) {
-        setState(() {
-          _placeList = json.decode(response.body)['predictions'];
-        });
+        // List<dynamic> _placeList = json.decode(response.body)['predictions'];
+        places = data.map((e) => e["description"] as String).toList();
+        print(_placeList.length);
+        print(places);
       } else {
+        print("error happend inside getsuggestions");
         throw Exception('Failed to load predictions');
       }
     } catch (e) {
+      print("error happend inside getsuggestions");
       // toastMessage('success');
     }
+    return places;
   }
 
   @override
@@ -172,7 +178,7 @@ class _CheckBodyState extends State<CheckBody> {
                     ),
                   ),
                   SizedBox(
-                    width: 300,
+                    width: 250,
                     child: TextField(
                       onChanged: (value) {
                         notesController.text = value;
@@ -196,53 +202,74 @@ class _CheckBodyState extends State<CheckBody> {
                     ),
                   ),
                   SizedBox(
-                    width: 300,
-                    child: TextField(
-                      // controller: addrController,
-                      decoration: InputDecoration(
-                        hintText: "Seek your location here",
-                        focusColor: Colors.white,
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        //  prefixIcon: Icon(Icons.map),
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.cancel),
-                          onPressed: () {
-                            addrController.clear();
-                          },
+                    width: 250,
+                    child: TypeAheadField<String?>(
+                      debounceDuration: const Duration(microseconds: 500),
+                      textFieldConfiguration: const TextFieldConfiguration(
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          hintText: "Seek your location here",
                         ),
                       ),
-                      onChanged: (value) {
-                        addrController.text = value;
-                        // print(addrController.text);
+                      suggestionsCallback: getPlaceSuggestions,
+                      itemBuilder: (context, String? suggestion) {
+                        final String place = suggestion!;
+                        return ListTile(title: Text(place));
                       },
-                      onSubmitted: (value) {
-                        if (value.isEmpty) {
-                          Fluttertoast.showToast(
-                              msg: "Address cannot be Empty");
-                        }
-                        answer = value;
+                      onSuggestionSelected: (String? suggestion) {
+                        setState(() {
+                          addrController.text = suggestion!;
+                        });
                       },
-                      textInputAction: TextInputAction.next,
+                      noItemsFoundBuilder: ((context) =>
+                          const ListTile(title: Text('No place found.'))),
                     ),
+                    // TextField(
+                    //   // controller: addrController,
+                    //   decoration: InputDecoration(
+                    //     hintText: "Seek your location here",
+                    //     focusColor: Colors.white,
+                    //     floatingLabelBehavior: FloatingLabelBehavior.never,
+                    //     //  prefixIcon: Icon(Icons.map),
+                    //     suffixIcon: IconButton(
+                    //       icon: const Icon(Icons.cancel),
+                    //       onPressed: () {
+                    //         addrController.clear();
+                    //       },
+                    //     ),
+                    //   ),
+                    //   onChanged: (value) {
+                    //     addrController.text = value;
+                    //     // print(addrController.text);
+                    //   },
+                    //   onSubmitted: (value) {
+                    //     if (value.isEmpty) {
+                    //       Fluttertoast.showToast(
+                    //           msg: "Address cannot be Empty");
+                    //     }
+                    //     answer = value;
+                    //   },
+                    //   textInputAction: TextInputAction.next,
+                    // ),
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: _placeList.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () async {
-                            answer = _placeList[index]["description"];
-                          },
-                          child: ListTile(
-                            title: Text(addrController.text =
-                                _placeList[index]["description"]),
-                          ),
-                        );
-                      },
-                    ),
-                  )
+                  // Expanded(
+                  //   child: ListView.builder(
+                  //     physics: const NeverScrollableScrollPhysics(),
+                  //     shrinkWrap: true,
+                  //     itemCount: _placeList.length,
+                  //     itemBuilder: (context, index) {
+                  //       return GestureDetector(
+                  //         onTap: () async {
+                  //           answer = _placeList[index]["description"];
+                  //         },
+                  //         child: ListTile(
+                  //           title: Text(addrController.text =
+                  //               _placeList[index]["description"]),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // )
                 ],
               ),
               ListTile(
@@ -288,7 +315,7 @@ class _CheckBodyState extends State<CheckBody> {
                         subtotal: subTotal,
                         total: (subTotal + 5),
                         notes: notesController.text,
-                        address: answer,
+                        address: addrController.text,
                         isAccepted: false,
                         isDelivered: false,
                         isCancelled: false,

@@ -100,7 +100,7 @@ class OrderCard extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 SizedBox(
-                                  width: 285,
+                                  width: 200,
                                   child: Text(
                                     order.orderList[index].category,
                                     style: const TextStyle(
@@ -112,7 +112,7 @@ class OrderCard extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 SizedBox(
-                                  width: 285,
+                                  width: 200,
                                   child: Text(
                                     "Quantity: ${order.orderList[index].quantity}",
                                     style: const TextStyle(
@@ -124,7 +124,7 @@ class OrderCard extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 SizedBox(
-                                  width: 285,
+                                  width: 200,
                                   child: Text(
                                     "Price: ${order.orderList[index].price}",
                                     style: const TextStyle(

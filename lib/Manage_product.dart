@@ -265,7 +265,7 @@ class ManageProduct extends StatelessWidget {
                   itemCount: productController.products.length,
                   itemBuilder: (context, index) {
                     return SizedBox(
-                      height: 380,
+                      height: 450,
                       child: ProductCard(
                         product: productController.products[index],
                         index: index,
@@ -320,13 +320,26 @@ class _ProductCardState extends State<ProductCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.product.name,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              Row(children: [
+                SizedBox(
+                  height: 80,
+                  width: 80,
+                  child: Image.network(
+                    widget.product.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  widget.product.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ]),
               const SizedBox(
                 height: 10,
               ),
@@ -345,14 +358,6 @@ class _ProductCardState extends State<ProductCard> {
                   )),
               Row(
                 children: [
-                  SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: Image.network(
-                      widget.product.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
                   const SizedBox(
                     width: 10,
                   ),

@@ -37,8 +37,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Obx(
-          () => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          () => ListView(
+            shrinkWrap: true,
             children: [
               SizedBox(
                 height: 100,
