@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/models/cart_model.dart';
 import 'package:flutter_login_ui/models/order_model.dart';
@@ -10,10 +9,10 @@ import 'package:flutter_login_ui/services/notify.dart';
 import 'package:flutter_login_ui/widgets/my_button.dart';
 import 'package:flutter_login_ui/widgets/single_cart_item.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
@@ -34,26 +33,9 @@ class _CheckBodyState extends State<CheckBody> {
 
   var uuid = const Uuid();
   final String _sessionToken = '1234567890';
-  final List<String> _placeList = [];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   addrController.addListener(() {
-  //     _onChanged();
-  //   });
-  // }
-
-  // _onChanged() {
-  //   getSuggestion(addrController.text);
-  // }
+  // final List<String> _placeList = [];
 
   Future<List<String>> getPlaceSuggestions(String input) async {
-    // if (_sessionToken == null) {
-    //   setState(() {
-    //     _sessionToken = uuid.v4();
-    //   });
-    // }
     List<String> places = [];
     String kPLACESAPIKEY = "AIzaSyDXdESNtAANbXKvY15Q10MlqjkWaNtVufM";
     try {
@@ -63,36 +45,30 @@ class _CheckBodyState extends State<CheckBody> {
           '$baseURL?input=$input&key=$kPLACESAPIKEY&sessiontoken=$_sessionToken';
       var response = await http.get(Uri.parse(request));
       final List data = json.decode(response.body)['predictions'];
-      print('mydata');
-      print(data);
       if (response.statusCode == 200) {
-        // List<dynamic> _placeList = json.decode(response.body)['predictions'];
         places = data.map((e) => e["description"] as String).toList();
-        print(_placeList.length);
-        print(places);
       } else {
         print("error happend inside getsuggestions");
         throw Exception('Failed to load predictions');
       }
     } catch (e) {
       print("error happend inside getsuggestions");
-      // toastMessage('success');
     }
     return places;
   }
 
   @override
   Widget build(BuildContext context) {
-    String answer = '';
     final user = Provider.of<UserModel>(context);
     String uname = "${user.firstName} ${user.lastName}";
+    print(uname);
     return ListView(
       children: [
         Expanded(
           child: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("cart")
-                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .doc(user.uid)
                 .collection("userCart")
                 .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
@@ -109,11 +85,6 @@ class _CheckBodyState extends State<CheckBody> {
                       itemCount: streamSnapshort.data!.docs.length,
                       itemBuilder: (ctx, index) {
                         var data = streamSnapshort.data!.docs[index];
-                        // print(data['id'].runtimeType);
-                        // print(data['category'].runtimeType);
-                        // print(data['imageUrl'].runtimeType);
-                        // print(data['price'].runtimeType);
-                        // print(data['name'].runtimeType);
                         var c = CartModel(
                           id: data["id"].toString(),
                           category: data["category"],
@@ -133,12 +104,8 @@ class _CheckBodyState extends State<CheckBody> {
                                   name: '',
                                 ));
                         if (existingItem.id == '') {
-                          // print(data['price']);
                           subTotal += (data["price"] * data["quantity"]);
-                          // print(data['quantity'].runtimeType);
-                          // print(subTotal);
                           orderList.add(c);
-                          // print(orderList);
                         } else {
                           if (existingItem.quantity != c.quantity) {
                             orderList.remove(existingItem);
@@ -146,7 +113,6 @@ class _CheckBodyState extends State<CheckBody> {
                                 (existingItem.price * existingItem.quantity);
                             orderList.add(c);
                             subTotal += (c.price * c.quantity);
-                            // print("qantity is different");
                           }
                         }
                         return SingleCartItem(
@@ -178,7 +144,7 @@ class _CheckBodyState extends State<CheckBody> {
                     ),
                   ),
                   SizedBox(
-                    width: 250,
+                    width: 200,
                     child: TextField(
                       onChanged: (value) {
                         notesController.text = value;
@@ -202,7 +168,7 @@ class _CheckBodyState extends State<CheckBody> {
                     ),
                   ),
                   SizedBox(
-                    width: 250,
+                    width: 200,
                     child: TypeAheadField<String?>(
                       debounceDuration: const Duration(microseconds: 500),
                       textFieldConfiguration: const TextFieldConfiguration(
@@ -224,57 +190,12 @@ class _CheckBodyState extends State<CheckBody> {
                       noItemsFoundBuilder: ((context) =>
                           const ListTile(title: Text('No place found.'))),
                     ),
-                    // TextField(
-                    //   // controller: addrController,
-                    //   decoration: InputDecoration(
-                    //     hintText: "Seek your location here",
-                    //     focusColor: Colors.white,
-                    //     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    //     //  prefixIcon: Icon(Icons.map),
-                    //     suffixIcon: IconButton(
-                    //       icon: const Icon(Icons.cancel),
-                    //       onPressed: () {
-                    //         addrController.clear();
-                    //       },
-                    //     ),
-                    //   ),
-                    //   onChanged: (value) {
-                    //     addrController.text = value;
-                    //     // print(addrController.text);
-                    //   },
-                    //   onSubmitted: (value) {
-                    //     if (value.isEmpty) {
-                    //       Fluttertoast.showToast(
-                    //           msg: "Address cannot be Empty");
-                    //     }
-                    //     answer = value;
-                    //   },
-                    //   textInputAction: TextInputAction.next,
-                    // ),
                   ),
-                  // Expanded(
-                  //   child: ListView.builder(
-                  //     physics: const NeverScrollableScrollPhysics(),
-                  //     shrinkWrap: true,
-                  //     itemCount: _placeList.length,
-                  //     itemBuilder: (context, index) {
-                  //       return GestureDetector(
-                  //         onTap: () async {
-                  //           answer = _placeList[index]["description"];
-                  //         },
-                  //         child: ListTile(
-                  //           title: Text(addrController.text =
-                  //               _placeList[index]["description"]),
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // )
                 ],
               ),
               ListTile(
                 leading: const Text("Sub Total"),
-                trailing: Text("\$" + subTotal.toString()),
+                trailing: Text("\$$subTotal"),
               ),
 
               const ListTile(
@@ -286,10 +207,9 @@ class _CheckBodyState extends State<CheckBody> {
               ),
               ListTile(
                 leading: const Text("Total"),
-                trailing: Text("\$" + (subTotal + 5).toString()),
+                trailing: Text("\$${subTotal + 5}"),
               ),
               //scroll text input field
-
               MyButton(
                 onPressed: () {
                   setState(() {});
@@ -310,7 +230,7 @@ class _CheckBodyState extends State<CheckBody> {
                     // print(subTotal);
                     await database.addOrder(
                       Order(
-                        uid: FirebaseAuth.instance.currentUser!.uid,
+                        uid: user.uid!,
                         orderList: orderList,
                         subtotal: subTotal,
                         total: (subTotal + 5),
@@ -326,26 +246,24 @@ class _CheckBodyState extends State<CheckBody> {
                     setState(() {
                       n.orderNotification(
                           title: "New Order Created",
-                          body: uname + " made a new order");
+                          body: "$uname made a new order");
                     });
 
                     for (var item in orderList) {
                       FirebaseFirestore.instance
                           .collection("cart")
-                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .doc(user.uid)
                           .collection("userCart")
                           .doc(item.id.toString())
                           .delete();
                       setState(() {});
                     }
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const UserActiveOrders()));
                   } on Exception {
                     Fluttertoast.showToast(msg: "Exceptional error occured");
                     // print(e);
                   }
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserActiveOrders()));
                 },
                 text: 'Order Now',
               ),

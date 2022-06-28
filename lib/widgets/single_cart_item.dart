@@ -49,100 +49,102 @@ class _SingleCartItemState extends State<SingleCartItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(20.0),
-      height: 150,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 7,
-          )
-        ],
-      ),
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(widget.imageUrl),
+    return SingleChildScrollView(
+      child: Container(
+        margin: const EdgeInsets.all(20.0),
+        height: 150,
+        width: 300,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              blurRadius: 7,
+            )
+          ],
+        ),
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(widget.imageUrl),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        widget.name,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      Text(
-                        widget.category,
-                      ),
-                      Text(
-                        "\$ ${widget.price * widget.quantity}",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          IncrementAndDecrement(
-                            icon: Icons.add,
-                            onPressed: () {
-                              setState(() {
-                                quantityFuntion(1);
-                              });
-                            },
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          widget.name,
+                          style: const TextStyle(
+                            fontSize: 18,
                           ),
-                          Text(
-                            widget.quantity.toString(),
-                            style: const TextStyle(
-                              fontSize: 18,
-                            ),
+                        ),
+                        Text(
+                          widget.category,
+                        ),
+                        Text(
+                          "\$ ${widget.price * widget.quantity}",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
-                          IncrementAndDecrement(
-                            icon: Icons.remove,
-                            onPressed: () {
-                              if (widget.quantity > 1) {
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IncrementAndDecrement(
+                              icon: Icons.add,
+                              onPressed: () {
                                 setState(() {
-                                  quantityFuntion(-1);
+                                  quantityFuntion(1);
                                 });
-                              }
-                            },
-                          ),
-                        ],
-                      )
-                    ],
+                              },
+                            ),
+                            Text(
+                              widget.quantity.toString(),
+                              style: const TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            IncrementAndDecrement(
+                              icon: Icons.remove,
+                              onPressed: () {
+                                if (widget.quantity > 1) {
+                                  setState(() {
+                                    quantityFuntion(-1);
+                                  });
+                                }
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-          IconButton(
-            onPressed: () {
-              deleteProductFuntion();
-            },
-            icon: const Icon(
-              Icons.close,
+                )
+              ],
             ),
-          )
-        ],
+            IconButton(
+              onPressed: () {
+                deleteProductFuntion();
+              },
+              icon: const Icon(
+                Icons.close,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

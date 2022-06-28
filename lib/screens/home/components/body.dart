@@ -21,6 +21,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     var products = productController.products;
+    setState(() {});
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,12 +48,7 @@ class _BodyState extends State<Body> {
                   setState(() {
                     products =
                         RxList(productController.onUpdate(categoryList[index]));
-                    // print(index);
                     idx = index;
-                    // productController.onUpdate(categoryList[idx]);
-                    // print(categoryList[idx]);
-                    // print('set state');
-                    // print(products.length);
                   });
                   setState(() {});
                 },
