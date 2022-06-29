@@ -21,7 +21,7 @@ class SingleCartItem extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SingleCartItemState createState() => _SingleCartItemState();
+  State<SingleCartItem> createState() => _SingleCartItemState();
 }
 
 class _SingleCartItemState extends State<SingleCartItem> {

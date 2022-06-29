@@ -9,9 +9,9 @@ import 'package:flutter_login_ui/products_screen.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
-  UserModel loggedInUser;
+  final UserModel loggedInUser;
 
-  Wrapper({required this.loggedInUser});
+  const Wrapper({super.key, required this.loggedInUser});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class Wrapper extends StatelessWidget {
       if (loggedInUser.title == "Admin") {
         return ProductsScreen();
       } else {
-        return HomeScreen();
+        return const HomeScreen();
       }
     } else {
       return const LoginPage();

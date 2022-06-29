@@ -5,12 +5,13 @@ class MyButton extends StatefulWidget {
   final void Function()? onPressed;
   final String text;
   const MyButton({
+    super.key,
     required this.onPressed,
     required this.text,
   });
 
   @override
-  _MyButtonState createState() => _MyButtonState();
+  State<MyButton> createState() => _MyButtonState();
 }
 
 class _MyButtonState extends State<MyButton> {
@@ -41,7 +42,7 @@ class _MyButtonState extends State<MyButton> {
           child: Text(
             widget.text,
             style: const TextStyle(
-              color: AppColors.KwhiteColor,
+              color: AppColors.whiteColor,
             ),
           ),
         ),

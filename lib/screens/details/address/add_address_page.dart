@@ -3,9 +3,9 @@ import 'package:flutter_login_ui/screens/details/address/address_form.dart';
 import 'package:flutter_login_ui/screens/details/checkout/check_out_page.dart';
 import 'package:flutter/material.dart';
 
-import '../../../app_properties.dart';
-
 class AddAddressPage extends StatelessWidget {
+  const AddAddressPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     Widget finishButton = InkWell(
@@ -16,8 +16,8 @@ class AddAddressPage extends StatelessWidget {
         width: MediaQuery.of(context).size.width / 1.5,
         decoration: BoxDecoration(
             gradient: mainButton,
-            boxShadow: [
-              const BoxShadow(
+            boxShadow: const [
+              BoxShadow(
                 color: Color.fromRGBO(0, 0, 0, 0.16),
                 offset: Offset(0, 5),
                 blurRadius: 10.0,
@@ -160,7 +160,7 @@ class AddAddressPage extends StatelessWidget {
                               )))
                     ],
                   ),
-                  AddAddressForm(),
+                  const AddAddressForm(),
                   Center(child: finishButton)
                 ],
               ),

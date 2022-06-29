@@ -65,7 +65,7 @@ class DatabaseService {
   }
 
   Future<void> addOrder(Order order) async {
-    print(order.subtotal);
+    // print(order.subtotal);
     int list =
         await _firebaseFirestore.collection('orders').get().then((value) {
       var count = 0;
@@ -74,7 +74,7 @@ class DatabaseService {
       return count;
     });
     // int x = list.length;
-    print(list);
+    // print(list);
     return _firebaseFirestore
         .collection('orders')
         .doc((list + 1).toString())

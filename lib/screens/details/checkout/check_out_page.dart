@@ -1,17 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/models/cart_model.dart';
-import 'package:flutter_login_ui/models/order_model.dart';
-import 'package:flutter_login_ui/models/user.dart';
 import 'package:flutter_login_ui/screens/details/checkout/checkout_body.dart';
-import 'package:flutter_login_ui/screens/manage_orders/user_orders.dart';
 
 import 'package:flutter_login_ui/services/database_service.dart';
-import 'package:flutter_login_ui/widgets/my_button.dart';
-import 'package:flutter_login_ui/widgets/single_cart_item.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 import '../../../appColors/app_colors.dart';
 
@@ -31,9 +22,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
   @override
   Widget build(BuildContext context) {
-    String uid = Provider.of<UserModel>(context).uid!;
     return Scaffold(
-      body: CheckBody(),
+      body: const CheckBody(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color.fromARGB(0, 59, 57, 57),
@@ -41,7 +31,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
         title: const Text(
           "Cart",
           style: TextStyle(
-            color: AppColors.KblackColor,
+            color: AppColors.blackColor,
           ),
         ),
       ),

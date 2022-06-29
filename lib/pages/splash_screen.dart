@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_ui/models/user.dart';
 import 'package:flutter_login_ui/wrapper.dart';
@@ -13,7 +12,7 @@ class SplashScreen extends StatefulWidget {
   final String title;
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -47,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
           .get()
           .then((value) {
         loggedInUser = UserModel.fromMap(value.data());
-        print(loggedInUser.title);
+        // print(loggedInUser.title);
       });
     }
 
@@ -71,13 +70,6 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Container(
             height: 140.0,
             width: 140.0,
-            child: const Center(
-              child: ClipOval(
-                child: Image(
-                  image: AssetImage('assets/logo.png'),
-                ), //logo
-              ),
-            ),
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.transparent,
@@ -89,6 +81,13 @@ class _SplashScreenState extends State<SplashScreen> {
                     spreadRadius: 2.0,
                   )
                 ]),
+            child: const Center(
+              child: ClipOval(
+                child: Image(
+                  image: AssetImage('assets/logo.png'),
+                ), //logo
+              ),
+            ),
           ),
         ),
       ),

@@ -19,7 +19,7 @@ class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key, this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print(product!.id);
+    // print(product!.id);
     return Scaffold(
       // each product have a color
       backgroundColor: (product!.isRecommended == true)

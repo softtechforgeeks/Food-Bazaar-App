@@ -9,7 +9,6 @@ import 'package:flutter_login_ui/route/routing_page.dart';
 
 import '../cartPage/cart_page.dart';
 import '../checkout/check_out_page.dart';
-import '/route/routing_page.dart';
 
 int quantity = 1;
 
@@ -244,7 +243,7 @@ class CartCounter extends StatefulWidget {
   const CartCounter({Key? key}) : super(key: key);
 
   @override
-  _CartCounterState createState() => _CartCounterState();
+  State<CartCounter> createState() => _CartCounterState();
 }
 
 class _CartCounterState extends State<CartCounter> {

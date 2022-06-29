@@ -5,7 +5,6 @@ import 'package:flutter_login_ui/models/order_model.dart';
 import 'package:flutter_login_ui/services/notify.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:share_plus/share_plus.dart';
 
 class OrderScreen extends StatelessWidget {
   OrderScreen({Key? key}) : super(key: key);
@@ -42,17 +41,11 @@ class OrderCard extends StatelessWidget {
 
   final Order order;
   final OrderController orderController = Get.find();
-  String cate = "Accepted";
-
-  final String _content =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam ipsum, lobortis quis ultricies non, lacinia at justo.';
-
-  void _shareContent() {
-    Share.share(_content);
-  }
 
   @override
   Widget build(BuildContext context) {
+    String cate = "Accepted";
+
     return Padding(
         padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
         child: Card(
@@ -343,6 +336,8 @@ class OrderCard extends StatelessWidget {
                     ? Row(
                         children: [
                           Container(
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShaddow(),
                             child: DropdownButton<String>(
                               value: cate,
                               elevation: 16,
@@ -352,7 +347,7 @@ class OrderCard extends StatelessWidget {
                                 color: Colors.orange,
                               ),
                               onChanged: (value) {
-                                print(value);
+                                // print(value);
                                 if (value == "Accepted") {
                                   orderController.updateOrder(
                                       order, 'isAccepted', true);
@@ -365,9 +360,9 @@ class OrderCard extends StatelessWidget {
                                 }
                                 Notify n = Notify();
                                 n.orderNotification(
-                                    title: "Order " + value!,
-                                    body: "Admin changed order status to " +
-                                        value);
+                                    title: "Order $value",
+                                    body:
+                                        "Admin changed order status to $value");
                               },
                               items: <String>[
                                 'Accepted',
@@ -383,8 +378,6 @@ class OrderCard extends StatelessWidget {
                               //   secondNameController.text = value!;
                               // },
                             ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShaddow(),
                           ),
                         ],
                       )

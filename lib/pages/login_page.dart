@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   String? errorMessage;
 
   // firebase
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +68,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               Container(
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
                                 child: TextFormField(
                                   controller: emailController,
                                   keyboardType: TextInputType.emailAddress,
@@ -93,11 +95,11 @@ class _LoginPageState extends State<LoginPage> {
                                     // print(val);
                                   },
                                 ),
-                                decoration:
-                                    ThemeHelper().inputBoxDecorationShaddow(),
                               ),
                               const SizedBox(height: 30.0),
                               Container(
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
                                 child: TextFormField(
                                   controller: passwordController,
                                   obscureText: true,
@@ -119,8 +121,6 @@ class _LoginPageState extends State<LoginPage> {
                                       'Password', 'Enter your password'),
                                   onChanged: (val) {},
                                 ),
-                                decoration:
-                                    ThemeHelper().inputBoxDecorationShaddow(),
                               ),
                               const SizedBox(height: 15.0),
                               Container(
@@ -212,33 +212,11 @@ class _LoginPageState extends State<LoginPage> {
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth
+        await auth
             .signInWithEmailAndPassword(email: email, password: password)
-            .then((_auth) async {
-          print(_auth);
-          print(_auth.user?.uid);
-          AuthService().userFromFirebaseUser(_auth.user);
+            .then((auth) async {
+          AuthService().userFromFirebaseUser(auth.user);
         });
-        // final user = Provider.of<UserModel>(context);
-        //   print(user);
-        //   if (user.title == "Admin") {
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => ProductsScreen()));
-        //   } else {
-        //     Navigator.push(
-        //         context, MaterialPageRoute(builder: (context) => HomeScreen()));
-        //   }
-
-        //           // Navigator.pushAndRemoveUntil(
-        //           //     (context),
-        //           //     MaterialPageRoute(
-        //           //         builder: (context) => ),
-        //           //     (route) => false)
-        //         });
-        // .then((uid) => userid = uid
-        //   Navigator.of(context).pushReplacement(
-        //       MaterialPageRoute(builder: (context) => Home())),
-        // );
         Fluttertoast.showToast(msg: "Login Successful");
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

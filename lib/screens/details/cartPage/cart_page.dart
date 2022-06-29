@@ -27,7 +27,7 @@ class CartPage extends StatelessWidget {
         title: const Text(
           "Check out",
           style: TextStyle(
-            color: AppColors.KblackColor,
+            color: AppColors.blackColor,
           ),
         ),
       ),

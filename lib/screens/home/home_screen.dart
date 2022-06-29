@@ -28,6 +28,8 @@ class HomeScreen extends StatelessWidget {
   final double _drawerIconSize = 24;
   final double _drawerFontSize = 17;
 
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -237,14 +239,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   AppBar buildAppBar(BuildContext context) {
-    Future<void> _shareApp() async {
+    Future<void> shareApp() async {
       const urlImage = 'https://i.ibb.co/KXKfdrM/logo.png';
       final url = Uri.parse(urlImage);
       final response = await http.get(url);
       final bytes = response.bodyBytes;
       final temp = await getTemporaryDirectory();
       final path = '${temp.path}/logo.png';
-      print(path);
+      // print(path);
       File(path).writeAsBytesSync(bytes);
 
       await Share.shareFiles([path],
@@ -277,11 +279,6 @@ class HomeScreen extends StatelessWidget {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 255, 106, 0),
       elevation: 0,
-      // leading: IconButton(
-      //   icon: SvgPicture.asset("assets/icons/back.svg"),
-      //   onPressed: () {},
-      // ),
-
       actions: [
         IconButton(
           icon: SvgPicture.asset(
@@ -289,7 +286,7 @@ class HomeScreen extends StatelessWidget {
             // By default our  icon color is white
             color: kTextColor,
           ),
-          onPressed: _shareApp,
+          onPressed: shareApp,
         ),
         IconButton(
             icon: const Icon(Icons.whatsapp_rounded),

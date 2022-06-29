@@ -7,7 +7,7 @@ import 'package:flutter_login_ui/models/cart_model.dart';
 class Order extends Equatable {
   final String uid;
   final List<CartModel> orderList;
-  CartModel? orderItem;
+  // CartModel? orderItem;
   final num subtotal;
   final num total;
   final String notes;
@@ -17,7 +17,7 @@ class Order extends Equatable {
   final bool isCancelled;
   final DateTime createdAt;
 
-  Order({
+  const Order({
     required this.uid,
     required this.orderList,
     required this.subtotal,
@@ -30,54 +30,7 @@ class Order extends Equatable {
     required this.createdAt,
   });
 
-  // Future getOrderData() async {
-  //   List<CartModel> newOrderList = [];
-  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //       .collection('orders')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .collection('all')
-  //       .get();
-
-  //   for (var element in querySnapshot.docs) {
-  //     orderItem = CartModel.fromDocument(element);
-  //     newOrderList.add(orderItem!);
-  //     subtotal += (orderItem!.price * orderItem!.quantity);
-  //     total += (orderItem!.price * orderItem!.quantity);
-  //   }
-  //   orderList = newOrderList;
-  // }
-
-  // Order copyWith({
-  //   List<CartModel>? items,
-  //   double? subtotal,
-  //   double? total,
-  //   String? notes,
-  //   String? address,
-  //   bool? isAccepted,
-  //   bool? isDelivered,
-  //   bool? isCancelled,
-  //   DateTime? createdAt,
-  // }) {
-  //   return Order(
-  //     orderList: items ?? orderList,
-  //     subtotal: subtotal ?? this.subtotal,
-  //     total: total ?? this.total,
-  //     notes: notes ?? this.notes,
-  //     address: address ?? this.address,
-  //     isAccepted: isAccepted ?? this.isAccepted,
-  //     isDelivered: isDelivered ?? this.isDelivered,
-  //     isCancelled: isCancelled ?? this.isCancelled,
-  //     createdAt: createdAt ?? this.createdAt,
-  //   );
-  // }
-
-  // List<CartModel> get getOrderList {
-  //   return orderList;
-  // }
-
   Map<String, dynamic> toMap() {
-    // print('orderlist in ordermodel toMap');
-    // print(orderList);
     var js = {
       'uid': uid,
       'items': List<dynamic>.from(orderList.map((e) => e.toMap())),
@@ -90,28 +43,13 @@ class Order extends Equatable {
       'isDelivered': isDelivered,
       'createdAt': createdAt,
     };
-    // var elem={};
-    print("in to map after listing attributes");
-    // for (var element in orderList) {
-    //   js.addEntries({element.id:{
-    //       "id": element.id,
-    //       "name": element.name,
-    //       "price": element.price,
-    //       "imageUrl": element.imageUrl,
-    //       "category": element.category,
-    //       "quantity": element.quantity,
-    //     }});
-    // }
+    // print("in to map after listing attributes");
     return js;
   }
 
   factory Order.fromSnapshot(DocumentSnapshot snap) {
-    // print(snap['items'].runtimeType);
     List<CartModel> y = [];
     for (var element in snap['items']) {
-      // print(element);
-      // print(element['id'].runtimeType);
-      // print(element['quantity'].runtimeType);
       CartModel x = CartModel(
           category: element['category'],
           id: element['id'],

@@ -19,7 +19,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
 
-  print("Handling a background message: ${message.messageId}");
+  // print("Handling a background message: ${message.messageId}");
 }
 
 void main() async {
@@ -39,11 +39,11 @@ void main() async {
 
   print('User granted permission: ${settings.authorizationStatus}');
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
+    // print('Got a message whilst in the foreground!');
+    // print('Message data: ${message.data}');
 
     if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
+      // print('Message also contained a notification: ${message.notification}');
     }
   });
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -59,6 +59,8 @@ class LoginUiApp extends StatelessWidget {
   //Design color
   final Color _primaryColor = HexColor('#ff4c00');
   final Color _accentColor = HexColor('#FF8C00');
+
+  LoginUiApp({super.key});
 
   // Our Logo Color
   // Color _primaryColor= HexColor('#D44CF6');

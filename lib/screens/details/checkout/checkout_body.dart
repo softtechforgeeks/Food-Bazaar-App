@@ -48,11 +48,11 @@ class _CheckBodyState extends State<CheckBody> {
       if (response.statusCode == 200) {
         places = data.map((e) => e["description"] as String).toList();
       } else {
-        print("error happend inside getsuggestions");
+        // print("error happend inside getsuggestions");
         throw Exception('Failed to load predictions');
       }
     } catch (e) {
-      print("error happend inside getsuggestions");
+      // print("error happend inside getsuggestions");
     }
     return places;
   }
@@ -61,7 +61,7 @@ class _CheckBodyState extends State<CheckBody> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     String uname = "${user.firstName} ${user.lastName}";
-    print(uname);
+    // print(uname);
     return ListView(
       children: [
         Expanded(
@@ -144,7 +144,7 @@ class _CheckBodyState extends State<CheckBody> {
                     ),
                   ),
                   SizedBox(
-                    width: 200,
+                    width: 250,
                     child: TextField(
                       onChanged: (value) {
                         notesController.text = value;
@@ -168,7 +168,7 @@ class _CheckBodyState extends State<CheckBody> {
                     ),
                   ),
                   SizedBox(
-                    width: 200,
+                    width: 250,
                     child: TypeAheadField<String?>(
                       debounceDuration: const Duration(microseconds: 500),
                       textFieldConfiguration: const TextFieldConfiguration(

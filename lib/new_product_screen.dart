@@ -49,11 +49,11 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     children: [
                       IconButton(
                         onPressed: () async {
-                          ImagePicker _picker = ImagePicker();
-                          final XFile? _image = await _picker.pickImage(
+                          ImagePicker picker = ImagePicker();
+                          final XFile? image = await picker.pickImage(
                               source: ImageSource.gallery);
 
-                          if (_image == null) {
+                          if (image == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('No Image was selected'),
@@ -61,11 +61,11 @@ class _NewProductScreenState extends State<NewProductScreen> {
                             );
                           }
 
-                          if (_image != null) {
-                            await storage.uploadImage(_image);
+                          if (image != null) {
+                            await storage.uploadImage(image);
 
                             var imageUrl =
-                                await storage.getDownloadURL(_image.name);
+                                await storage.getDownloadURL(image.name);
 
                             productController.newProduct.update(
                                 'imageUrl', (_) => imageUrl,
@@ -121,6 +121,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     ),
                   ),
                   Container(
+                    decoration: ThemeHelper().inputBoxDecorationShaddow(),
                     child: DropdownButton<String>(
                       value: dropdownValue,
                       elevation: 16,
@@ -150,7 +151,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                       //   secondNameController.text = value!;
                       // },
                     ),
-                    decoration: ThemeHelper().inputBoxDecorationShaddow(),
                   ),
                 ],
               ),
@@ -211,13 +211,13 @@ class _NewProductScreenState extends State<NewProductScreen> {
                           MaterialPageRoute(
                               builder: (context) => ProductsScreen()),
                           (Route<dynamic> route) => false);
-                    } on Exception catch (e) {
+                    } on Exception {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Exceptional error occured"),
                         ),
                       );
-                      print(e);
+                      // print(e);
                     }
                   },
                   style: ElevatedButton.styleFrom(

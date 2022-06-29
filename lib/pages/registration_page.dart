@@ -99,6 +99,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           height: 20,
                         ),
                         Container(
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: DropdownButton<String>(
                             value: title,
                             elevation: 16,
@@ -126,10 +127,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             //   secondNameController.text = value!;
                             // },
                           ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         const SizedBox(height: 20.0),
                         Container(
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
                             controller: firstNameController,
                             keyboardType: TextInputType.name,
@@ -150,12 +151,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration: ThemeHelper().textInputDecoration(
                                 'First Name', 'Enter your first name'),
                           ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
                         Container(
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
                             controller: secondNameController,
                             keyboardType: TextInputType.name,
@@ -172,10 +173,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration: ThemeHelper().textInputDecoration(
                                 'Last Name', 'Enter your last name'),
                           ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         const SizedBox(height: 20.0),
                         Container(
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
                             controller: emailController,
                             keyboardType: TextInputType.emailAddress,
@@ -197,10 +198,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration: ThemeHelper().textInputDecoration(
                                 "E-mail address", "Enter your email"),
                           ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         const SizedBox(height: 20.0),
                         Container(
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
                             controller: mobileController,
                             decoration: ThemeHelper().textInputDecoration(
@@ -219,10 +220,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               mobileController.text = value!;
                             },
                           ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         const SizedBox(height: 20.0),
                         Container(
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                           child: TextFormField(
                             controller: passwordController,
                             obscureText: true,
@@ -242,7 +243,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               passwordController.text = value!;
                             },
                           ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         const SizedBox(height: 15.0),
                         FormField<bool>(

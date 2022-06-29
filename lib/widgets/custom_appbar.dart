@@ -27,10 +27,10 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
               .copyWith(color: Colors.white),
         ),
       ),
-      iconTheme: IconThemeData(color: Colors.black),
+      iconTheme: const IconThemeData(color: Colors.black),
       actions: [
         IconButton(
-          icon: Icon(Icons.favorite),
+          icon: const Icon(Icons.favorite),
           onPressed: () {
             Navigator.pushNamed(
               context,
@@ -42,5 +42,6 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     );
   }
 
-  Size get preferredSize => Size.fromHeight(50.0);
+  @override
+  Size get preferredSize => const Size.fromHeight(50.0);
 }

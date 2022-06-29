@@ -17,7 +17,7 @@ class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
 
   @override
-  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
@@ -38,16 +38,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    double _headerHeight = 300;
+    double headerHeight = 300;
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: _headerHeight,
-                child:
-                    HeaderWidget(_headerHeight, true, Icons.password_rounded),
+              SizedBox(
+                height: headerHeight,
+                child: HeaderWidget(headerHeight, true, Icons.password_rounded),
               ),
               SafeArea(
                 child: Container(
@@ -61,8 +60,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
+                          children: const [
+                            Text(
                               'Forgot Password?',
                               style: TextStyle(
                                   fontSize: 35,
@@ -70,10 +69,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   color: Colors.black54),
                               // textAlign: TextAlign.center,
                             ),
-                            const SizedBox(
+                            SizedBox(
                               height: 10,
                             ),
-                            const Text(
+                            Text(
                               'Enter the email address associated with your account.',
                               style: TextStyle(
                                   // fontSize: 20,
@@ -81,10 +80,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   color: Colors.black54),
                               // textAlign: TextAlign.center,
                             ),
-                            const SizedBox(
+                            SizedBox(
                               height: 10,
                             ),
-                            const Text(
+                            Text(
                               'We will email you a verification code to check your authenticity.',
                               style: TextStyle(
                                 color: Colors.black38,
@@ -101,6 +100,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         child: Column(
                           children: <Widget>[
                             Container(
+                              decoration:
+                                  ThemeHelper().inputBoxDecorationShaddow(),
                               child: TextFormField(
                                 controller: emailController,
                                 keyboardType: TextInputType.emailAddress,
@@ -121,11 +122,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 },
                                 textInputAction: TextInputAction.next,
                                 onChanged: (val) {
-                                  print(val);
+                                  // print(val);
                                 },
                               ),
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShaddow(),
                             ),
                             const SizedBox(height: 40.0),
                             Container(
@@ -206,7 +205,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           case "wrong-password":
             final url =
                 Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
-            final response = await http.post(url,
+            await http.post(url,
                 headers: {
                   'origin': 'http://localhost',
                   'Content-Type': 'application/json',
@@ -218,7 +217,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   "template_params": {
                     "user_email": email,
                     "user_name": "Food Bazaar User",
-                    "message": "Verification code: " + code.toString(),
+                    "message": "Verification code: $code",
                   },
                 }));
             // print(response.body);

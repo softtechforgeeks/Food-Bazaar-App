@@ -15,12 +15,21 @@ import 'package:get/get.dart';
 import 'package:flutter_login_ui/new_product_screen.dart';
 import 'controllers/product_controller.dart';
 
-class ManageProduct extends StatelessWidget {
-  ManageProduct({Key? key}) : super(key: key);
+class ManageProduct extends StatefulWidget {
+  const ManageProduct({Key? key}) : super(key: key);
+
+  @override
+  State<ManageProduct> createState() => _ManageProductState();
+}
+
+class _ManageProductState extends State<ManageProduct> {
   final ProductController productController =
       Get.put(ProductController(type: 'All'));
+
   Notify n = Notify();
+
   final double _drawerIconSize = 24;
+
   final double _drawerFontSize = 17;
 
   @override
@@ -304,11 +313,11 @@ class _ProductCardState extends State<ProductCard> {
   Notify n = Notify();
 
   void notifyOnChange() {
-    print('before notify');
+    // print('before notify');
     n.productNotification(
-        title: widget.product.name + " meal changed",
+        title: "${widget.product.name} meal changed",
         body: "Admin updated meal's information, check it out");
-    print('after notify');
+    // print('after notify');
   }
 
   @override
@@ -376,6 +385,8 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                           ),
                           Container(
+                            decoration:
+                                ThemeHelper().inputBoxDecorationShaddow(),
                             child: DropdownButton<String>(
                               value: cate,
                               elevation: 16,
@@ -410,8 +421,6 @@ class _ProductCardState extends State<ProductCard> {
                               //   secondNameController.text = value!;
                               // },
                             ),
-                            decoration:
-                                ThemeHelper().inputBoxDecorationShaddow(),
                           ),
                         ],
                       ),
@@ -560,8 +569,8 @@ class _ProductCardState extends State<ProductCard> {
                       Icons.delete_sweep_outlined,
                       size: 40,
                     ),
-                    onPressed: () {
-                      final docProduct = FirebaseFirestore.instance
+                    onPressed: () async {
+                      await FirebaseFirestore.instance
                           .collection('products')
                           .where('id', isEqualTo: widget.product.id)
                           .get()

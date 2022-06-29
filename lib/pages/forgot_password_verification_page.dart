@@ -20,7 +20,7 @@ class ForgotPasswordVerificationPage extends StatefulWidget {
   final int code;
 
   @override
-  _ForgotPasswordVerificationPageState createState() =>
+  State<ForgotPasswordVerificationPage> createState() =>
       _ForgotPasswordVerificationPageState();
 }
 
@@ -33,7 +33,7 @@ class _ForgotPasswordVerificationPageState
 
   @override
   Widget build(BuildContext context) {
-    double _headerHeight = 300;
+    double headerHeight = 300;
     final OtpFieldController codeController = OtpFieldController();
 
     return Scaffold(
@@ -41,10 +41,10 @@ class _ForgotPasswordVerificationPageState
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: _headerHeight,
+              SizedBox(
+                height: headerHeight,
                 child: HeaderWidget(
-                    _headerHeight, true, Icons.privacy_tip_outlined),
+                    headerHeight, true, Icons.privacy_tip_outlined),
               ),
               SafeArea(
                 child: Container(
@@ -58,8 +58,8 @@ class _ForgotPasswordVerificationPageState
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
+                          children: const [
+                            Text(
                               'Verification',
                               style: TextStyle(
                                   fontSize: 35,
@@ -67,10 +67,10 @@ class _ForgotPasswordVerificationPageState
                                   color: Colors.black54),
                               // textAlign: TextAlign.center,
                             ),
-                            const SizedBox(
+                            SizedBox(
                               height: 10,
                             ),
-                            const Text(
+                            Text(
                               'Enter the verification code we just sent you on your email address.',
                               style: TextStyle(
                                   // fontSize: 20,
@@ -141,18 +141,6 @@ class _ForgotPasswordVerificationPageState
                                       context, "#AAAAAA", "#757575"),
                               child: ElevatedButton(
                                 style: ThemeHelper().buttonStyle(),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                  child: Text(
-                                    "Verify".toUpperCase(),
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
                                 onPressed: _pinSuccess
                                     ? () async {
                                         // print(input);
@@ -181,6 +169,18 @@ class _ForgotPasswordVerificationPageState
                                         }
                                       }
                                     : null,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                  child: Text(
+                                    "Verify".toUpperCase(),
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],

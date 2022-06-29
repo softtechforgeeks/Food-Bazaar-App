@@ -84,15 +84,15 @@ class ThemeHelper {
       content: Text(content),
       actions: [
         TextButton(
-          child: const Text(
-            "OK",
-            style: TextStyle(color: Colors.white),
-          ),
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.black38)),
           onPressed: () {
             Navigator.of(context).pop();
           },
+          child: const Text(
+            "OK",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ],
     );

@@ -16,7 +16,7 @@ class CartModel {
     required this.quantity,
   });
   factory CartModel.fromDocument(QueryDocumentSnapshot doc) {
-    print(doc['name']);
+    // print(doc['name']);
     return CartModel(
       id: doc["id"],
       category: doc["category"],

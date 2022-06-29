@@ -31,10 +31,10 @@ class Notify {
 
     if (response.statusCode == 200) {
       // on success do sth
-      print('test ok push CFM');
+      // print('test ok push CFM');
       return true;
     } else {
-      print(' CFM error');
+      // print(' CFM error');
       // on failure do sth
       return false;
     }
@@ -69,10 +69,10 @@ class Notify {
 
     if (response.statusCode == 200) {
       // on success do sth
-      print('test ok push CFM');
+      // print('test ok push CFM');
       return true;
     } else {
-      print(' CFM error');
+      // print(' CFM error');
       // on failure do sth
       return false;
     }

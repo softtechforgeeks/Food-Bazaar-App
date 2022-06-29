@@ -23,7 +23,6 @@ class Product extends Equatable {
     required this.isPopular,
     this.price = 0,
     this.quantity = 0,
-    // this.index,
   });
 
   @override
@@ -40,31 +39,6 @@ class Product extends Equatable {
       quantity,
     ];
   }
-
-  // Product copyWith({
-  //   int? id,
-  //   String? name,
-  //   String? category,
-  //   String? description,
-  //   String? imageUrl,
-  //   bool? isRecommended,
-  //   bool? isPopular,
-  //   double? price,
-  //   int? quantity,
-  // }) {
-  //   return Product(
-  //     id: id ?? this.id,
-  //     name: name ?? this.name,
-  //     category: category ?? this.category,
-  //     description: description ?? this.description,
-  //     imageUrl: imageUrl ?? this.imageUrl,
-  //     isRecommended: isRecommended ?? this.isRecommended,
-  //     isPopular: isPopular ?? this.isPopular,
-  //     price: price ?? this.price,
-  //     quantity: quantity ?? this.quantity,
-  //     // index: index ?? this.index,
-  //   );
-  // }
 
   Map<String, dynamic> toMap() {
     return {
@@ -98,33 +72,4 @@ class Product extends Equatable {
 
   @override
   bool get stringify => true;
-
-  static List<Product> products = [
-    Product(
-      id: 1,
-      name: 'Pizza Margherita',
-      category: 'Pizza',
-      description:
-          'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Fusce, dolore!',
-      price: 4,
-      quantity: 10,
-      isRecommended: true,
-      isPopular: true,
-      imageUrl:
-          'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-    ),
-    Product(
-      id: 2,
-      name: 'Marinara',
-      category: 'Pizza',
-      description:
-          'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Fusce, dolore!',
-      price: 10,
-      quantity: 10,
-      isRecommended: true,
-      isPopular: true,
-      imageUrl:
-          'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    ),
-  ];
 }
